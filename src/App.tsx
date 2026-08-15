@@ -14,6 +14,7 @@ import FilePreview from './pages/FilePreview';
 import SharedLink from './pages/SharedLink';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
+import OAuthCallback from './pages/OAuth';
 import { TransferProvider } from './context/TransferContext';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { DriveProvider } from './context/DriveContext';
@@ -42,6 +43,7 @@ export default function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/terms" element={<Terms />} />
                 <Route path="/privacy" element={<Privacy />} />
+                <Route path="/oauth" element={<OAuthCallback />} />
                 <Route path="/t/:linkId" element={<SharedLink />} />
                 
                 {/* Authenticated Portal Routes */}

@@ -15,6 +15,8 @@ pub fn run() {
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_oauth::init())
         .setup(|app| {
             if cfg!(debug_assertions) {
                 app.handle().plugin(

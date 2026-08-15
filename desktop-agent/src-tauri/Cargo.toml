@@ -27,3 +27,5 @@ tauri-plugin-fs = { version = "2", features = ["watch"] }
 tauri-plugin-autostart = "2"
 tauri-plugin-notification = "2"
 tauri-plugin-dialog = "2"
+tauri-plugin-shell = "2"
+tauri-plugin-oauth = "2"
