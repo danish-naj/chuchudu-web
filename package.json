@@ -1,7 +1,9 @@
 {
   "name": "chuchudu",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "homepage": "https://chuchudu.in",
+  "repository": "https://github.com/danish-naj/chuchudu-web",
   "type": "module",
   "scripts": {
     "dev": "vite",
