@@ -107,15 +107,15 @@ export default function Dashboard() {
       <PortalSidebar />
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto bg-surface p-6 md:p-12 pb-24 md:pb-12">
-        <div className="max-w-[1100px] mx-auto space-y-12">
+      <main className="flex-1 overflow-y-auto bg-surface p-4 sm:p-6 md:p-12 pb-28 md:pb-12 w-full max-w-full">
+        <div className="max-w-[1100px] mx-auto space-y-8 sm:space-y-12">
           {/* Header */}
-          <header className="space-y-3">
-            <h1 className="font-headline-lg text-[32px] md:text-headline-lg uppercase text-on-background tracking-tight">
+          <header className="space-y-2">
+            <h1 className="font-headline-lg text-2xl sm:text-3xl md:text-headline-lg uppercase text-on-background tracking-tight">
               Upload to Your Vault
             </h1>
-            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
-              Files are encrypted and sent to your laptop. Open the Desktop Agent to view your files.
+            <p className="font-body-md text-xs sm:text-sm md:text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+              Files are encrypted and sent to your laptop. Open the Desktop Agent to view and access your files.
             </p>
           </header>
 
@@ -137,7 +137,7 @@ export default function Dashboard() {
             }}
             onDragLeave={() => setDragOver(false)}
             onDrop={handleDrop}
-            className={`border-2 border-dashed border-on-background bg-surface-container-lowest p-10 md:p-14 flex flex-col items-center justify-center text-center space-y-6 transition-all cursor-pointer group ${
+            className={`border-2 border-dashed border-on-background bg-surface-container-lowest p-6 sm:p-10 md:p-14 flex flex-col items-center justify-center text-center space-y-4 sm:space-y-6 transition-all cursor-pointer group ${
               dragOver
                 ? 'bg-primary-container/20 border-primary scale-[1.01]'
                 : 'hover:bg-surface-container-low hover:border-on-background'

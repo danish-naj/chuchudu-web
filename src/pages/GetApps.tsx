@@ -9,13 +9,13 @@ export default function GetApps() {
       <PortalSidebar />
 
       {/* Main Content Canvas */}
-      <main className="flex-1 p-6 md:p-12 max-w-container-max mx-auto w-full pb-24 md:pb-12">
+      <main className="flex-1 p-4 sm:p-6 md:p-12 max-w-container-max mx-auto w-full pb-28 md:pb-12">
         {/* Header Section */}
-        <header className="mb-12">
-          <h1 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase mb-4 tracking-tight">
+        <header className="mb-8 sm:mb-12">
+          <h1 className="font-headline-lg text-2xl sm:text-3xl md:text-headline-lg uppercase mb-3 tracking-tight">
             Download Chuchudu Apps
           </h1>
-          <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl border-l-4 border-primary-fixed pl-4">
+          <p className="font-body-md text-xs sm:text-sm md:text-body-lg text-on-surface-variant max-w-2xl border-l-4 border-primary-fixed pl-3 sm:pl-4 leading-relaxed">
             Install the Desktop Agent on your Windows PC and the companion app on your Android phone to start syncing.
           </p>
         </header>

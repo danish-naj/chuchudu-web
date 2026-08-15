@@ -102,11 +102,11 @@ export default function UploadStatus() {
       <PortalSidebar />
 
       {/* Main Content Area */}
-      <main className="flex-1 w-full bg-surface relative min-h-screen p-6 md:p-12 pb-24 md:pb-12">
-        <div className="max-w-[1000px] mx-auto w-full flex flex-col gap-10">
+      <main className="flex-1 w-full bg-surface relative min-h-screen p-4 sm:p-6 md:p-12 pb-28 md:pb-12">
+        <div className="max-w-[1000px] mx-auto w-full flex flex-col gap-6 sm:gap-10">
           {/* Page Header */}
-          <section className="flex flex-col gap-4">
-            <h2 className="font-display-lg text-[32px] md:text-headline-lg uppercase border-b-4 border-on-background pb-3 w-fit pr-8 transform -rotate-1 shadow-[8px_8px_0px_0px_rgba(164,198,57,1)] bg-surface-container-lowest font-black tracking-tight">
+          <section className="flex flex-col gap-3">
+            <h2 className="font-headline-lg text-2xl sm:text-3xl md:text-headline-lg uppercase border-b-4 border-on-background pb-2 sm:pb-3 w-fit pr-4 sm:pr-8 bg-surface-container-lowest font-black tracking-tight brutal-shadow">
               Upload Status
             </h2>
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl bg-surface-container-lowest border-2 border-on-background p-4 brutal-shadow rounded-none">
