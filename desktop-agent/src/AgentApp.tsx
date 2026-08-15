@@ -166,10 +166,6 @@ function FilePreviewModal({ file, onClose, onDownload, onStar, onDelete }: {
 
     const load = async () => {
       try {
-        if (file.encrypted) {
-          setLoading(false);
-          return;
-        }
         const data = await vault.readFile(file.id);
         if (!data) { setLoading(false); return; }
 
@@ -190,7 +186,7 @@ function FilePreviewModal({ file, onClose, onDownload, onStar, onDelete }: {
     load();
 
     return () => { if (objectUrl) URL.revokeObjectURL(objectUrl); };
-  }, [file.id]);
+  }, [file.id, file.mime]);
 
   const isImage = file.mime?.startsWith('image/');
   const isVideo = file.mime?.startsWith('video/');
@@ -207,11 +203,6 @@ function FilePreviewModal({ file, onClose, onDownload, onStar, onDelete }: {
           <div className="flex items-center gap-2 min-w-0">
             <span className="material-symbols-outlined text-primary flex-shrink-0">{getFileIcon(file.mime || '')}</span>
             <h3 className="font-bold uppercase truncate text-sm">{file.name}</h3>
-            {file.encrypted && (
-              <span className="border border-on-background px-2 py-0.5 text-xs font-bold text-on-surface-variant uppercase bg-surface-dim flex-shrink-0">
-                Encrypted
-              </span>
-            )}
           </div>
           <button onClick={onClose} className="flex-shrink-0 p-1.5 hover:bg-surface-dim border-2 border-transparent hover:border-on-background transition-colors">
             <span className="material-symbols-outlined text-xl">close</span>
@@ -225,16 +216,10 @@ function FilePreviewModal({ file, onClose, onDownload, onStar, onDelete }: {
               <span className="material-symbols-outlined text-4xl text-on-surface-variant animate-spin">progress_activity</span>
               <p className="text-sm text-on-surface-variant">Loading preview...</p>
             </div>
-          ) : file.encrypted ? (
-            <div className="flex flex-col items-center gap-3 py-10 px-6 text-center">
-              <span className="material-symbols-outlined text-6xl text-on-surface-variant">lock</span>
-              <p className="font-bold text-on-surface-variant">This file is encrypted.</p>
-              <p className="text-sm text-on-surface-variant max-w-xs">It was synced from your phone. Download it to decrypt locally.</p>
-            </div>
           ) : !previewUrl && !textContent ? (
             <div className="flex flex-col items-center gap-3 py-10">
               <span className="material-symbols-outlined text-7xl text-on-surface-variant">{getFileIcon(file.mime || '')}</span>
-              <p className="text-sm text-on-surface-variant">No preview available — download to open</p>
+              <p className="text-sm text-on-surface-variant">Preview not supported for this file type — click Download to open.</p>
             </div>
           ) : isImage && previewUrl ? (
             <img src={previewUrl} alt={file.name} className="max-w-full max-h-[50vh] object-contain p-4" />
@@ -358,12 +343,12 @@ export function AgentApp() {
     return () => clearInterval(interval);
   }, []);
 
-  // Thumbnail generation — only for non-encrypted image files
+  // Thumbnail generation — for all image files
   useEffect(() => {
     const loadThumbs = async () => {
       const imgs = Object.values(files)
-        .filter(f => !f.encrypted && f.mime?.startsWith('image/') && !thumbnails[f.id])
-        .slice(0, 20);
+        .filter(f => f.mime?.startsWith('image/') && !thumbnails[f.id])
+        .slice(0, 50);
       for (const file of imgs) {
         try {
           const data = await vault.readFile(file.id);
@@ -417,10 +402,6 @@ export function AgentApp() {
   };
 
   const handleDownload = async (file: VaultFile) => {
-    if (file.encrypted) {
-      alert('This file is still encrypted. It will be decrypted in a future update.');
-      return;
-    }
     const data = await vault.readFile(file.id);
     if (!data) { alert('File data not found in vault.'); return; }
 
