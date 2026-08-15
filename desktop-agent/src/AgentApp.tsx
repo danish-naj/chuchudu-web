@@ -53,21 +53,40 @@ function fmtDate(d: string): string {
 
 const isTauri = () => typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 
-// ─── Logo Component ───────────────────────────────────────────────────────────
+// ─── Logo Component — matches real Chuchudu brand logo ───────────────────────
 function ChuchuduLogo({ size = 40 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-      <rect width="512" height="512" fill="#A4C639"/>
-      <rect x="110" y="96" width="292" height="72" fill="#1a1c1c"/>
-      <rect x="110" y="96" width="80" height="320" fill="#1a1c1c"/>
-      <rect x="110" y="344" width="292" height="72" fill="#1a1c1c"/>
-      <rect x="190" y="168" width="230" height="176" fill="#A4C639"/>
-      <rect x="342" y="340" width="80" height="64" fill="#1a1c1c"/>
-      <rect x="358" y="308" width="14" height="44" fill="#1a1c1c"/>
-      <rect x="406" y="308" width="14" height="44" fill="#1a1c1c"/>
-      <rect x="358" y="308" width="62" height="14" fill="#1a1c1c"/>
-      <circle cx="382" cy="366" r="10" fill="#A4C639"/>
-      <rect x="377" y="370" width="10" height="16" fill="#A4C639"/>
+      {/* Green rounded-square background */}
+      <rect width="512" height="512" rx="90" ry="90" fill="#8DB83A"/>
+
+      {/* 3D shadow of the ticket badge (offset down-right) */}
+      <g transform="rotate(-8, 256, 256)">
+        <g transform="translate(18, 18)">
+          {/* Shadow shape — ticket with notch top-right */}
+          <path d="M72,148 L440,148 L440,198 L468,198 L468,228 L440,228 L440,364 L72,364 Z" fill="#111"/>
+        </g>
+        {/* White ticket badge with notch cut from top-right corner */}
+        <path d="M72,148 L440,148 L440,198 L468,198 L468,228 L440,228 L440,364 L72,364 Z" fill="white" stroke="#111" strokeWidth="10"/>
+
+        {/* "CHU" text */}
+        <text x="256" y="262" textAnchor="middle"
+          fontFamily="'Arial Black','Impact',sans-serif" fontWeight="900"
+          fontSize="108" fill="#111" letterSpacing="-2">
+          CHU
+        </text>
+        {/* "CHUDU" text */}
+        <text x="248" y="350" textAnchor="middle"
+          fontFamily="'Arial Black','Impact',sans-serif" fontWeight="900"
+          fontSize="108" fill="#111" letterSpacing="-2">
+          CHUDU
+        </text>
+        {/* ® symbol */}
+        <circle cx="444" cy="336" r="18" fill="none" stroke="#111" strokeWidth="6"/>
+        <text x="444" y="342" textAnchor="middle"
+          fontFamily="Arial,sans-serif" fontWeight="bold"
+          fontSize="20" fill="#111">R</text>
+      </g>
     </svg>
   );
 }
