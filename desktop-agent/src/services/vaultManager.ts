@@ -1,7 +1,5 @@
-import { BaseDirectory, mkdir, writeTextFile, readTextFile, remove, exists, readFile, writeFile } from '@tauri-apps/plugin-fs';
-
-const VAULT_DIR = 'Chuchudu_Vault';
-const MANIFEST_FILE = `${VAULT_DIR}/.manifest.json`;
+import { mkdir, writeTextFile, readTextFile, remove, exists, readFile, writeFile } from '@tauri-apps/plugin-fs';
+import { homeDir } from '@tauri-apps/api/path';
 
 export interface VaultFile {
   id: string;
@@ -21,9 +19,37 @@ export class VaultManager {
   private initialized = false;
   private memoryManifest: Record<string, VaultFile> = {};
   private memoryFiles: Record<string, Uint8Array> = {};
+  private cachedVaultPath: string | null = null;
+
+  async getVaultDir(): Promise<string> {
+    if (!isTauri()) return 'Chuchudu_Vault';
+
+    const saved = localStorage.getItem('chuchudu_vault_path');
+    if (saved && saved.trim()) {
+      return saved.trim();
+    }
+
+    try {
+      const home = await homeDir();
+      const defaultPath = `${home.replace(/\\/g, '/')}/Chuchudu_Vault`;
+      localStorage.setItem('chuchudu_vault_path', defaultPath);
+      return defaultPath;
+    } catch {
+      return 'C:/Users/ACER/Chuchudu_Vault';
+    }
+  }
+
+  async setVaultDir(newPath: string) {
+    localStorage.setItem('chuchudu_vault_path', newPath);
+    this.cachedVaultPath = newPath;
+    this.initialized = false;
+    await this.init();
+    window.dispatchEvent(new CustomEvent('vault-updated'));
+  }
 
   async init() {
     if (this.initialized) return;
+
     if (!isTauri()) {
       try {
         const saved = localStorage.getItem('chuchudu_vault_manifest');
@@ -32,15 +58,21 @@ export class VaultManager {
       this.initialized = true;
       return;
     }
-    
-    try {
-      const hasDir = await exists(VAULT_DIR, { baseDir: BaseDirectory.Home });
-      if (!hasDir) await mkdir(VAULT_DIR, { baseDir: BaseDirectory.Home });
 
-      const hasManifest = await exists(MANIFEST_FILE, { baseDir: BaseDirectory.Home });
-      if (!hasManifest) await writeTextFile(MANIFEST_FILE, JSON.stringify({}), { baseDir: BaseDirectory.Home });
+    try {
+      const vaultDir = await this.getVaultDir();
+      const hasDir = await exists(vaultDir);
+      if (!hasDir) {
+        await mkdir(vaultDir, { recursive: true });
+      }
+
+      const manifestPath = `${vaultDir}/.manifest.json`;
+      const hasManifest = await exists(manifestPath);
+      if (!hasManifest) {
+        await writeTextFile(manifestPath, JSON.stringify({}));
+      }
     } catch (e) {
-      console.warn('Tauri FS init fallback:', e);
+      console.warn('[VaultManager] init warning:', e);
     }
 
     this.initialized = true;
@@ -49,11 +81,14 @@ export class VaultManager {
   async getManifest(): Promise<Record<string, VaultFile>> {
     await this.init();
     if (!isTauri()) return { ...this.memoryManifest };
+
     try {
-      const data = await readTextFile(MANIFEST_FILE, { baseDir: BaseDirectory.Home });
+      const vaultDir = await this.getVaultDir();
+      const manifestPath = `${vaultDir}/.manifest.json`;
+      const data = await readTextFile(manifestPath);
       return JSON.parse(data);
     } catch (e) {
-      console.error('Error reading manifest', e);
+      console.error('[VaultManager] Error reading manifest:', e);
       return {};
     }
   }
@@ -66,7 +101,10 @@ export class VaultManager {
       window.dispatchEvent(new CustomEvent('vault-updated'));
       return;
     }
-    await writeTextFile(MANIFEST_FILE, JSON.stringify(manifest, null, 2), { baseDir: BaseDirectory.Home });
+
+    const vaultDir = await this.getVaultDir();
+    const manifestPath = `${vaultDir}/.manifest.json`;
+    await writeTextFile(manifestPath, JSON.stringify(manifest, null, 2));
     window.dispatchEvent(new CustomEvent('vault-updated'));
   }
 
@@ -80,8 +118,22 @@ export class VaultManager {
       return;
     }
 
-    const filePath = `${VAULT_DIR}/${id}.chuchudu`;
-    await writeFile(filePath, data, { baseDir: BaseDirectory.Home });
+    const vaultDir = await this.getVaultDir();
+
+    // 1. Save vault ID file for fast lookup
+    const idPath = `${vaultDir}/${id}.chuchudu`;
+    await writeFile(idPath, data);
+
+    // 2. Also save real named file directly in the folder so user can see it in Windows File Explorer
+    if (metadata.name) {
+      try {
+        const cleanName = metadata.name.replace(/[<>:"/\\|?*]/g, '_');
+        const namedPath = `${vaultDir}/${cleanName}`;
+        await writeFile(namedPath, data);
+      } catch (err) {
+        console.warn('[VaultManager] Could not write named file:', err);
+      }
+    }
 
     const manifest = await this.getManifest();
     manifest[id] = { id, ...metadata };
@@ -92,11 +144,30 @@ export class VaultManager {
     await this.init();
     if (!isTauri()) return this.memoryFiles[id] || null;
 
-    const filePath = `${VAULT_DIR}/${id}.chuchudu`;
-    const fileExists = await exists(filePath, { baseDir: BaseDirectory.Home });
-    if (!fileExists) return null;
+    const vaultDir = await this.getVaultDir();
+    const idPath = `${vaultDir}/${id}.chuchudu`;
 
-    return await readFile(filePath, { baseDir: BaseDirectory.Home });
+    try {
+      const fileExists = await exists(idPath);
+      if (fileExists) {
+        return await readFile(idPath);
+      }
+    } catch {}
+
+    // Fallback: try by real name from manifest
+    try {
+      const manifest = await this.getManifest();
+      if (manifest[id]?.name) {
+        const cleanName = manifest[id].name.replace(/[<>:"/\\|?*]/g, '_');
+        const namedPath = `${vaultDir}/${cleanName}`;
+        const hasNamed = await exists(namedPath);
+        if (hasNamed) {
+          return await readFile(namedPath);
+        }
+      }
+    } catch {}
+
+    return null;
   }
 
   async deleteFile(id: string) {
@@ -108,14 +179,27 @@ export class VaultManager {
       return;
     }
 
-    const filePath = `${VAULT_DIR}/${id}.chuchudu`;
-    const fileExists = await exists(filePath, { baseDir: BaseDirectory.Home });
-    if (fileExists) {
-      await remove(filePath, { baseDir: BaseDirectory.Home });
-    }
+    const vaultDir = await this.getVaultDir();
+    const idPath = `${vaultDir}/${id}.chuchudu`;
+
+    try {
+      const fileExists = await exists(idPath);
+      if (fileExists) {
+        await remove(idPath);
+      }
+    } catch {}
 
     const manifest = await this.getManifest();
     if (manifest[id]) {
+      try {
+        const cleanName = manifest[id].name.replace(/[<>:"/\\|?*]/g, '_');
+        const namedPath = `${vaultDir}/${cleanName}`;
+        const hasNamed = await exists(namedPath);
+        if (hasNamed) {
+          await remove(namedPath);
+        }
+      } catch {}
+
       delete manifest[id];
       await this.saveManifest(manifest);
     }
@@ -123,4 +207,3 @@ export class VaultManager {
 }
 
 export const vault = new VaultManager();
-

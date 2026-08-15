@@ -315,7 +315,7 @@ export function AgentApp() {
   }, []);
 
   useEffect(() => {
-    if (isTauri()) isEnabled().then(setAutostart).catch(() => {});
+    vault.getVaultDir().then(setVaultPath);
   }, []);
 
   useEffect(() => {
@@ -427,9 +427,26 @@ export function AgentApp() {
 
   const handlePickFolder = async () => {
     try {
-      const sel = await openDialog({ directory: true, multiple: false, title: 'Select Vault Folder' });
-      if (sel && typeof sel === 'string') { localStorage.setItem('chuchudu_vault_path', sel); setVaultPath(sel); }
-    } catch {}
+      const sel = await openDialog({ directory: true, multiple: false, title: 'Choose Storage Folder' });
+      if (sel && typeof sel === 'string') {
+        await vault.setVaultDir(sel);
+        setVaultPath(sel);
+        vault.getManifest().then(setFiles);
+      }
+    } catch (e) {
+      console.error('Error selecting folder:', e);
+    }
+  };
+
+  const handleOpenInExplorer = async () => {
+    try {
+      const dir = await vault.getVaultDir();
+      if (isTauri()) {
+        await openUrl(dir);
+      }
+    } catch (e) {
+      console.error('Error opening explorer:', e);
+    }
   };
 
   // ── Google Drive OAuth — open chuchudu.in/oauth in system browser, poll Firestore for token ──
@@ -841,18 +858,34 @@ export function AgentApp() {
                 </button>
               </section>
 
-              {/* Vault Folder */}
+              {/* Storage Folder */}
               <section className="border-2 border-on-background bg-surface-container-lowest p-6 flex flex-col gap-4" style={{ boxShadow: '4px 4px 0 #1a1c1c' }}>
-                <h2 className="font-black text-base uppercase border-b-2 border-on-background pb-2">Vault Folder</h2>
-                <p className="text-sm text-on-surface-variant">All your files are stored and encrypted here on your local machine.</p>
-                <div className="flex items-center gap-3">
-                  <div className="flex-grow flex items-center gap-2 bg-surface-container-low border-2 border-on-background px-4 py-3">
-                    <span className="material-symbols-outlined text-primary">folder_open</span>
-                    <code className="text-xs text-on-background truncate">{vaultPath}</code>
+                <div className="flex items-center justify-between border-b-2 border-on-background pb-2">
+                  <h2 className="font-black text-base uppercase">Storage Folder</h2>
+                  <span className="text-xs font-bold uppercase bg-primary-fixed text-on-primary-fixed border border-on-background px-2 py-0.5">Active</span>
+                </div>
+                <p className="text-sm text-on-surface-variant leading-relaxed">
+                  Choose any folder on your laptop or external drive where your photos and files will be stored. Files are saved directly with their original names so you can view and use them anytime in Windows File Explorer.
+                </p>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                  <div className="flex-grow flex items-center gap-2 bg-surface-container-low border-2 border-on-background px-4 py-3 min-w-0">
+                    <span className="material-symbols-outlined text-primary flex-shrink-0">folder_open</span>
+                    <code className="text-xs text-on-background truncate font-mono">{vaultPath}</code>
                   </div>
-                  <button onClick={handlePickFolder}
-                    className="bg-on-background text-background border-2 border-on-background px-4 py-3 font-bold text-sm uppercase whitespace-nowrap"
-                    style={{ boxShadow: '3px 3px 0 #444' }}>Change</button>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <button onClick={handlePickFolder}
+                      className="bg-primary-fixed text-on-primary-fixed border-2 border-on-background px-4 py-3 font-bold text-sm uppercase whitespace-nowrap"
+                      style={{ boxShadow: '3px 3px 0 #1a1c1c' }}>
+                      Choose Folder
+                    </button>
+                    <button onClick={handleOpenInExplorer}
+                      title="Open this folder in Windows File Explorer"
+                      className="bg-on-background text-background border-2 border-on-background px-4 py-3 font-bold text-sm uppercase whitespace-nowrap flex items-center gap-1.5"
+                      style={{ boxShadow: '3px 3px 0 #444' }}>
+                      <span className="material-symbols-outlined text-lg">folder</span>
+                      Open in Explorer
+                    </button>
+                  </div>
                 </div>
               </section>
 
