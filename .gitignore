@@ -17,6 +17,7 @@ dist-ssr
 
 # Binaries & Temporary files
 *.exe
+!public/downloads/*.exe
 test.txt
 target
 desktop-agent/src-tauri/target
