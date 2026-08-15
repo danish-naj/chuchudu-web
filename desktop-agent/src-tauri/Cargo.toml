@@ -1,8 +1,8 @@
 [package]
-name = "app"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+name = "chuchudu"
+version = "1.0.0"
+description = "Chuchudu Encrypted Personal Vault"
+authors = ["Chuchudu Team <dev@chuchudu.in>"]
 license = ""
 repository = ""
 edition = "2021"
