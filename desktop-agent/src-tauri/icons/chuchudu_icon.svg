@@ -10,14 +10,17 @@
   <!-- Bottom bar -->
   <rect x="110" y="344" width="292" height="72" fill="#1a1c1c"/>
   
-  <!-- Inner cutout (lime to show the "C" opening on the right) -->
+  <!-- Inner cutout (white/lime to show the "C" opening on the right) -->
   <rect x="190" y="168" width="230" height="176" fill="#A4C639"/>
 
   <!-- Padlock icon bottom-right corner -->
-  <rect x="342" y="340" width="80" height="64" fill="#1a1c1c"/>
+  <!-- Padlock body -->
+  <rect x="342" y="340" width="80" height="64" rx="0" fill="#1a1c1c"/>
+  <!-- Padlock shackle (arch) -->
   <rect x="358" y="308" width="14" height="44" fill="#1a1c1c"/>
   <rect x="406" y="308" width="14" height="44" fill="#1a1c1c"/>
   <rect x="358" y="308" width="62" height="14" fill="#1a1c1c"/>
+  <!-- Keyhole -->
   <circle cx="382" cy="366" r="10" fill="#A4C639"/>
   <rect x="377" y="370" width="10" height="16" fill="#A4C639"/>
 </svg>
