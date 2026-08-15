@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Videos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#3c4d00",
+                      "primary-fixed": "#ccf05f",
+                      "on-primary-fixed": "#161e00",
+                      "secondary-container": "#e2e2e2",
+                      "on-secondary-fixed": "#1b1b1b",
+                      "on-error": "#ffffff",
+                      "surface-container": "#eeeeee",
+                      "secondary": "#5e5e5e",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#1a1c1c",
+                      "on-tertiary-container": "#484a4a",
+                      "on-secondary-container": "#646464",
+                      "surface-container-high": "#e8e8e8",
+                      "primary": "#506600",
+                      "error-container": "#ffdad6",
+                      "primary-container": "#a4c639",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "tertiary-container": "#b8b9b9",
+                      "outline": "#757965",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-error-container": "#93000a",
+                      "outline-variant": "#c5c9b1",
+                      "surface-variant": "#e2e2e2",
+                      "surface": "#f9f9f9",
+                      "on-surface-variant": "#454937",
+                      "surface-dim": "#dadada",
+                      "surface-bright": "#f9f9f9",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "surface-container-highest": "#e2e2e2",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "on-background": "#1a1c1c",
+                      "surface-tint": "#506600",
+                      "primary-fixed-dim": "#b1d446",
+                      "tertiary": "#5d5f5f",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed": "#e2e2e2",
+                      "on-secondary-fixed-variant": "#474747",
+                      "inverse-primary": "#b1d446",
+                      "inverse-on-surface": "#f1f1f1",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "inverse-surface": "#2f3131",
+                      "background": "#f9f9f9",
+                      "surface-container-low": "#f3f3f3",
+                      "on-primary-container": "#3e5000"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "container-max": "1280px",
+                      "unit": "4px",
+                      "gutter": "24px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Space Grotesk"
+                      ],
+                      "headline-lg-mobile": [
+                              "Space Grotesk"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "button-text": [
+                              "Space Grotesk"
+                      ],
+                      "headline-md": [
+                              "Space Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "display-lg": [
+                              "Space Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "52px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "button-text": [
+                              "18px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "72px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .neo-border {
+            border: 2px solid #000;
+        }
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-shadow-lg {
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-shadow-hover:hover {
+            box-shadow: none;
+            transform: translate(4px, 4px);
+        }
+        .neo-shadow-lg-hover:hover {
+            box-shadow: 2px 2px 0px 0px rgba(0,0,0,1);
+            transform: translate(6px, 6px);
+        }
+        
+        /* Ensure font pairs are applied correctly */
+        .font-headline-lg { font-family: 'Space Grotesk', sans-serif; font-size: 48px; line-height: 52px; font-weight: 700; letter-spacing: -0.02em; }
+        .font-headline-md { font-family: 'Space Grotesk', sans-serif; font-size: 24px; line-height: 28px; font-weight: 700; }
+        .font-body-lg { font-family: 'Hanken Grotesk', sans-serif; font-size: 18px; line-height: 28px; font-weight: 500; }
+        .font-body-md { font-family: 'Hanken Grotesk', sans-serif; font-size: 16px; line-height: 24px; font-weight: 400; }
+        .font-button-text { font-family: 'Space Grotesk', sans-serif; font-size: 18px; line-height: 20px; font-weight: 700; }
+        .font-label-caps { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 16px; font-weight: 700; }
+        .font-display-lg { font-family: 'Space Grotesk', sans-serif; font-size: 72px; line-height: 72px; font-weight: 700; letter-spacing: -0.04em; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="w-full bg-background border-b-4 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop h-20 max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<a class="text-headline-md font-headline-md font-black text-on-background uppercase tracking-tighter" href="#">CHUCHUDU</a>
+<nav class="hidden md:flex gap-6">
+<a class="text-primary border-b-4 border-primary pb-1 font-label-caps text-label-caps uppercase hover:bg-primary-container hover:text-on-primary-container transition-all" href="#">My Files</a>
+<a class="text-on-surface font-label-caps text-label-caps font-bold uppercase hover:bg-primary-container hover:text-on-primary-container transition-all" href="#">Transfers</a>
+<a class="text-on-surface font-label-caps text-label-caps font-bold uppercase hover:bg-primary-container hover:text-on-primary-container transition-all" href="#">Activity</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary-container text-on-primary-container neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all px-6 py-2 font-button-text text-button-text uppercase">
+                    START SHARING
+                </button>
+<button class="p-2 hover:bg-primary-container hover:text-on-primary-container transition-all rounded-none neo-border bg-surface">
+<span class="material-symbols-outlined block" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-desktop py-12 flex gap-gutter">
+<!-- Sidebar Filter (Simulated) -->
+<aside class="hidden lg:block w-64 flex-shrink-0">
+<div class="bg-surface neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-6 sticky top-32">
+<h2 class="font-headline-md text-headline-md mb-6 uppercase">Filters</h2>
+<div class="mb-6">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3 uppercase">File Type</h3>
+<div class="space-y-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="sr-only" name="fileType" type="radio"/>
+<div class="w-5 h-5 neo-border group-hover:bg-primary-container transition-colors"></div>
+<span class="font-body-md text-body-md">All Files</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="sr-only" name="fileType" type="radio"/>
+<div class="w-5 h-5 neo-border bg-primary-container flex items-center justify-center">
+<div class="w-2.5 h-2.5 bg-on-primary-container rounded-sm"></div>
+</div>
+<span class="font-body-md text-body-md font-bold text-primary">Videos</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="sr-only" name="fileType" type="radio"/>
+<div class="w-5 h-5 neo-border group-hover:bg-primary-container transition-colors"></div>
+<span class="font-body-md text-body-md">Images</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="sr-only" name="fileType" type="radio"/>
+<div class="w-5 h-5 neo-border group-hover:bg-primary-container transition-colors"></div>
+<span class="font-body-md text-body-md">Documents</span>
+</label>
+</div>
+</div>
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3 uppercase">Size</h3>
+<div class="space-y-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="sr-only" type="checkbox"/>
+<div class="w-5 h-5 neo-border group-hover:bg-primary-container transition-colors"></div>
+<span class="font-body-md text-body-md">&lt; 100MB</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="sr-only" type="checkbox"/>
+<div class="w-5 h-5 neo-border group-hover:bg-primary-container transition-colors"></div>
+<span class="font-body-md text-body-md">100MB - 1GB</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="sr-only" type="checkbox"/>
+<div class="w-5 h-5 neo-border group-hover:bg-primary-container transition-colors"></div>
+<span class="font-body-md text-body-md">&gt; 1GB</span>
+</label>
+</div>
+</div>
+</div>
+</aside>
+<!-- Video Grid -->
+<div class="flex-grow">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h1 class="font-display-lg text-display-lg uppercase leading-none">Videos</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-2">Showing 12 items • Filtered</p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 bg-surface neo-border hover:bg-primary-container hover:text-on-primary-container transition-all">
+<span class="material-symbols-outlined block" data-icon="grid_view">grid_view</span>
+</button>
+<button class="p-2 bg-surface-container-high text-on-surface-variant neo-border transition-all opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined block" data-icon="list">list</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Video Item 1 (Featured/Large) -->
+<div class="col-span-1 md:col-span-2 xl:col-span-2 bg-surface neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[4px] hover:translate-y-[4px] transition-all group flex flex-col cursor-pointer overflow-hidden relative">
+<div class="h-64 bg-surface-container w-full relative overflow-hidden flex-shrink-0 neo-border border-0 border-b-2">
+<img class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A cinematic, high-contrast urban landscape at night with neon lights reflecting off wet pavement, dramatic cyberpunk neo-brutalist aesthetic, highly detailed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD72GSDmnxmnBx03eQygYFu-8VPHLnHZILQ2DJrHkP30bc9a__0-wIKRchsNFmJeBLdaqggG6f2dGfUlcFibkeN8RNnVrDp-Gyz71OH3XQuZxzCsB7UAkK89jFoarQX0CAmFED-n-CgG4cMOJAJZ6lj4O84btaW6Vee7EIqsQgjx0ym4WHdAy4YCNx9ZJ6f74T2a1urCbX3lBZBgX_IqCWi2Gm1WKBlfububLO1A3zV4HqLEoe1o-HPN6PmIE9xRo3L5g4fCu0l3d9u"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 bg-primary-container neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl" data-icon="play_arrow" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-4 right-4 bg-background neo-border px-2 py-1 font-label-caps text-label-caps">
+                            12:45
+                         </div>
+<div class="absolute top-4 left-4">
+<span class="bg-primary-container text-on-primary-container neo-border px-2 py-1 font-label-caps text-label-caps uppercase">MP4</span>
+</div>
+</div>
+<div class="p-4 bg-background flex flex-col justify-between flex-grow">
+<h3 class="font-headline-md text-headline-md truncate mb-2 group-hover:text-primary transition-colors">Campaign_Broll_Raw_01.mp4</h3>
+<div class="flex justify-between items-center text-on-surface-variant font-label-caps text-label-caps">
+<span>Added 2 hrs ago</span>
+<span class="bg-surface-container-high px-2 py-1 neo-border">2.4 GB</span>
+</div>
+</div>
+</div>
+<!-- Video Item 2 -->
+<div class="bg-surface neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[4px] hover:translate-y-[4px] transition-all group flex flex-col cursor-pointer overflow-hidden">
+<div class="h-40 bg-surface-container w-full relative overflow-hidden flex-shrink-0 neo-border border-0 border-b-2">
+<img class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Abstract vibrant lime green and black geometric patterns morphing organically, high contrast neo-brutalist visual style, sharp edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRlQXOXK5aAM6UPn-AxAVbXoHBgohvei6ceALLwahtbDcp4--_73OHlZLsJnmbIFBCXV8tAjeiFmnOCQ0nqPbRSlJx3OKFOC6PO7mGJUKqkZ_USxz_kflCP_Pkm6parv95nPqlhIQYbnWx5MtDFJDOlxSXTzBP5CNMEhE-QFETJZdC9GFUEl-T5vZYklGf9Lc-2CYliqS9EpvwiS7vbtPVaYYxJl85XSNc06mhXrp3ky3p-OrfdKTmhlGbiPM2gwfS6EgB_io-AAf4"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-12 h-12 bg-primary-container neo-border shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="play_arrow" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-2 right-2 bg-background neo-border px-1.5 py-0.5 font-label-caps text-label-caps text-[10px]">
+                            03:12
+                         </div>
+</div>
+<div class="p-4 bg-background flex flex-col justify-between flex-grow">
+<h3 class="font-body-lg text-body-lg font-bold truncate mb-2 group-hover:text-primary transition-colors">Motion_Graphics_V2.mov</h3>
+<div class="flex justify-between items-center text-on-surface-variant font-label-caps text-label-caps text-[10px]">
+<span>Yesterday</span>
+<span>845 MB</span>
+</div>
+</div>
+</div>
+<!-- Video Item 3 -->
+<div class="bg-surface neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[4px] hover:translate-y-[4px] transition-all group flex flex-col cursor-pointer overflow-hidden">
+<div class="h-40 bg-surface-container w-full relative overflow-hidden flex-shrink-0 neo-border border-0 border-b-2">
+<img class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A raw, unedited backstage video still of a fashion shoot, bright stark lighting, industrial concrete setting, neo-brutalist edge." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCreGbHF-r5G6tnOwRjdteDefiIohGQt00-uF_SIiSSd-uONpcGBn0W2bqVl8HcWNvNQTy_vlXKw2-BKm_kkj8AI9LOEHJbsoAiV3fk_7RrreEZtWbI0B5iWuFzuYmWupgO-JFpK6McFmDFhD8DjPs-ISiOWVZJZYxfw8-LzUlBGJsLeCV7w6ErSk6FDudQs2dlCxI5eD4J9WYIN0PIzn5cdLsVA0ABacxP1kYF2LcmsLR9tC4qnaR-56g6WKm5cxTd_kOR5DcLfn1C"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-12 h-12 bg-primary-container neo-border shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="play_arrow" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-2 right-2 bg-background neo-border px-1.5 py-0.5 font-label-caps text-label-caps text-[10px]">
+                            45:00
+                         </div>
+</div>
+<div class="p-4 bg-background flex flex-col justify-between flex-grow">
+<h3 class="font-body-lg text-body-lg font-bold truncate mb-2 group-hover:text-primary transition-colors">Interview_Take1_Uncut.mp4</h3>
+<div class="flex justify-between items-center text-on-surface-variant font-label-caps text-label-caps text-[10px]">
+<span>Oct 24</span>
+<span>4.1 GB</span>
+</div>
+</div>
+</div>
+<!-- Video Item 4 -->
+<div class="bg-surface neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[4px] hover:translate-y-[4px] transition-all group flex flex-col cursor-pointer overflow-hidden">
+<div class="h-40 bg-primary-container w-full relative overflow-hidden flex-shrink-0 neo-border border-0 border-b-2 flex items-center justify-center">
+<!-- Fallback for no thumbnail -->
+<span class="material-symbols-outlined text-6xl text-on-primary-container opacity-50" data-icon="movie">movie</span>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-on-background/10">
+<div class="w-12 h-12 bg-background neo-border shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center scale-90 group-hover:scale-100 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="play_arrow" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-2 right-2 bg-background neo-border px-1.5 py-0.5 font-label-caps text-label-caps text-[10px]">
+                            00:15
+                         </div>
+</div>
+<div class="p-4 bg-background flex flex-col justify-between flex-grow">
+<h3 class="font-body-lg text-body-lg font-bold truncate mb-2 group-hover:text-primary transition-colors">Social_Teaser_Vertical.mp4</h3>
+<div class="flex justify-between items-center text-on-surface-variant font-label-caps text-label-caps text-[10px]">
+<span>Oct 22</span>
+<span>45 MB</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 flex justify-center">
+<button class="bg-surface text-on-surface neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all px-8 py-3 font-button-text text-button-text uppercase flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span> LOAD MORE
+                </button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-highest py-12 px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter border-t-4 border-on-background">
+<div class="font-headline-md text-headline-md font-black text-on-background">
+            © 2024 CHUCHUDU. NO LIMITS.
+        </div>
+<nav class="flex flex-wrap gap-6 font-body-md text-body-md">
+<a class="text-on-secondary-container hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Terms</a>
+<a class="text-on-secondary-container hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Privacy</a>
+<a class="text-on-secondary-container hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Support</a>
+<a class="text-on-secondary-container hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Twitter</a>
+<a class="text-on-secondary-container hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Instagram</a>
+</nav>
+</footer>
+</body></html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Chuchudu - My Files</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "primary": "#506600",
+                        "surface-bright": "#f9f9f9",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "surface-container-highest": "#e2e2e2",
+                        "tertiary-fixed": "#e2e2e2",
+                        "tertiary": "#5d5f5f",
+                        "secondary": "#5e5e5e",
+                        "on-primary-fixed": "#161e00",
+                        "inverse-primary": "#b1d446",
+                        "tertiary-container": "#b8b9b9",
+                        "surface-tint": "#506600",
+                        "surface-container-low": "#f3f3f3",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "inverse-on-surface": "#f1f1f1",
+                        "outline": "#757965",
+                        "surface": "#f9f9f9",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#b1d446",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#3e5000",
+                        "primary-fixed": "#ccf05f",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-surface-variant": "#454937",
+                        "surface-dim": "#dadada",
+                        "outline-variant": "#c5c9b1",
+                        "on-secondary-container": "#646464",
+                        "surface-variant": "#e2e2e2",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary-fixed-variant": "#474747",
+                        "on-background": "#1a1c1c",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e8e8e8",
+                        "primary-container": "#a4c639",
+                        "surface-container": "#eeeeee",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "secondary-container": "#e2e2e2",
+                        "background": "#f9f9f9",
+                        "on-tertiary-container": "#484a4a",
+                        "inverse-surface": "#2f3131"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"],
+                        "button-text": ["Space Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "display-lg": ["Space Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "button-text": ["18px", { "lineHeight": "20px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .neo-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+        .neo-shadow-lg { box-shadow: 8px 8px 0px 0px rgba(0,0,0,1); }
+        .neo-border { border: 2px solid #1a1c1c; }
+        .neo-border-thick { border: 4px solid #1a1c1c; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="w-full sticky top-0 z-50 bg-background dark:bg-on-background border-b-2 border-on-background dark:border-surface-container-highest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto w-full">
+<div class="flex items-center gap-4">
+<img alt="Chuchudu Logo" class="h-10 w-10 object-cover neo-border rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7Rbab1g-OPAoW2Drbyt1XQRoBcWpq_2ASDeXjH3XFwHUUogt4GvSiJT1s1YB7syNLVrRRg-txhDtnYK-du3Jqkv5yKiNruMPdsNdaaUDUwhSOscQ3HMZMdcDln_EvMkyYnkYx-Bd7vRedEXlfYuHDUuPDyg4XYxCyiy93i2xetEPjdoc9R5rq_iPFEpx1vM70JbzBCcGE_X18__ElURjFrKAMvu3H0dR5QC5zzuPST1z0MK-zKtpG-ORPZWKS-ArV9UoMHspKTykB">
+<span class="font-headline-md text-headline-md font-black tracking-tighter text-on-background dark:text-background">Chuchudu</span>
+</div>
+<nav class="hidden md:flex gap-8 items-center font-button-text text-button-text uppercase">
+<a class="text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed hover:-translate-y-0.5 hover:translate-x-0.5 transition-transform active:translate-y-1 active:translate-x-1 active:shadow-none transition-all pb-1" href="#">My Files</a>
+<a class="text-on-surface dark:text-surface-bright hover:text-primary hover:-translate-y-0.5 hover:translate-x-0.5 transition-transform active:translate-y-1 active:translate-x-1 active:shadow-none transition-all pb-1" href="#">Transfers</a>
+<a class="text-on-surface dark:text-surface-bright hover:text-primary hover:-translate-y-0.5 hover:translate-x-0.5 transition-transform active:translate-y-1 active:translate-x-1 active:shadow-none transition-all pb-1" href="#">Activity</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden md:block bg-primary-container text-on-primary-container font-button-text text-button-text uppercase px-6 py-2 neo-border neo-shadow hover:-translate-y-0.5 hover:translate-x-0.5 transition-transform active:translate-y-1 active:translate-x-1 active:shadow-none transition-all rounded">Start Sharing</button>
+<button class="p-2 neo-border rounded-full hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-on-surface">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 flex flex-col md:flex-row gap-gutter">
+<!-- Sidebar Filters -->
+<aside class="w-full md:w-64 flex-shrink-0 flex flex-col gap-4">
+<h2 class="font-headline-md text-headline-md uppercase mb-2">Filters</h2>
+<div class="flex flex-col gap-2">
+<a href="{{DATA:SCREEN:SCREEN_47}}" class="w-full text-left bg-primary-container neo-border neo-shadow px-4 py-3 font-button-text text-button-text uppercase rounded flex items-center justify-between hover:translate-x-1 transition-transform"><span class="">All Files</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">folder_open</span></a>
+<a href="{{DATA:SCREEN:SCREEN_149}}" class="w-full text-left bg-surface neo-border px-4 py-3 font-button-text text-button-text uppercase rounded flex items-center justify-between hover:translate-x-1 transition-transform hover:bg-surface-container-high"><span class="">Photos</span><span class="material-symbols-outlined">image</span></a>
+<a href="{{DATA:SCREEN:SCREEN_154}}" class="w-full text-left bg-surface neo-border px-4 py-3 font-button-text text-button-text uppercase rounded flex items-center justify-between hover:translate-x-1 transition-transform hover:bg-surface-container-high"><span class="">Videos</span><span class="material-symbols-outlined">movie</span></a>
+<a href="{{DATA:SCREEN:SCREEN_140}}" class="w-full text-left bg-surface neo-border px-4 py-3 font-button-text text-button-text uppercase rounded flex items-center justify-between hover:translate-x-1 transition-transform hover:bg-surface-container-high"><span class="">Documents</span><span class="material-symbols-outlined">description</span></a>
+<a href="{{DATA:SCREEN:SCREEN_148}}" class="w-full text-left bg-surface neo-border px-4 py-3 font-button-text text-button-text uppercase rounded flex items-center justify-between hover:translate-x-1 transition-transform hover:bg-surface-container-high mt-4"><span class="">Recent</span><span class="material-symbols-outlined">schedule</span></a>
+</div>
+<div class="mt-8 p-4 bg-primary-fixed neo-border neo-shadow-lg rounded">
+<h3 class="font-headline-md text-headline-md uppercase mb-2">Storage</h3>
+<div class="w-full h-4 bg-surface neo-border rounded-full overflow-hidden mb-2">
+<div class="h-full bg-on-surface w-3/4"></div>
+</div>
+<p class="font-label-caps text-label-caps uppercase">75GB / 100GB Used</p>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-grow flex flex-col gap-12 overflow-hidden">
+<!-- Albums Section -->
+<section class="flex flex-col gap-4">
+<div class="flex justify-between items-end">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase">Your Albums</h2>
+<button class="font-button-text text-button-text uppercase hover:underline decoration-primary decoration-4 underline-offset-4">View All</button>
+</div>
+<div class="flex gap-6 overflow-x-auto pb-6 pt-2 snap-x px-2 -mx-2">
+<div class="min-w-[280px] w-[280px] bg-surface neo-border-thick neo-shadow-lg rounded-lg flex flex-col snap-center hover:-translate-y-2 transition-transform cursor-pointer group">
+<div class="h-40 w-full bg-primary-container border-b-4 border-on-surface flex items-center justify-center relative overflow-hidden rounded-t-sm">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A vibrant summer beach scene with stylized, high-contrast flat colors, harsh shadows, and bold shapes. Neon lime green surfboards against deep black sand. A highly stylized, slightly abstract digital illustration." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3vP5l8iSsR4bZrd-k77LOalIY2zHnqPQmtNr8h5FfCM7ezAvlZ2WQwcF2X99Hbo4IGBNiq9dzJLob_LfEp1T9R0kfR9jlP2sW-vMZLHcdqvbqNFCTA7XkvGwCakdg9JCnP4nNai3Bb33MJ-Di9qigSR75rRuzKLSTUX0A6gifNbb13-ru8MbeB-scJYDCMNTz94QV3zIqEFY-2VKIUwx0gAnQzuEqGL3oOdhZBJ1ssVPGXGCrgtl62GAIB46N4QZjXL2gsKfuzzm6">
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+</div>
+<div class="p-4 flex flex-col gap-1">
+<h3 class="font-headline-md text-headline-md uppercase line-clamp-1">Summer Trip 24</h3>
+<p class="font-label-caps text-label-caps text-secondary uppercase">142 Items • 2.4GB</p>
+</div>
+</div>
+<div class="min-w-[280px] w-[280px] bg-surface neo-border-thick neo-shadow-lg rounded-lg flex flex-col snap-center hover:-translate-y-2 transition-transform cursor-pointer group">
+<div class="h-40 w-full bg-surface-container-highest border-b-4 border-on-surface flex items-center justify-center relative overflow-hidden rounded-t-sm">
+<span class="material-symbols-outlined text-display-lg" style="font-size: 64px;">work</span>
+</div>
+<div class="p-4 flex flex-col gap-1">
+<h3 class="font-headline-md text-headline-md uppercase line-clamp-1">Work Project Alpha</h3>
+<p class="font-label-caps text-label-caps text-secondary uppercase">12 Items • 450MB</p>
+</div>
+</div>
+<div class="min-w-[280px] w-[280px] bg-surface neo-border-thick neo-shadow-lg rounded-lg flex flex-col snap-center hover:-translate-y-2 transition-transform cursor-pointer group">
+<div class="h-40 w-full bg-inverse-primary border-b-4 border-on-surface flex items-center justify-center relative overflow-hidden rounded-t-sm">
+<img class="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50 group-hover:opacity-100 transition-opacity" data-alt="A collection of chaotic, highly contrasting abstract shapes and internet meme references, rendered in a brutalist graphic design style. Lots of pure black ink, white negative space, and flashes of intense lime green." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqRZ9MzZmCUoLq4r_2WKqR4OIwyZtVX7MOtUSjqGRxwGlkioeUgJGVSSJiqVi27oFvej7a7NqbiTj-Xr1hOgvM4WQBS8EbIfVAwgB00-I4jpB8SpxJON1asWyZatsy2sMue-YftVUxpXHufO95tfcyklxtZueOySwdVjDjtYTBXDVU0z_hVKT3Y4XGptqe_HOilgxswJwaBj77B-zHngx2MT6sOlG3XHZnPDht25cfRgp6Hlb9maEKdMGTqeEalarAg3ukWq6IrzQF">
+<span class="material-symbols-outlined text-display-lg z-10 text-on-surface" style="font-size: 64px;">mood</span>
+</div>
+<div class="p-4 flex flex-col gap-1">
+<h3 class="font-headline-md text-headline-md uppercase line-clamp-1">Dank Memes</h3>
+<p class="font-label-caps text-label-caps text-secondary uppercase">9,001 Items • 1.2GB</p>
+</div>
+</div>
+<div class="min-w-[280px] w-[280px] bg-surface border-4 border-dashed border-on-surface rounded-lg flex items-center justify-center snap-center hover:bg-surface-container-high transition-colors cursor-pointer opacity-70 hover:opacity-100">
+<div class="flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-display-lg" style="font-size: 48px;">add_circle</span>
+<span class="font-button-text text-button-text uppercase">New Album</span>
+</div>
+</div>
+</div>
+</section>
+<!-- All Files Section -->
+<section class="flex flex-col gap-4">
+<div class="flex justify-between items-end border-b-4 border-on-surface pb-2">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase">All Files</h2>
+<div class="flex gap-2">
+<button class="p-2 neo-border rounded bg-primary-container"><span class="material-symbols-outlined">grid_view</span></button>
+<button class="p-2 neo-border rounded bg-surface hover:bg-surface-container-high"><span class="material-symbols-outlined">list</span></button>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pt-4">
+<!-- File Item 1 -->
+<div class="bg-surface neo-border neo-shadow flex flex-col group cursor-pointer hover:translate-x-1 hover:-translate-y-1 transition-transform">
+<div class="aspect-square bg-surface-container-highest border-b-2 border-on-surface relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A macro shot of a highly textured, brutalist concrete surface with sharp, angular lighting. A single splash of vibrant lime green paint crosses the concrete. The lighting is harsh and dramatic, emphasizing the rough texture and high contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMuIULKrVeQkhGMmgNYKBgs674YfCj9b7YxDTA_O9p0Hqd282ZmUyow-A-3Wq2AA8cW2ci53zQ1JRECx-dacV7drlDbLRfRp102Vuuhs3M6-TZq0YnqWamGmO7qCvHsLMILIrosO3V9DPe2AyJYVqBoaw0kXriHL73nNNrdNuWg1aGzmkjmv68jZhbKBQfi7TC6PV4LuvUxUNCMTa7AJML7lLUb8lLnSvC2ldyjcKN6wymB-mM9hUHrxsnpoYN9aLNkZKJcLFl_s0E">
+<div class="absolute top-2 right-2 bg-surface neo-border px-2 py-1 font-label-caps text-label-caps uppercase">JPG</div>
+</div>
+<div class="p-3 flex flex-col gap-1 bg-surface group-hover:bg-primary-container transition-colors">
+<h4 class="font-body-lg text-body-lg truncate font-bold">DSC_0492.jpg</h4>
+<div class="flex justify-between items-center text-secondary group-hover:text-on-primary-container">
+<span class="font-label-caps text-label-caps">4.2 MB</span>
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</div>
+</div>
+</div>
+<!-- File Item 2 -->
+<div class="bg-surface neo-border neo-shadow flex flex-col group cursor-pointer hover:translate-x-1 hover:-translate-y-1 transition-transform">
+<div class="aspect-square bg-inverse-primary border-b-2 border-on-surface relative overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-display-lg" style="font-size: 64px;">picture_as_pdf</span>
+<div class="absolute top-2 right-2 bg-surface neo-border px-2 py-1 font-label-caps text-label-caps uppercase">PDF</div>
+</div>
+<div class="p-3 flex flex-col gap-1 bg-surface group-hover:bg-primary-container transition-colors">
+<h4 class="font-body-lg text-body-lg truncate font-bold">Q3_Report_Final_V2.pdf</h4>
+<div class="flex justify-between items-center text-secondary group-hover:text-on-primary-container">
+<span class="font-label-caps text-label-caps">1.8 MB</span>
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</div>
+</div>
+</div>
+<!-- File Item 3 -->
+<div class="bg-surface neo-border neo-shadow flex flex-col group cursor-pointer hover:translate-x-1 hover:-translate-y-1 transition-transform">
+<div class="aspect-square bg-surface-container-highest border-b-2 border-on-surface relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A stylized 3D render of a retro computer monitor displaying glowing lime green text on a black screen. The monitor sits on a stark white desk against a pitch black background. The style is raw, lo-fi, and heavily contrasted." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAS5Tw30bP_DLHikZYkmlXRYJOaXhHGKa2ZhrVbcZUnKnf97iKVU8jO4wxv2g9vSnyitJbRELR8VPgcTz-1sgghbxEqWXTN7DL3zG7CZFcEBdgrLIVZ0Hfjwgz26c4ObHk-rpVXk9kAbE0AtpDLJQLVeQIYn8TjezK2RIZPFUYgPcjuWYN6o4sLFZoBZa5ouYbCwCrnu2cVC_qmwAIwrQakYbpxddjXA02ya7vMpR41T0CNS-VPypXsagqVsJ2-f7zPbVZlSQwkPrZL">
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-display-lg" style="font-size: 48px;">play_circle</span>
+</div>
+<div class="absolute top-2 right-2 bg-surface neo-border px-2 py-1 font-label-caps text-label-caps uppercase">MP4</div>
+</div>
+<div class="p-3 flex flex-col gap-1 bg-surface group-hover:bg-primary-container transition-colors">
+<h4 class="font-body-lg text-body-lg truncate font-bold">Screen_Rec_UI.mp4</h4>
+<div class="flex justify-between items-center text-secondary group-hover:text-on-primary-container">
+<span class="font-label-caps text-label-caps">24.5 MB</span>
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</div>
+</div>
+</div>
+<!-- File Item 4 -->
+<div class="bg-surface neo-border neo-shadow flex flex-col group cursor-pointer hover:translate-x-1 hover:-translate-y-1 transition-transform">
+<div class="aspect-square bg-surface-container-high border-b-2 border-on-surface relative overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-display-lg" style="font-size: 64px;">audio_file</span>
+<div class="absolute top-2 right-2 bg-surface neo-border px-2 py-1 font-label-caps text-label-caps uppercase">WAV</div>
+</div>
+<div class="p-3 flex flex-col gap-1 bg-surface group-hover:bg-primary-container transition-colors">
+<h4 class="font-body-lg text-body-lg truncate font-bold">Meeting_Notes.wav</h4>
+<div class="flex justify-between items-center text-secondary group-hover:text-on-primary-container">
+<span class="font-label-caps text-label-caps">12.1 MB</span>
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</div>
+</div>
+</div>
+<!-- File Item 5 -->
+<div class="bg-surface neo-border neo-shadow flex flex-col group cursor-pointer hover:translate-x-1 hover:-translate-y-1 transition-transform">
+<div class="aspect-square bg-primary border-b-2 border-on-surface relative overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-display-lg text-on-primary" style="font-size: 64px;">folder_zip</span>
+<div class="absolute top-2 right-2 bg-surface neo-border px-2 py-1 font-label-caps text-label-caps uppercase">ZIP</div>
+</div>
+<div class="p-3 flex flex-col gap-1 bg-surface group-hover:bg-primary-container transition-colors">
+<h4 class="font-body-lg text-body-lg truncate font-bold">Assets_Bundle_Final.zip</h4>
+<div class="flex justify-between items-center text-secondary group-hover:text-on-primary-container">
+<span class="font-label-caps text-label-caps">145 MB</span>
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-auto bg-surface-container-highest dark:bg-on-surface-variant border-t-2 border-on-background dark:border-surface-container-highest">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-8 max-w-container-max mx-auto gap-gutter w-full">
+<span class="font-headline-md text-headline-md font-bold text-on-background dark:text-background">Chuchudu</span>
+<div class="flex flex-wrap gap-6 justify-center">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:underline hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Terms</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:underline hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Privacy</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:underline hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Support</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:underline hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Twitter</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:underline hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Instagram</a>
+</div>
+<span class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant">© 2024 Chuchudu. All Rights Reserved.</span>
+</div>
+</footer>
+
+
+</body></html>

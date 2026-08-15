@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Profile Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Space+Grotesk:wght@400;500;700;900&amp;family=Hanken+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#3e5000",
+                        "background": "#f9f9f9",
+                        "surface": "#f9f9f9",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f9f9f9",
+                        "primary": "#506600",
+                        "secondary": "#5e5e5e",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-background": "#1a1c1c",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "secondary-container": "#e2e2e2",
+                        "primary-container": "#a4c639",
+                        "primary-fixed": "#ccf05f",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "primary-fixed-dim": "#b1d446",
+                        "surface-variant": "#e2e2e2",
+                        "on-primary-fixed": "#161e00",
+                        "on-tertiary-container": "#484a4a",
+                        "on-secondary-container": "#646464",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "outline": "#757965",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#b1d446",
+                        "surface-tint": "#506600",
+                        "on-surface-variant": "#454937",
+                        "inverse-surface": "#2f3131",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-container": "#eeeeee",
+                        "surface-container-low": "#f3f3f3",
+                        "surface-dim": "#dadada",
+                        "on-secondary-fixed-variant": "#474747",
+                        "tertiary-container": "#b8b9b9",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c5c9b1",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "on-surface": "#1a1c1c",
+                        "tertiary": "#5d5f5f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg": ["Space Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "display-lg": ["Space Grotesk"],
+                        "button-text": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "button-text": ["18px", { "lineHeight": "20px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .neo-brutalist-border { border: 2px solid #000; }
+        .neo-brutalist-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+        .neo-brutalist-shadow-lg { box-shadow: 8px 8px 0px 0px rgba(0,0,0,1); }
+        .neo-brutalist-input:focus { border-width: 4px; outline: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md h-screen flex overflow-hidden">
+<!-- Top Navigation (Mobile Only) -->
+<nav class="md:hidden fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-surface border-b-2 border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="font-headline-lg-mobile text-headline-lg-mobile font-black uppercase tracking-tighter text-on-surface">Chuchudu</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary hover:bg-primary-container p-2 border-2 border-transparent active:translate-y-1 active:translate-x-1 cursor-pointer transition-all rounded">notifications</span>
+<span class="material-symbols-outlined text-primary hover:bg-primary-container p-2 border-2 border-transparent active:translate-y-1 active:translate-x-1 cursor-pointer transition-all rounded">help</span>
+</div>
+</nav>
+<!-- Side Navigation (Desktop) -->
+<aside class="hidden md:flex flex-col h-screen p-4 gap-4 bg-surface border-r-2 border-on-surface shadow-[4px_0px_0px_0px_rgba(0,0,0,1)] w-64 z-40 relative flex-shrink-0">
+<div class="mb-8">
+<h1 class="font-headline-md text-headline-md font-black uppercase text-on-surface">Chuchudu</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">File Sharing v2.0</p>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 p-3 font-label-caps text-label-caps text-on-surface-variant hover:bg-secondary-container hover:translate-x-1 transition-transform border-2 border-transparent" href="#">
+<span class="material-symbols-outlined">folder</span> My Files
+            </a>
+<a class="flex items-center gap-3 p-3 font-label-caps text-label-caps text-on-surface-variant hover:bg-secondary-container hover:translate-x-1 transition-transform border-2 border-transparent" href="#">
+<span class="material-symbols-outlined">share</span> Shared
+            </a>
+<a class="flex items-center gap-3 p-3 font-label-caps text-label-caps text-on-surface-variant hover:bg-secondary-container hover:translate-x-1 transition-transform border-2 border-transparent" href="#">
+<span class="material-symbols-outlined">database</span> Storage
+            </a>
+<a class="flex items-center gap-3 p-3 font-label-caps text-label-caps text-on-surface-variant hover:bg-secondary-container hover:translate-x-1 transition-transform border-2 border-transparent" href="#">
+<span class="material-symbols-outlined">shield</span> Security
+            </a>
+<a class="flex items-center gap-3 p-3 font-label-caps text-label-caps bg-primary-container text-on-primary-container border-2 border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined">person</span> Profile
+            </a>
+</nav>
+<button class="bg-primary-container text-on-primary-container font-button-text text-button-text border-2 border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-4 uppercase hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all active:scale-95">
+            Upgrade Plan
+        </button>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto pt-20 md:pt-8 pb-24 md:pb-8 px-4 md:px-gutter">
+<div class="max-w-[1000px] mx-auto space-y-8">
+<header>
+<h2 class="font-headline-lg text-headline-lg md:font-display-lg md:text-display-lg font-black uppercase tracking-tighter">PROFILE SETTINGS</h2>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Profile Section -->
+<section class="md:col-span-8 bg-surface p-6 border-2 border-on-surface shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col gap-6">
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+<div class="relative group cursor-pointer">
+<div class="w-24 h-24 sm:w-32 sm:h-32 rounded-none border-2 border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden bg-secondary-container relative">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A stylized, high-contrast, pop-art style avatar of a young tech professional on a vibrant lime green background. The image should feel energetic and slightly raw, perfectly matching a neo-brutalist UI aesthetic with thick black outlines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrXlifdEJG7f2y4Z0J3BAg4fy4Ab7oJSRsIX1ao0epaQ83v3X3hL4j2fDICsvGmsKZJic8Ad5zltIl_BwzEA0qI3u4l2BnJsFlPMcNEr5OBD3rWHSThWXXbG82MoBFT-Yvem7Ez_FCW6nFU-ZZcc1klucqBlZqM40yaQJnIvVM4owHNxdoTItgtY-7ltOpaNLf0P7RQtNiI1qHUo9KVkfttMOSfxIjpwGU3Z_CqH1rmS4VCW-fYo-y3--9o6OX15UoZ2T0bXZAFpr3"/>
+<div class="absolute inset-0 bg-black/50 hidden group-hover:flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-3xl">upload</span>
+</div>
+</div>
+</div>
+<div class="flex-1 space-y-4 w-full">
+<div>
+<label class="block font-label-caps text-label-caps mb-2 text-on-surface">DISPLAY NAME</label>
+<input class="w-full bg-surface border-2 border-on-surface p-3 font-body-lg text-body-lg focus:border-4 focus:outline-none transition-all placeholder:font-label-caps" type="text" value="Alex Chuchudu"/>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div>
+<label class="block font-label-caps text-label-caps mb-2 text-on-surface">USERNAME</label>
+<input class="w-full bg-surface border-2 border-on-surface p-3 font-body-lg text-body-lg focus:border-4 focus:outline-none transition-all placeholder:font-label-caps" type="text" value="@alex_chu"/>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps mb-2 text-on-surface">EMAIL</label>
+<input class="w-full bg-surface border-2 border-on-surface p-3 font-body-lg text-body-lg focus:border-4 focus:outline-none transition-all placeholder:font-label-caps" type="email" value="alex@chuchudu.com"/>
+</div>
+</div>
+<div class="flex justify-end mt-4">
+<button class="bg-primary-container text-on-primary-container font-button-text text-button-text border-2 border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] px-8 py-3 uppercase hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all active:scale-95">
+                            Save Changes
+                        </button>
+</div>
+</section>
+<div class="md:col-span-4 flex flex-col gap-8">
+<!-- Storage Section -->
+<section class="bg-primary-container text-on-primary-container p-6 border-2 border-on-surface shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md font-bold uppercase">STORAGE</h3>
+<span class="material-symbols-outlined text-3xl">cloud</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-caps text-label-caps">
+<span>USED</span>
+<span>45GB / 100GB</span>
+</div>
+<div class="h-6 w-full border-2 border-on-surface bg-surface relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-on-surface" style="width: 45%;"></div>
+</div>
+</div>
+<button class="bg-surface text-on-surface font-button-text text-button-text border-2 border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] px-4 py-2 mt-2 uppercase hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all active:scale-95 self-start">
+                            Upgrade Space
+                        </button>
+</section>
+<!-- Security Section -->
+<section class="bg-surface p-6 border-2 border-on-surface shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col gap-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-2xl">shield_lock</span>
+<h3 class="font-headline-md text-headline-md font-bold uppercase">SECURITY</h3>
+</div>
+<div class="flex items-center justify-between p-4 border-2 border-on-surface bg-surface-container-low">
+<div>
+<p class="font-body-lg text-body-lg font-bold">Two-Factor Auth</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">Extra layer of security</p>
+</div>
+<!-- Brutalist Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-8 bg-surface peer-focus:outline-none border-2 border-on-surface rounded-none peer peer-checked:after:translate-x-6 peer-checked:bg-primary-container after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-surface after:border-2 after:border-on-surface after:h-6 after:w-6 after:transition-all"></div>
+</label>
+</div>
+<button class="w-full bg-surface text-on-surface font-button-text text-button-text border-2 border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] px-4 py-3 uppercase hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">key</span> Change Password
+                        </button>
+</section>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-surface border-t-2 border-on-surface shadow-[0px_-4px_0px_0px_rgba(0,0,0,1)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:bg-primary-container transition-colors font-label-caps text-label-caps border-2 border-transparent w-16" href="#">
+<span class="material-symbols-outlined mb-1">folder</span>
+<span class="text-[10px]">Files</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:bg-primary-container transition-colors font-label-caps text-label-caps border-2 border-transparent w-16" href="#">
+<span class="material-symbols-outlined mb-1">schedule</span>
+<span class="text-[10px]">Recent</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:bg-primary-container transition-colors font-label-caps text-label-caps border-2 border-transparent w-16" href="#">
+<span class="material-symbols-outlined mb-1">cloud</span>
+<span class="text-[10px]">Storage</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary border-2 border-on-surface rounded-none p-1 font-label-caps text-label-caps w-16 active:translate-y-1" href="#">
+<span class="material-symbols-outlined mb-1">settings</span>
+<span class="text-[10px]">Settings</span>
+</a>
+</nav>
+<script>
+        // Simple interactions for inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', (e) => {
+                e.target.parentElement.querySelector('label').style.color = '#506600';
+            });
+            input.addEventListener('blur', (e) => {
+                e.target.parentElement.querySelector('label').style.color = '';
+            });
+        });
+    </script>
+</body></html>

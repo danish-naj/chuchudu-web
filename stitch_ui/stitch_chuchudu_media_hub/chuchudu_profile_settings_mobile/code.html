@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&amp;family=Space+Grotesk:wght@700;900&amp;family=Hanken+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#3e5000",
+                        "background": "#f9f9f9",
+                        "surface": "#f9f9f9",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f9f9f9",
+                        "primary": "#506600",
+                        "secondary": "#5e5e5e",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-background": "#1a1c1c",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "secondary-container": "#e2e2e2",
+                        "primary-container": "#a4c639",
+                        "primary-fixed": "#ccf05f",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "primary-fixed-dim": "#b1d446",
+                        "surface-variant": "#e2e2e2",
+                        "on-primary-fixed": "#161e00",
+                        "on-tertiary-container": "#484a4a",
+                        "on-secondary-container": "#646464",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "outline": "#757965",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#b1d446",
+                        "surface-tint": "#506600",
+                        "on-surface-variant": "#454937",
+                        "inverse-surface": "#2f3131",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-container": "#eeeeee",
+                        "surface-container-low": "#f3f3f3",
+                        "surface-dim": "#dadada",
+                        "on-secondary-fixed-variant": "#474747",
+                        "tertiary-container": "#b8b9b9",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c5c9b1",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "on-surface": "#1a1c1c",
+                        "tertiary": "#5d5f5f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg": ["Space Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "display-lg": ["Space Grotesk"],
+                        "button-text": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "button-text": ["18px", { "lineHeight": "20px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .neo-brutal-card {
+            border: 2px solid black;
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+            background-color: white;
+        }
+        .neo-brutal-btn {
+            border: 2px solid black;
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+            transition: all 0.1s ease-in-out;
+        }
+        .neo-brutal-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-surface dark:bg-surface-dim border-b-2 border-on-surface dark:border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="flex items-center gap-4">
+<button class="text-primary dark:text-primary-fixed hover:bg-primary-container dark:hover:bg-primary-fixed-dim transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2 border-2 border-transparent">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-black uppercase tracking-tighter text-on-surface dark:text-on-background">Chuchudu</h1>
+</div>
+<div class="flex gap-2">
+<button class="text-primary dark:text-primary-fixed hover:bg-primary-container dark:hover:bg-primary-fixed-dim transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-primary dark:text-primary-fixed hover:bg-primary-container dark:hover:bg-primary-fixed-dim transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 mt-20 mb-24 px-margin-mobile flex flex-col gap-6 md:hidden">
+<div class="text-center">
+<h2 class="font-headline-md text-headline-md font-bold mb-4">ACCOUNT SETTINGS</h2>
+</div>
+<!-- Profile Header -->
+<section class="neo-brutal-card p-6 flex flex-col items-center gap-4">
+<div class="w-24 h-24 rounded-full border-4 border-on-surface overflow-hidden bg-primary-container">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A stylized portrait photo of a young tech professional looking directly at the camera, highly contrasted lighting, vibrant green lime background, sharp clean modern aesthetics, raw energetic mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgeRDj-wa-A0gsThREucqlysuyCUB0MueT8q0OnsVcjIr7l6xvD9Fz5JPlnySlZXF1OQLz3LOlKNQwdOfjEDO10WjuSa5EgYLmTmz4NWKx41D1umlyZb4pW2qby-WXH3NKYlCuHkKMaGoT7nD3ox38ZOL8O1CcQCxXT9-0aEi7nEsihsT5rHAiElxCH2BpsiIwPy4NKMdRbRNptv-hB4Zanq8JWJSwTAsb2BpN_KG0fLEBUSrsBM-St41-Q0BCq-2onumkY57f4zRz"/>
+</div>
+<button class="neo-brutal-btn bg-surface px-4 py-2 font-button-text text-button-text uppercase">Edit Photo</button>
+</section>
+<!-- Settings List -->
+<section class="flex flex-col gap-4">
+<a class="neo-brutal-card p-4 flex items-center justify-between hover:bg-surface-container-high transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+<span class="font-body-lg text-body-lg">Personal Info</span>
+</div>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="neo-brutal-card p-4 flex items-center justify-between hover:bg-surface-container-high transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="security">security</span>
+<span class="font-body-lg text-body-lg">Security</span>
+</div>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="neo-brutal-card p-4 flex items-center justify-between hover:bg-surface-container-high transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="notifications_active">notifications_active</span>
+<span class="font-body-lg text-body-lg">Notifications</span>
+</div>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</a>
+<!-- Storage -->
+<div class="neo-brutal-card p-4 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="cloud">cloud</span>
+<span class="font-body-lg text-body-lg">Storage</span>
+</div>
+<span class="font-label-caps text-label-caps">75%</span>
+</div>
+<div class="h-4 border-2 border-on-surface bg-surface w-full relative">
+<div class="h-full bg-primary absolute top-0 left-0 w-3/4"></div>
+</div>
+</div>
+<button class="neo-brutal-btn bg-error-container text-on-error-container p-4 flex items-center justify-center gap-2 mt-4">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-button-text text-button-text uppercase">Logout</span>
+</button>
+</section>
+<!-- Save CTA -->
+<div class="mt-8">
+<button class="neo-brutal-btn w-full bg-primary text-on-primary py-4 font-button-text text-button-text uppercase">Save Changes</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 md:hidden bg-surface dark:bg-surface-dim border-t-2 border-on-surface dark:border-on-background shadow-[0px_-4px_0px_0px_rgba(0,0,0,1)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:bg-primary-container active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="folder">folder</span>
+<span class="font-label-caps text-label-caps">Files</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:bg-primary-container active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+<span class="font-label-caps text-label-caps">Recent</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:bg-primary-container active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="cloud">cloud</span>
+<span class="font-label-caps text-label-caps">Storage</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary border-2 border-on-surface rounded-none p-1 hover:bg-primary-container active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-caps text-label-caps">Settings</span>
+</a>
+</nav>
+</body></html>

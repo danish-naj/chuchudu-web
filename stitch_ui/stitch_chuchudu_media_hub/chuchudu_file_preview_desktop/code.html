@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - File Preview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&amp;family=Space+Grotesk:wght@700&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#1a1c1c",
+                      "on-tertiary-container": "#484a4a",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "on-primary-container": "#3e5000",
+                      "outline": "#757965",
+                      "tertiary-container": "#b8b9b9",
+                      "on-secondary-container": "#646464",
+                      "surface-bright": "#f9f9f9",
+                      "primary-container": "#a4c639",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "secondary-container": "#e2e2e2",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed": "#e2e2e2",
+                      "on-secondary-fixed": "#1b1b1b",
+                      "surface-container": "#eeeeee",
+                      "on-secondary-fixed-variant": "#474747",
+                      "surface": "#f9f9f9",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "on-secondary": "#ffffff",
+                      "surface-tint": "#506600",
+                      "primary-fixed": "#ccf05f",
+                      "on-background": "#1a1c1c",
+                      "inverse-primary": "#b1d446",
+                      "primary": "#506600",
+                      "tertiary": "#5d5f5f",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed": "#161e00",
+                      "surface-container-highest": "#e2e2e2",
+                      "outline-variant": "#c5c9b1",
+                      "on-error": "#ffffff",
+                      "surface-dim": "#dadada",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "inverse-surface": "#2f3131",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-surface-variant": "#454937",
+                      "inverse-on-surface": "#f1f1f1",
+                      "surface-container-low": "#f3f3f3",
+                      "secondary": "#5e5e5e",
+                      "on-primary-fixed-variant": "#3c4d00",
+                      "error-container": "#ffdad6",
+                      "surface-variant": "#e2e2e2",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-high": "#e8e8e8",
+                      "primary-fixed-dim": "#b1d446",
+                      "background": "#f9f9f9"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "body-md": ["Hanken Grotesk"],
+                      "headline-md": ["Space Grotesk"],
+                      "button-text": ["Space Grotesk"],
+                      "headline-lg-mobile": ["Space Grotesk"],
+                      "display-lg": ["Space Grotesk"],
+                      "label-caps": ["JetBrains Mono"],
+                      "headline-lg": ["Space Grotesk"],
+                      "body-lg": ["Hanken Grotesk"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "28px", "fontWeight": "700"}],
+                      "button-text": ["18px", {"lineHeight": "20px", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["32px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "display-lg": ["72px", {"lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                      "headline-lg": ["48px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px #1a1c1c;
+        }
+        .neo-shadow-lg {
+            box-shadow: 8px 8px 0px 0px #1a1c1c;
+        }
+        .neo-border {
+            border: 2px solid #1a1c1c;
+        }
+        .neo-border-thick {
+            border: 4px solid #1a1c1c;
+        }
+        .btn-hover:hover {
+            transform: translate(2px, 2px);
+            box-shadow: none;
+        }
+        .backdrop-dim {
+            background-color: rgba(26, 28, 28, 0.7);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md h-screen w-screen overflow-hidden flex items-center justify-center relative">
+<!-- Background Dashboard (Dimmed) -->
+<div class="absolute inset-0 z-0 p-8 flex flex-col gap-8 opacity-40 grayscale pointer-events-none">
+<header class="flex justify-between items-center bg-surface w-full border-b-2 border-on-surface pb-4">
+<div class="font-display-lg text-headline-md uppercase tracking-tighter text-on-surface">Chuchudu</div>
+<div class="flex gap-4">
+<div class="font-headline-md text-headline-md border-b-4 border-primary">Files</div>
+<div class="font-button-text text-on-surface-variant">Transfers</div>
+</div>
+<button class="bg-primary-container text-on-primary-container font-button-text px-4 py-2 neo-border neo-shadow">Upgrade</button>
+</header>
+<div class="grid grid-cols-4 gap-6">
+<div class="bg-white p-4 h-48 neo-border neo-shadow"></div>
+<div class="bg-white p-4 h-48 neo-border neo-shadow"></div>
+<div class="bg-white p-4 h-48 neo-border neo-shadow"></div>
+<div class="bg-white p-4 h-48 neo-border neo-shadow"></div>
+</div>
+</div>
+<!-- Modal Backdrop -->
+<div class="absolute inset-0 z-10 backdrop-dim flex items-center justify-center p-gutter">
+<!-- Modal Container -->
+<div class="bg-surface w-full max-w-6xl h-[870px] flex flex-col neo-border-thick neo-shadow-lg relative overflow-hidden">
+<!-- Modal Header -->
+<div class="flex items-center justify-between p-4 border-b-4 border-on-surface bg-surface-container-lowest shrink-0">
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-label-caps bg-white neo-border px-2 py-1 uppercase">JPG</span>
+<h2 class="font-headline-md text-headline-md truncate max-w-xl">Summer_Trip_24.jpg</h2>
+</div>
+<button aria-label="Close" class="w-10 h-10 flex items-center justify-center bg-white neo-border neo-shadow btn-hover transition-all group">
+<span class="material-symbols-outlined text-on-surface group-hover:text-error transition-colors" data-icon="close">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="flex flex-1 overflow-hidden flex-col md:flex-row">
+<!-- Main Preview Area -->
+<div class="flex-1 bg-surface-container-highest flex items-center justify-center p-8 overflow-hidden relative group border-b-4 md:border-b-0 md:border-r-4 border-on-surface">
+<div class="absolute inset-0 p-8 flex items-center justify-center">
+<img class="max-w-full max-h-full object-contain neo-border shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-transform duration-300 group-hover:scale-[1.02]" data-alt="A vibrant, high-contrast photograph of a sunny beach scene during midday. The sand is a warm, textured gold, contrasting sharply with the deep, saturated cyan and blue of the ocean. Bright lime green beach umbrellas add punchy accents, fitting a neo-brutalist palette. The lighting is harsh and direct, casting sharp, deep black shadows across the scene. The overall mood is energetic, raw, and hyper-saturated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcuvLg23yuD2SNsMXMl6qmTl4JrAvIFAuPDjWBR6U4EtTgayjSrMFw01PUDI3xThKBM7Tz8wrpPbTwR-cOAm7zgjIE-Wxi80FG28-fbvIATSKkySIa-cCE-mTa9RQkigiWVBGfHBnE9HAfCa82ZwNE0rwMo-eqkCUoGDF9uDYzZlWDOJSCeWjrQ4LTltGih6YnvMnPjgMrmPZKFfbVsKLZpGXD-TuqakMOf38Tnat-vnwxNSzp2y0VbVQsgLU6koqeA26SU-h9ZmNo"/>
+</div>
+<!-- Floating Preview Controls (Zoom, etc.) -->
+<div class="absolute bottom-6 right-6 flex gap-2">
+<button class="w-10 h-10 bg-white flex items-center justify-center neo-border neo-shadow btn-hover transition-all">
+<span class="material-symbols-outlined" data-icon="zoom_in">zoom_in</span>
+</button>
+<button class="w-10 h-10 bg-white flex items-center justify-center neo-border neo-shadow btn-hover transition-all">
+<span class="material-symbols-outlined" data-icon="zoom_out">zoom_out</span>
+</button>
+</div>
+</div>
+<!-- Sidebar Details -->
+<div class="w-full md:w-96 bg-surface flex flex-col shrink-0 overflow-y-auto">
+<div class="p-6 flex-1 flex flex-col gap-8">
+<!-- File Metadata -->
+<div class="flex flex-col gap-4">
+<h3 class="font-headline-md text-headline-md uppercase border-b-2 border-on-surface pb-2 inline-block self-start">Details</h3>
+<div class="grid grid-cols-2 gap-y-4 gap-x-2">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Size</span>
+<span class="font-body-lg text-body-lg font-bold">2.4 GB</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Dimensions</span>
+<span class="font-body-lg text-body-lg font-bold">4000x3000</span>
+</div>
+<div class="flex flex-col col-span-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Uploaded</span>
+<span class="font-body-lg text-body-lg font-bold">Today, 10:42 AM</span>
+</div>
+</div>
+</div>
+<!-- Description Field -->
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Description</label>
+<textarea class="w-full bg-white p-3 neo-border focus:border-[4px] focus:outline-none focus:ring-0 resize-none h-24 font-body-md text-body-md placeholder-on-surface-variant" placeholder="Add a description..."></textarea>
+</div>
+<!-- Tags -->
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Tags</label>
+<div class="flex flex-wrap gap-2">
+<span class="bg-white px-3 py-1 neo-border font-label-caps text-label-caps uppercase flex items-center gap-1">Summer <button class="hover:text-error"><span class="material-symbols-outlined text-[14px]" data-icon="close">close</span></button></span>
+<span class="bg-white px-3 py-1 neo-border font-label-caps text-label-caps uppercase flex items-center gap-1">Trip <button class="hover:text-error"><span class="material-symbols-outlined text-[14px]" data-icon="close">close</span></button></span>
+<button class="bg-surface-container px-2 py-1 neo-border font-label-caps text-label-caps border-dashed hover:bg-primary-container transition-colors">+</button>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="p-6 border-t-4 border-on-surface bg-surface-container-lowest flex flex-col gap-3 mt-auto">
+<button class="w-full bg-primary-fixed text-on-primary-fixed font-button-text text-button-text uppercase py-4 neo-border neo-shadow btn-hover transition-all flex items-center justify-center gap-2 tracking-wide">
+<span class="material-symbols-outlined" data-icon="download">download</span> Download
+                        </button>
+<button class="w-full bg-white text-on-surface font-button-text text-button-text uppercase py-3 neo-border neo-shadow btn-hover transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="link">link</span> Share Link
+                        </button>
+<button class="w-full bg-error-container text-on-error-container font-button-text text-button-text uppercase py-3 neo-border neo-shadow btn-hover transition-all flex items-center justify-center gap-2 mt-2">
+<span class="material-symbols-outlined" data-icon="delete">delete</span> Delete
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

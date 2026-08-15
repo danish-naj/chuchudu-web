@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Activity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&amp;family=JetBrains+Mono:wght@400;700&amp;family=Hanken+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "on-secondary-container": "#646464",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "surface-container": "#eeeeee",
+                        "primary-fixed": "#ccf05f",
+                        "primary-fixed-dim": "#b1d446",
+                        "outline-variant": "#c5c9b1",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface": "#f9f9f9",
+                        "outline": "#757965",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#474747",
+                        "tertiary": "#5d5f5f",
+                        "surface-tint": "#506600",
+                        "surface-container-low": "#f3f3f3",
+                        "on-tertiary-container": "#484a4a",
+                        "secondary-container": "#e2e2e2",
+                        "inverse-primary": "#b1d446",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-container-highest": "#e2e2e2",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-surface": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "primary": "#506600",
+                        "surface-container-high": "#e8e8e8",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#b8b9b9",
+                        "on-primary-fixed": "#161e00",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "on-surface-variant": "#454937",
+                        "background": "#f9f9f9",
+                        "surface-bright": "#f9f9f9",
+                        "secondary": "#5e5e5e",
+                        "on-primary-container": "#3e5000",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#a4c639",
+                        "surface-dim": "#dadada",
+                        "on-background": "#1a1c1c",
+                        "secondary-fixed-dim": "#c6c6c6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "button-text": ["Space Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-md": ["Space Grotesk"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "display-lg": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "button-text": ["18px", { "lineHeight": "20px", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f9f9f9;
+        }
+        .neo-brutalist-border {
+            border: 4px solid #1a1c1c;
+        }
+        .neo-brutalist-shadow {
+            box-shadow: 8px 8px 0px 0px #1a1c1c;
+            transition: all 0.1s ease-in-out;
+        }
+        .neo-brutalist-shadow:hover {
+            box-shadow: 4px 4px 0px 0px #1a1c1c;
+            transform: translate(4px, 4px);
+        }
+        .neo-brutalist-shadow-small {
+            box-shadow: 4px 4px 0px 0px #1a1c1c;
+        }
+        .neo-brutalist-input:focus {
+            outline: none;
+            box-shadow: 4px 4px 0px 0px #a4c639;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar (JSON) -->
+<header class="w-full top-0 sticky z-50 bg-surface border-b-2 border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-3xl">bolt</span>
+<span class="font-headline-md text-headline-md font-black text-on-surface uppercase italic tracking-tighter">CHUCHUDU</span>
+</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="font-button-text text-button-text text-on-surface hover:translate-x-[2px] hover:translate-y-[2px] transition-all" href="#">Files</a>
+<a class="font-button-text text-button-text text-on-surface hover:translate-x-[2px] hover:translate-y-[2px] transition-all" href="#">Transfer</a>
+<!-- Active Navigation Target: Activity -->
+<a class="font-button-text text-button-text text-primary underline decoration-4 hover:translate-x-[2px] hover:translate-y-[2px] transition-all" href="#">Activity</a>
+<a class="font-button-text text-button-text text-on-surface hover:translate-x-[2px] hover:translate-y-[2px] transition-all" href="#">Account</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-primary-container rounded-full neo-brutalist-border flex items-center justify-center font-button-text text-button-text">
+                    UP
+                </div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 flex flex-col gap-12">
+<!-- Header Section -->
+<section class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b-4 border-on-surface pb-6">
+<div>
+<h1 class="font-display-lg text-display-lg uppercase italic text-on-surface drop-shadow-[4px_4px_0_#a4c639]">Activity Log</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-2 uppercase">Tracking all kinetic data transfers</p>
+</div>
+<!-- Search / Filter Bar -->
+<div class="flex gap-4 w-full md:w-auto">
+<div class="relative flex-grow md:w-64">
+<span class="material-symbols-outlined absolute left-3 top-3 text-on-surface">search</span>
+<input class="w-full bg-surface-container-lowest neo-brutalist-border py-3 pl-10 pr-4 font-label-caps text-label-caps neo-brutalist-input uppercase" placeholder="Search activity..." type="text"/>
+</div>
+<button class="bg-primary-container text-on-primary-container neo-brutalist-border neo-brutalist-shadow px-6 py-3 font-button-text text-button-text uppercase flex items-center gap-2">
+<span class="material-symbols-outlined">filter_list</span> Filter
+                </button>
+</div>
+</section>
+<!-- Main Activity Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Timeline (2 columns on Desktop) -->
+<section class="lg:col-span-2 flex flex-col gap-6">
+<h2 class="font-headline-md text-headline-md uppercase bg-on-surface text-surface inline-block px-4 py-1 neo-brutalist-shadow-small self-start">Recent Activity</h2>
+<!-- Activity Item: Upload -->
+<article class="bg-surface-container-lowest neo-brutalist-border neo-brutalist-shadow p-6 flex flex-col md:flex-row gap-6 items-start relative overflow-hidden group">
+<div class="w-16 h-16 bg-primary-container neo-brutalist-border flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-4xl">cloud_upload</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-button-text text-button-text uppercase">Project_Alpha_Assets.zip</h3>
+<span class="font-label-caps text-label-caps bg-on-surface text-surface px-2 py-1">2 mins ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Uploaded to Team Workspace</p>
+<div class="flex gap-2">
+<span class="font-label-caps text-label-caps uppercase bg-surface-variant px-3 py-1 neo-brutalist-border">2.4 GB</span>
+<span class="font-label-caps text-label-caps uppercase bg-primary-container px-3 py-1 neo-brutalist-border">Success</span>
+</div>
+</div>
+</article>
+<!-- Activity Item: Download -->
+<article class="bg-surface-container-lowest neo-brutalist-border neo-brutalist-shadow p-6 flex flex-col md:flex-row gap-6 items-start">
+<div class="w-16 h-16 bg-surface-variant neo-brutalist-border flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-4xl">download</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-button-text text-button-text uppercase">Q3_Financial_Report.pdf</h3>
+<span class="font-label-caps text-label-caps bg-on-surface text-surface px-2 py-1">1 hour ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Downloaded by guest user (IP: 192.168.1.1)</p>
+<div class="flex gap-2">
+<span class="font-label-caps text-label-caps uppercase bg-surface-variant px-3 py-1 neo-brutalist-border">14 MB</span>
+</div>
+</div>
+</article>
+<!-- Activity Item: Link Created -->
+<article class="bg-surface-container-lowest neo-brutalist-border neo-brutalist-shadow p-6 flex flex-col md:flex-row gap-6 items-start">
+<div class="w-16 h-16 bg-surface-variant neo-brutalist-border flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-4xl">link</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-button-text text-button-text uppercase">Design_System_v2.fig</h3>
+<span class="font-label-caps text-label-caps bg-on-surface text-surface px-2 py-1">3 hours ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Share link generated. Expiration set to 7 days.</p>
+<div class="flex gap-2 items-center">
+<input class="bg-surface font-label-caps text-label-caps px-3 py-2 neo-brutalist-border flex-grow" readonly="" type="text" value="chuchu.du/s/d8f9k2"/>
+<button class="bg-on-surface text-surface px-4 py-2 neo-brutalist-border font-button-text text-button-text uppercase hover:bg-primary-container hover:text-on-surface transition-colors">Copy</button>
+</div>
+</div>
+</article>
+<!-- Activity Item: Error -->
+<article class="bg-[#ffdad6] neo-brutalist-border neo-brutalist-shadow p-6 flex flex-col md:flex-row gap-6 items-start">
+<div class="w-16 h-16 bg-[#ba1a1a] text-white neo-brutalist-border flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-4xl">error</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-button-text text-button-text uppercase text-[#93000a]">Video_Render_Final.mp4</h3>
+<span class="font-label-caps text-label-caps bg-on-surface text-surface px-2 py-1">5 hours ago</span>
+</div>
+<p class="font-body-md text-body-md text-[#93000a] mb-4">Upload failed: Connection timed out.</p>
+<button class="bg-white text-[#93000a] px-4 py-2 neo-brutalist-border font-button-text text-button-text uppercase border-[#93000a]">Retry Upload</button>
+</div>
+</article>
+</section>
+<!-- Sidebar / System Alerts -->
+<aside class="lg:col-span-1 flex flex-col gap-6">
+<h2 class="font-headline-md text-headline-md uppercase bg-primary-container text-on-surface inline-block px-4 py-1 neo-brutalist-shadow-small self-start">System Alerts</h2>
+<!-- Storage Warning -->
+<div class="bg-surface-container-lowest neo-brutalist-border p-6 flex flex-col gap-4 relative">
+<div class="absolute -top-3 -right-3 bg-primary-container w-8 h-8 rounded-full neo-brutalist-border flex items-center justify-center font-label-caps">!</div>
+<h3 class="font-button-text text-button-text uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">storage</span> Storage Status
+                    </h3>
+<div class="w-full bg-surface-variant neo-brutalist-border h-6 relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-primary-container w-[85%] border-r-4 border-on-surface"></div>
+</div>
+<p class="font-label-caps text-label-caps uppercase text-right">85% Used (42.5 GB / 50 GB)</p>
+<button class="bg-on-surface text-surface py-3 neo-brutalist-border font-button-text text-button-text uppercase mt-2 hover:bg-primary-container hover:text-on-surface transition-colors">Upgrade Plan</button>
+</div>
+<!-- Security Alert -->
+<div class="bg-surface-container-lowest neo-brutalist-border p-6 flex flex-col gap-4 border-dashed">
+<h3 class="font-button-text text-button-text uppercase flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined">security</span> New Login
+                    </h3>
+<p class="font-body-md text-body-md text-on-surface-variant">MacBook Pro detected from Tokyo, JP.</p>
+<span class="font-label-caps text-label-caps uppercase bg-surface-variant px-2 py-1 self-start">Today, 09:42 AM</span>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer (JSON) -->
+<footer class="w-full mt-auto bg-on-surface border-t-8 border-primary">
+<div class="hidden md:flex flex-col md:flex-row justify-between items-center px-margin-desktop py-12 gap-gutter max-w-container-max mx-auto">
+<span class="font-headline-lg text-headline-lg text-primary-fixed uppercase italic tracking-tighter">CHUCHUDU</span>
+<nav class="flex gap-8">
+<a class="font-label-caps text-label-caps text-surface-variant hover:text-primary-fixed-dim underline uppercase" href="#">Security</a>
+<a class="font-label-caps text-label-caps text-surface-variant hover:text-primary-fixed-dim underline uppercase" href="#">Terms</a>
+<a class="font-label-caps text-label-caps text-surface-variant hover:text-primary-fixed-dim underline uppercase" href="#">API</a>
+<a class="font-label-caps text-label-caps text-surface-variant hover:text-primary-fixed-dim underline uppercase" href="#">Help</a>
+</nav>
+<div class="font-label-caps text-label-caps text-surface-variant">
+                © 2024 CHUCHUDU KINETIC SHARING
+            </div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile only) - Generated from JSON but suppressed as per instructions? Wait, Activity IS a top-level destination. -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t-4 border-on-surface flex justify-around items-center h-16 md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-1 flex-1 h-full hover:bg-primary-container" href="#">
+<span class="material-symbols-outlined">folder</span>
+<span class="font-label-caps text-label-caps mt-1">Files</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-1 flex-1 h-full hover:bg-primary-container" href="#">
+<span class="material-symbols-outlined">swap_horiz</span>
+<span class="font-label-caps text-label-caps mt-1">Transfer</span>
+</a>
+<!-- Active Mobile Navigation -->
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-none border-2 border-on-surface py-1 flex-1 h-full" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-caps text-label-caps mt-1">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-1 flex-1 h-full hover:bg-primary-container" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps mt-1">Account</span>
+</a>
+</nav>
+</body></html>

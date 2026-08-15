@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Chuchudu - Activity</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&amp;family=JetBrains+Mono:wght@700&amp;family=Space+Grotesk:wght@700;900&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "on-secondary-container": "#646464",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "surface-container": "#eeeeee",
+                        "primary-fixed": "#ccf05f",
+                        "primary-fixed-dim": "#b1d446",
+                        "outline-variant": "#c5c9b1",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface": "#f9f9f9",
+                        "outline": "#757965",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#474747",
+                        "tertiary": "#5d5f5f",
+                        "surface-tint": "#506600",
+                        "surface-container-low": "#f3f3f3",
+                        "on-tertiary-container": "#484a4a",
+                        "secondary-container": "#e2e2e2",
+                        "inverse-primary": "#b1d446",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-container-highest": "#e2e2e2",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-surface": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "primary": "#506600",
+                        "surface-container-high": "#e8e8e8",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#b8b9b9",
+                        "on-primary-fixed": "#161e00",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "on-surface-variant": "#454937",
+                        "background": "#f9f9f9",
+                        "surface-bright": "#f9f9f9",
+                        "secondary": "#5e5e5e",
+                        "on-primary-container": "#3e5000",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#a4c639",
+                        "surface-dim": "#dadada",
+                        "on-background": "#1a1c1c",
+                        "secondary-fixed-dim": "#c6c6c6"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "container-max": "1280px",
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px"
+                    },
+                    fontFamily: {
+                        "button-text": ["Space Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-md": ["Space Grotesk"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "display-lg": ["Space Grotesk"]
+                    },
+                    fontSize: {
+                        "button-text": ["18px", { "lineHeight": "20px", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f9f9f9; /* fallback */
+            -webkit-font-smoothing: antialiased;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Brutalist shadow utility for non-configurable arbitrary values */
+        .brutal-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(26,28,28,1);
+        }
+        .brutal-shadow-sm {
+            box-shadow: 2px 2px 0px 0px rgba(26,28,28,1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar (Shared Component) -->
+<header class="bg-surface dark:bg-on-surface w-full top-0 sticky border-b-2 border-on-surface dark:border-surface-variant shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-40">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<button class="text-on-surface dark:text-surface-variant hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:scale-95 duration-100 flex items-center justify-center" onclick="window.location.href='{{DATA:SCREEN:SCREEN_9}}'">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-black text-on-surface dark:text-surface-bright uppercase italic">CHUCHUDU</h1>
+<div class="w-8 h-8 rounded-full border-2 border-on-surface overflow-hidden bg-surface-variant flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A neo-brutalist style avatar placeholder featuring a high-contrast black and white geometric face with vivid lime green accents, set against a stark, flat background, evoking a modern, edgy, and playful tech identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqVpZ7fZyXLCaG6YYvE63hvGfyq1T4VzmGvEn5mpHBB-EpfouGUa5Uxb5E1Jxmrao1RAoMyWaPITNjoZZjWGuZFHk6rogYA7s-GlecLaD6c9X19tL6qGpEUiBJBTvWaaGovl1zgQqOXB6-Nypgn-N-SC2cssUGT3m0mHrXR1D0keMJ6jV9MVSMA4ruoRtq-j1yrjwkL8BZC1EuW9baiEw3Sq6QB7HgkBY8LvIhdgMt7plZt6eRziIfZkJcinJeKR9actUVW5cw4zDt">
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-container-max mx-auto overflow-x-hidden pb-24">
+<!-- Filters (Horizontal Scroll) -->
+<div class="px-margin-mobile py-6 flex gap-3 overflow-x-auto hide-scrollbar sticky top-[72px] bg-background z-30">
+<button class="bg-primary-fixed text-on-surface border-2 border-on-surface px-4 py-2 font-label-caps text-label-caps uppercase tracking-wider brutal-shadow-sm active:translate-y-[2px] active:translate-x-[2px] active:shadow-none transition-all whitespace-nowrap">
+                All
+            </button>
+<button class="bg-surface text-on-surface border-2 border-on-surface px-4 py-2 font-label-caps text-label-caps uppercase tracking-wider hover:bg-surface-variant active:bg-primary-fixed active:shadow-none transition-all whitespace-nowrap">
+                Uploads
+            </button>
+<button class="bg-surface text-on-surface border-2 border-on-surface px-4 py-2 font-label-caps text-label-caps uppercase tracking-wider hover:bg-surface-variant active:bg-primary-fixed active:shadow-none transition-all whitespace-nowrap">
+                Downloads
+            </button>
+<button class="bg-surface text-on-surface border-2 border-on-surface px-4 py-2 font-label-caps text-label-caps uppercase tracking-wider hover:bg-surface-variant active:bg-primary-fixed active:shadow-none transition-all whitespace-nowrap">
+                Links
+            </button>
+</div>
+<!-- Activity Feed -->
+<div class="px-margin-mobile flex flex-col gap-5">
+<!-- Date Header -->
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-2 border-b-2 border-on-surface inline-block self-start pr-4 pb-1">
+                TODAY
+            </div>
+<!-- Feed Item 1: Upload -->
+<div class="bg-surface border-2 border-on-surface brutal-shadow p-4 flex flex-col gap-3 group relative overflow-hidden transition-transform active:scale-[0.98]">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 bg-primary-fixed border-2 border-on-surface flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+<span class="material-symbols-outlined text-on-surface text-[28px]" style="font-variation-settings: 'FILL' 1;">upload</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-on-surface-variant text-sm mb-1">You uploaded</p>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface truncate">Project_X_Final_V2.zip</h3>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">10:42 AM • 45 MB</p>
+</div>
+<button class="text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex gap-2 mt-1">
+<span class="border border-on-surface px-2 py-1 font-label-caps text-[10px] uppercase bg-surface-container">Archive</span>
+<span class="border border-on-surface px-2 py-1 font-label-caps text-[10px] uppercase bg-surface-container">Design</span>
+</div>
+</div>
+<!-- Feed Item 2: Download -->
+<div class="bg-surface border-2 border-on-surface brutal-shadow p-4 flex flex-col gap-3 group relative overflow-hidden transition-transform active:scale-[0.98]">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 bg-surface-container-highest border-2 border-on-surface flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+<span class="material-symbols-outlined text-on-surface text-[28px]" style="font-variation-settings: 'FILL' 1;">download</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-on-surface-variant text-sm mb-1">Alex shared</p>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface truncate">Q3_Financial_Invoice.pdf</h3>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">09:15 AM • 2.1 MB</p>
+</div>
+<button class="text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex gap-2 mt-1">
+<span class="border border-on-surface px-2 py-1 font-label-caps text-[10px] uppercase bg-surface-container">PDF</span>
+<span class="border border-on-surface px-2 py-1 font-label-caps text-[10px] uppercase bg-primary-fixed">Important</span>
+</div>
+</div>
+<!-- Date Header -->
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-6 border-b-2 border-on-surface inline-block self-start pr-4 pb-1">
+                YESTERDAY
+            </div>
+<!-- Feed Item 3: Link Generated -->
+<div class="bg-surface border-2 border-on-surface brutal-shadow p-4 flex flex-col gap-3 group relative overflow-hidden transition-transform active:scale-[0.98]">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 bg-surface-container-highest border-2 border-on-surface flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+<span class="material-symbols-outlined text-on-surface text-[28px]" style="font-variation-settings: 'FILL' 1;">link</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-on-surface-variant text-sm mb-1">Link generated for</p>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface truncate">Brand_Assets_2024.folder</h3>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">4:30 PM • 12 Items</p>
+</div>
+<button class="text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Feed Item 4: Transfer Expired -->
+<div class="bg-surface-variant border-2 border-on-surface border-dashed p-4 flex flex-col gap-3 opacity-75">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 bg-surface border-2 border-on-surface border-dashed flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant text-[28px]">timer_off</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-on-surface-variant text-sm mb-1">Transfer Expired</p>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface-variant truncate line-through decoration-2">Raw_Footage_001.mp4</h3>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">11:00 AM</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Shared Component) - Mobile Only -->
+<nav class="bg-surface dark:bg-on-surface fixed bottom-0 w-full z-50 border-t-4 border-on-surface dark:border-surface-variant flex justify-around items-center h-16 md:hidden">
+<!-- Files (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant py-1 hover:bg-primary-container dark:hover:bg-on-secondary-container active:scale-90 transition-transform w-full h-full" onclick="window.location.href='{{DATA:SCREEN:SCREEN_7}}'">
+<span class="material-symbols-outlined">folder</span>
+<span class="font-label-caps text-label-caps mt-1">Files</span>
+</button>
+<!-- Transfer (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant py-1 hover:bg-primary-container dark:hover:bg-on-secondary-container active:scale-90 transition-transform w-full h-full" onclick="window.location.href='{{DATA:SCREEN:SCREEN_5}}'">
+<span class="material-symbols-outlined">swap_horiz</span>
+<span class="font-label-caps text-label-caps mt-1">Transfer</span>
+</button>
+<!-- Activity (Active - Semantic Match) -->
+<button class="flex flex-col items-center justify-center bg-primary dark:bg-primary-fixed text-on-primary dark:text-on-primary-fixed rounded-none border-2 border-on-surface py-1 hover:bg-primary-container dark:hover:bg-on-secondary-container active:scale-90 transition-transform w-full h-full" onclick="window.location.href='{{DATA:SCREEN:SCREEN_2}}'">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-label-caps text-label-caps mt-1">Activity</span>
+</button>
+<!-- Account (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant py-1 hover:bg-primary-container dark:hover:bg-on-secondary-container active:scale-90 transition-transform w-full h-full" onclick="window.location.href='{{DATA:SCREEN:SCREEN_9}}'">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps mt-1">Account</span>
+</button>
+</nav>
+<!-- Simple interaction script for filter chips -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chips = document.querySelectorAll('.px-margin-mobile.overflow-x-auto button');
+            chips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    // Reset all
+                    chips.forEach(c => {
+                        c.classList.remove('bg-primary-fixed', 'brutal-shadow-sm');
+                        c.classList.add('bg-surface', 'hover:bg-surface-variant');
+                    });
+                    // Set active
+                    chip.classList.remove('bg-surface', 'hover:bg-surface-variant');
+                    chip.classList.add('bg-primary-fixed', 'brutal-shadow-sm');
+                });
+            });
+        });
+    </script>
+
+
+</body></html>

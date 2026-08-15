@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#8DB83A"/>
+  <g transform="translate(32,32) rotate(-8) translate(-32,-32)">
+    <rect x="8" y="16" width="48" height="32" rx="3" fill="#1A1A1A" stroke="#1A1A1A" stroke-width="2"/>
+    <rect x="9" y="17" width="46" height="30" rx="2" fill="#FFFFFF"/>
+    <text x="32" y="30" font-family="Arial Black, sans-serif" font-weight="900" font-size="11" fill="#1A1A1A" text-anchor="middle" dominant-baseline="central">CHU</text>
+    <text x="32" y="42" font-family="Arial Black, sans-serif" font-weight="900" font-size="11" fill="#1A1A1A" text-anchor="middle" dominant-baseline="central">CHUDU</text>
+  </g>
+</svg>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Recent Files</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#3c4d00",
+                      "primary-fixed": "#ccf05f",
+                      "on-primary-fixed": "#161e00",
+                      "secondary-container": "#e2e2e2",
+                      "on-secondary-fixed": "#1b1b1b",
+                      "on-error": "#ffffff",
+                      "surface-container": "#eeeeee",
+                      "secondary": "#5e5e5e",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#1a1c1c",
+                      "on-tertiary-container": "#484a4a",
+                      "on-secondary-container": "#646464",
+                      "surface-container-high": "#e8e8e8",
+                      "primary": "#506600",
+                      "error-container": "#ffdad6",
+                      "primary-container": "#a4c639",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "tertiary-container": "#b8b9b9",
+                      "outline": "#757965",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-error-container": "#93000a",
+                      "outline-variant": "#c5c9b1",
+                      "surface-variant": "#e2e2e2",
+                      "surface": "#f9f9f9",
+                      "on-surface-variant": "#454937",
+                      "surface-dim": "#dadada",
+                      "surface-bright": "#f9f9f9",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "surface-container-highest": "#e2e2e2",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "on-background": "#1a1c1c",
+                      "surface-tint": "#506600",
+                      "primary-fixed-dim": "#b1d446",
+                      "tertiary": "#5d5f5f",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed": "#e2e2e2",
+                      "on-secondary-fixed-variant": "#474747",
+                      "inverse-primary": "#b1d446",
+                      "inverse-on-surface": "#f1f1f1",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "inverse-surface": "#2f3131",
+                      "background": "#f9f9f9",
+                      "surface-container-low": "#f3f3f3",
+                      "on-primary-container": "#3e5000"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "container-max": "1280px",
+                      "unit": "4px",
+                      "gutter": "24px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Space Grotesk"
+                      ],
+                      "headline-lg-mobile": [
+                              "Space Grotesk"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "button-text": [
+                              "Space Grotesk"
+                      ],
+                      "headline-md": [
+                              "Space Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "display-lg": [
+                              "Space Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "52px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "button-text": [
+                              "18px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "72px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .neo-border {
+            border: 3px solid #000000;
+        }
+        .neo-shadow {
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+            transition: all 0.1s ease;
+        }
+        .neo-shadow:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-shadow-sm {
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+            transition: all 0.1s ease;
+        }
+        .neo-shadow-sm:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px rgba(0,0,0,1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-background docked full-width top-0 border-b-4 border-on-background dark:border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sticky z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop h-20 max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<div class="text-headline-md font-headline-md font-black text-on-background dark:text-on-background uppercase tracking-tighter">
+                    CHUCHUDU
+                </div>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-primary dark:text-primary-fixed border-b-4 border-primary dark:border-primary-fixed pb-1 hover:bg-primary-container dark:hover:bg-primary-fixed-dim hover:text-on-primary-container transition-all text-label-caps font-label-caps uppercase" href="#">My Files</a>
+<a class="text-on-surface dark:text-on-surface-variant font-bold uppercase hover:bg-primary-container dark:hover:bg-primary-fixed-dim hover:text-on-primary-container transition-all text-label-caps font-label-caps" href="#">Transfers</a>
+<a class="text-on-surface dark:text-on-surface-variant font-bold uppercase hover:bg-primary-container dark:hover:bg-primary-fixed-dim hover:text-on-primary-container transition-all text-label-caps font-label-caps" href="#">Activity</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<button class="bg-primary-container text-on-primary-container font-button-text text-button-text uppercase px-6 py-2 neo-border neo-shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                    START SHARING
+                </button>
+<button class="hover:bg-primary-container dark:hover:bg-primary-fixed-dim hover:text-on-primary-container transition-all p-2 rounded-full border-2 border-transparent hover:border-black">
+<span class="material-symbols-outlined text-[32px]">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-desktop py-12 flex flex-col gap-12">
+<!-- Header Section -->
+<div class="flex justify-between items-end border-b-4 border-black pb-4">
+<div>
+<h1 class="font-display-lg text-display-lg uppercase tracking-tighter">Recent</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2">Files modified or uploaded in the last 7 days.</p>
+</div>
+<div class="flex gap-4">
+<button aria-label="Grid View" class="bg-white p-3 neo-border neo-shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+<button aria-label="List View" class="bg-primary-container p-3 neo-border neo-shadow-sm flex items-center justify-center translate-x-[2px] translate-y-[2px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+<span class="material-symbols-outlined">view_list</span>
+</button>
+</div>
+</div>
+<!-- Files Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Large Focus Tile -->
+<div class="col-span-1 md:col-span-8 bg-surface-container neo-border neo-shadow p-6 flex flex-col justify-between h-[400px] relative overflow-hidden group cursor-pointer">
+<div class="absolute inset-0 bg-primary-fixed-dim/20 z-0 pointer-events-none group-hover:bg-primary-fixed-dim/40 transition-colors"></div>
+<div class="relative z-10 flex justify-between items-start">
+<div class="bg-white neo-border px-3 py-1 font-label-caps text-label-caps inline-block">
+                        JUST NOW
+                    </div>
+<button class="bg-white p-2 neo-border neo-shadow-sm hover:bg-primary-container">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="relative z-10 flex-grow flex items-center justify-center">
+<div class="bg-cover bg-center w-64 h-64 neo-border" data-alt="A large, bold abstract 3D geometric shape rendering featuring high contrast black outlines and vibrant lime green accents on a stark white background. The style is neo-brutalist, raw, and high-energy." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDr5RXw76IiPUIQ1Nal-bEcXQ40gPU4lyMkk1DEhi0o92EEUfVr_H7kG0W_vPFNRFbCoTMFQIk2EXInS2Z0nsLOA-KDZ2OhWTlpDJ77x-7Vel_WpGdAzHSGePDi56i_1UvxH0uEylf2pOZZSmTThbxMskxYxgyZZzrWbrCTVQ2j6x-8DUSWWjYRpstzq4TTxmL7vkKO1nWWcnSGSjWD_V5u1GkOLbKI-gpoX3LXJt2QHbdT0OqwJ762rys1j6f6IUZ8kcFUIafPK72j')"></div>
+</div>
+<div class="relative z-10 bg-white p-4 neo-border flex justify-between items-center mt-4">
+<div>
+<h3 class="font-headline-md text-headline-md">Q3_Final_Render_v2.mp4</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Video • 1.2 GB</p>
+</div>
+<span class="material-symbols-outlined text-[48px] text-primary">movie</span>
+</div>
+</div>
+<!-- Side Tiles -->
+<div class="col-span-1 md:col-span-4 flex flex-col gap-gutter">
+<!-- Tile 1 -->
+<div class="bg-white neo-border neo-shadow p-4 flex flex-col justify-between h-[188px] cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start mb-2">
+<div class="font-label-caps text-label-caps text-on-surface-variant">
+                            2 HOURS AGO
+                        </div>
+<span class="material-symbols-outlined">description</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md leading-tight mb-1 truncate">Project_Alpha_Brief.pdf</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Document • 4.5 MB</p>
+</div>
+</div>
+<!-- Tile 2 -->
+<div class="bg-primary-container neo-border neo-shadow p-4 flex flex-col justify-between h-[188px] cursor-pointer hover:bg-primary transition-colors">
+<div class="flex justify-between items-start mb-2">
+<div class="bg-white neo-border px-2 py-0.5 font-label-caps text-label-caps inline-block">
+                            SHARED
+                        </div>
+<span class="material-symbols-outlined">folder_shared</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md leading-tight mb-1 truncate text-on-primary-container">Marketing Assets 2024</h4>
+<p class="font-body-md text-body-md text-on-primary-container">Folder • 12 Items</p>
+</div>
+</div>
+</div>
+<!-- List Rows -->
+<div class="col-span-1 md:col-span-12 flex flex-col gap-4 mt-8">
+<h2 class="font-headline-lg text-headline-lg uppercase border-b-4 border-black pb-2 mb-4">Earlier This Week</h2>
+<!-- Row 1 -->
+<div class="bg-white neo-border p-4 flex items-center justify-between hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="flex items-center gap-4 w-1/2">
+<div class="bg-surface-container-high p-3 neo-border">
+<span class="material-symbols-outlined text-primary">image</span>
+</div>
+<div class="min-w-0">
+<h4 class="font-button-text text-button-text truncate">Campaign_Hero_Draft.png</h4>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Image</p>
+</div>
+</div>
+<div class="hidden md:block w-1/4 text-center font-body-md text-body-md">
+                        2.1 MB
+                    </div>
+<div class="flex items-center gap-4 w-1/4 justify-end">
+<div class="font-label-caps text-label-caps text-right">
+                            OCT 24, 10:30 AM
+                        </div>
+<button class="p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="bg-white neo-border p-4 flex items-center justify-between hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="flex items-center gap-4 w-1/2">
+<div class="bg-surface-container-high p-3 neo-border">
+<span class="material-symbols-outlined text-primary">audio_file</span>
+</div>
+<div class="min-w-0">
+<h4 class="font-button-text text-button-text truncate">Podcast_Ep12_Raw.wav</h4>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Audio</p>
+</div>
+</div>
+<div class="hidden md:block w-1/4 text-center font-body-md text-body-md">
+                        450 MB
+                    </div>
+<div class="flex items-center gap-4 w-1/4 justify-end">
+<div class="font-label-caps text-label-caps text-right">
+                            OCT 23, 4:15 PM
+                        </div>
+<button class="p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="bg-white neo-border p-4 flex items-center justify-between hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="flex items-center gap-4 w-1/2">
+<div class="bg-surface-container-high p-3 neo-border">
+<span class="material-symbols-outlined text-primary">data_object</span>
+</div>
+<div class="min-w-0">
+<h4 class="font-button-text text-button-text truncate">config_backup_v1.json</h4>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Code</p>
+</div>
+</div>
+<div class="hidden md:block w-1/4 text-center font-body-md text-body-md">
+                        12 KB
+                    </div>
+<div class="flex items-center gap-4 w-1/4 justify-end">
+<div class="font-label-caps text-label-caps text-right">
+                            OCT 21, 9:00 AM
+                        </div>
+<button class="p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-surface-container-highest full-width bottom-0 border-t-4 border-on-background mt-auto">
+<div class="w-full py-12 px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter">
+<div class="font-headline-md text-headline-md font-black text-on-background">
+                © 2024 CHUCHUDU. NO LIMITS.
+            </div>
+<div class="flex gap-6 flex-wrap justify-center">
+<a class="text-on-secondary-container dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed underline decoration-4 transition-colors duration-200 font-label-caps text-label-caps" href="#">Terms</a>
+<a class="text-on-secondary-container dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed underline decoration-4 transition-colors duration-200 font-label-caps text-label-caps" href="#">Privacy</a>
+<a class="text-on-secondary-container dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed underline decoration-4 transition-colors duration-200 font-label-caps text-label-caps" href="#">Support</a>
+<a class="text-on-secondary-container dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed underline decoration-4 transition-colors duration-200 font-label-caps text-label-caps" href="#">Twitter</a>
+<a class="text-on-secondary-container dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed underline decoration-4 transition-colors duration-200 font-label-caps text-label-caps" href="#">Instagram</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Pricing &amp; Plans</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration (Neo-Brutalist Light Mode) -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#1b1b1b",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container-low": "#f3f3f3",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#454937",
+                        "on-surface": "#1a1c1c",
+                        "primary-fixed-dim": "#b1d446",
+                        "on-primary-fixed": "#161e00",
+                        "on-tertiary-container": "#484a4a",
+                        "on-secondary-fixed-variant": "#474747",
+                        "tertiary-container": "#b8b9b9",
+                        "inverse-on-surface": "#f1f1f1",
+                        "primary-container": "#a4c639",
+                        "on-background": "#1a1c1c",
+                        "primary": "#506600",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "primary-fixed": "#ccf05f",
+                        "surface": "#f9f9f9",
+                        "inverse-primary": "#b1d446",
+                        "surface-dim": "#dadada",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c5c9b1",
+                        "on-secondary-container": "#646464",
+                        "outline": "#757965",
+                        "surface-container": "#eeeeee",
+                        "on-primary-container": "#3e5000",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "secondary-container": "#e2e2e2",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary": "#5e5e5e",
+                        "tertiary": "#5d5f5f",
+                        "surface-container-high": "#e8e8e8",
+                        "background": "#f9f9f9",
+                        "surface-tint": "#506600",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-container-highest": "#e2e2e2",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "surface-bright": "#f9f9f9",
+                        "on-primary-fixed-variant": "#3c4d00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"],
+                        "display-lg": ["Space Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "button-text": ["Space Grotesk"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "button-text": ["18px", { "lineHeight": "20px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neo-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+        .neo-shadow-lg { box-shadow: 8px 8px 0px 0px rgba(0,0,0,1); }
+        .neo-border { border: 2px solid #1a1c1c; }
+        .neo-border-thick { border: 3px solid #1a1c1c; }
+        .neo-button-hover:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-button-active:active {
+            transform: translate(4px, 4px);
+            box-shadow: none;
+        }
+        .neo-card-hover:hover {
+            transform: translate(4px, 4px);
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col pt-16 pb-20 md:pb-0 selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-background text-primary dark:text-primary-fixed font-headline-md text-headline-md w-full top-0 sticky border-b-2 border-on-surface dark:border-on-surface-variant shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-40">
+<div class="flex items-center justify-between px-margin-mobile py-4 w-full">
+<button aria-label="Go back" class="flex items-center justify-center p-2 neo-border rounded-DEFAULT hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none bg-surface">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-surface">Storage Upgrade</h1>
+<div class="w-10"></div> <!-- Spacer for balance -->
+</div>
+</header>
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12 flex flex-col gap-12">
+<!-- Header Section -->
+<section class="text-center">
+<h2 class="font-display-lg text-display-lg uppercase mb-4 inline-block bg-primary-fixed px-4 py-2 neo-border neo-shadow-lg transform -rotate-1">CHOOSE YOUR POWER</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mt-6">Upgrade your Chuchudu experience. More space, more speed, more raw creative power.</p>
+</section>
+<!-- Current Storage Status Panel -->
+<section class="bg-surface-container-lowest p-6 md:p-8 neo-border neo-shadow-lg relative overflow-hidden">
+<!-- decorative background pattern -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#1a1c1c 2px, transparent 2px); background-size: 20px 20px;"></div>
+<div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex-1">
+<h3 class="font-headline-md text-headline-md mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-error" data-icon="warning" data-weight="fill">warning</span>
+                        Storage Critical
+                    </h3>
+<p class="font-body-md text-body-md mb-4 text-on-surface-variant">You've used 42.5GB of your 50GB Free tier. Upgrade now before you hit the wall.</p>
+<!-- Progress Bar -->
+<div class="w-full h-8 neo-border bg-surface-container-highest relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-error" style="width: 85%;">
+<!-- Diagonal stripes for urgency -->
+<div class="w-full h-full opacity-30" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #000 10px, #000 20px);"></div>
+</div>
+</div>
+<div class="flex justify-between mt-2 font-label-caps text-label-caps uppercase">
+<span>42.5GB Used</span>
+<span class="text-error font-bold">85% Full</span>
+</div>
+</div>
+<div class="flex-shrink-0 flex items-center justify-center">
+<div class="w-24 h-24 rounded-full neo-border bg-error-container flex flex-col items-center justify-center neo-shadow text-on-error-container transform rotate-6">
+<span class="material-symbols-outlined text-4xl" data-icon="cloud_off">cloud_off</span>
+<span class="font-label-caps text-label-caps mt-1">WARNING</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing Cards Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-8 items-end">
+<!-- STARTER TIER -->
+<div class="bg-surface-container-lowest neo-border neo-shadow-lg p-6 flex flex-col h-full transition-transform duration-200 neo-card-hover">
+<div class="mb-6 border-b-2 border-on-surface pb-4">
+<span class="inline-block bg-surface-container-high px-2 py-1 neo-border font-label-caps text-label-caps uppercase mb-4">Current Plan</span>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg mb-2">STARTER</h3>
+<div class="flex items-baseline gap-1">
+<span class="font-display-lg text-display-lg">Free</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">The essentials to get you started.</p>
+</div>
+<ul class="flex-grow space-y-4 mb-8 font-body-md text-body-md">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="check_box">check_box</span>
+<span class="font-bold">50GB</span> Storage
+                    </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="check_box">check_box</span>
+                        Standard Speed
+                    </li>
+<li class="flex items-center gap-3 text-on-surface-variant opacity-50">
+<span class="material-symbols-outlined" data-icon="disabled_by_default">disabled_by_default</span>
+<del>Priority Support</del>
+</li>
+</ul>
+<button class="w-full py-4 neo-border bg-surface-container-high text-on-surface font-button-text text-button-text uppercase text-center disabled:opacity-50 cursor-not-allowed" disabled="">
+                    Current Plan
+                </button>
+</div>
+<!-- PRO TIER (Highlighted) -->
+<div class="bg-primary-fixed neo-border-thick neo-shadow-lg p-6 flex flex-col h-[105%] relative z-10 transition-transform duration-200 neo-card-hover transform md:-translate-y-4">
+<!-- Popular Badge -->
+<div class="absolute -top-4 -right-4 bg-on-surface text-on-primary font-label-caps text-label-caps uppercase px-4 py-2 neo-border transform rotate-12 shadow-[4px_4px_0px_0px_#ccf05f]">
+                    MOST POPULAR
+                </div>
+<div class="mb-6 border-b-2 border-on-surface pb-4">
+<span class="inline-block bg-primary px-2 py-1 neo-border font-label-caps text-label-caps uppercase text-on-primary mb-4 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">Recommended</span>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg mb-2">PRO</h3>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-md text-headline-md">$</span>
+<span class="font-display-lg text-display-lg">9.99</span>
+<span class="font-body-md text-body-md">/mo</span>
+</div>
+<p class="font-body-md text-body-md text-on-primary-fixed mt-2">More space, more speed, more raw creative power.</p>
+</div>
+<ul class="flex-grow space-y-4 mb-8 font-body-md text-body-md font-medium text-on-primary-fixed">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="check_box" data-weight="fill">check_box</span>
+<span class="font-bold text-lg">500GB</span> Storage
+                    </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="bolt" data-weight="fill">bolt</span>
+                        Lightning Speed Sync
+                    </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="support_agent" data-weight="fill">support_agent</span>
+                        Priority Support
+                    </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="share" data-weight="fill">share</span>
+                        Advanced Sharing Controls
+                    </li>
+</ul>
+<button class="w-full py-4 neo-border bg-on-surface text-on-primary font-button-text text-button-text uppercase text-center neo-shadow hover:bg-surface-tint hover:text-on-primary transition-all neo-button-hover neo-button-active flex items-center justify-center gap-2 group">
+                    SELECT PLAN
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- ELITE TIER -->
+<div class="bg-surface-container-lowest neo-border neo-shadow-lg p-6 flex flex-col h-full transition-transform duration-200 neo-card-hover">
+<div class="mb-6 border-b-2 border-on-surface pb-4">
+<span class="inline-block bg-inverse-surface px-2 py-1 neo-border font-label-caps text-label-caps uppercase text-inverse-on-surface mb-4">Enterprise</span>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg mb-2">ELITE</h3>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-md text-headline-md">$</span>
+<span class="font-display-lg text-display-lg">29.99</span>
+<span class="font-body-md text-body-md">/mo</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Unlimited boundaries for massive projects.</p>
+</div>
+<ul class="flex-grow space-y-4 mb-8 font-body-md text-body-md">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="all_inclusive">all_inclusive</span>
+<span class="font-bold text-lg">Unlimited</span> Storage
+                    </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+                        Admin Dashboard
+                    </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+                        Custom Security Rules
+                    </li>
+</ul>
+<button class="w-full py-4 neo-border bg-primary text-on-primary font-button-text text-button-text uppercase text-center neo-shadow transition-all neo-button-hover neo-button-active">
+                    SELECT PLAN
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden flex justify-around items-center h-20 w-full bg-surface fixed bottom-0 z-50 border-t-2 border-on-surface shadow-[0px_-4px_0px_0px_rgba(0,0,0,1)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-primary-fixed-dim hover:text-on-primary-fixed active:scale-95 transition-transform w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-label-caps text-label-caps">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-primary-fixed-dim hover:text-on-primary-fixed active:scale-95 transition-transform w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="cloud_upload">cloud_upload</span>
+<span class="font-label-caps text-label-caps">Storage</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-none border-2 border-on-surface p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-primary-fixed-dim hover:text-on-primary-fixed active:scale-95 transition-transform w-20 transform -translate-y-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="account_balance_wallet" data-weight="fill">account_balance_wallet</span>
+<span class="font-label-caps text-label-caps font-bold">Plans</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-primary-fixed-dim hover:text-on-primary-fixed active:scale-95 transition-transform w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</a>
+</nav>
+</body></html>

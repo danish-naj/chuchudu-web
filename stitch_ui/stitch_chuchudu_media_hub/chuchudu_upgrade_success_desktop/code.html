@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Storage Unlocked</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ba1a1a",
+                      "on-primary": "#ffffff",
+                      "surface-bright": "#f9f9f9",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "inverse-primary": "#b1d446",
+                      "surface-variant": "#e2e2e2",
+                      "surface-container-high": "#e8e8e8",
+                      "primary": "#506600",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "tertiary-container": "#b8b9b9",
+                      "surface-container": "#eeeeee",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "tertiary-fixed": "#e2e2e2",
+                      "surface-tint": "#506600",
+                      "outline-variant": "#c5c9b1",
+                      "on-surface-variant": "#454937",
+                      "primary-container": "#a4c639",
+                      "error-container": "#ffdad6",
+                      "on-background": "#1a1c1c",
+                      "inverse-surface": "#2f3131",
+                      "on-error": "#ffffff",
+                      "primary-fixed-dim": "#b1d446",
+                      "on-primary-fixed": "#161e00",
+                      "secondary": "#5e5e5e",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed": "#ccf05f",
+                      "on-secondary-fixed-variant": "#474747",
+                      "on-error-container": "#93000a",
+                      "surface-container-highest": "#e2e2e2",
+                      "surface": "#f9f9f9",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-secondary-container": "#646464",
+                      "inverse-on-surface": "#f1f1f1",
+                      "surface-dim": "#dadada",
+                      "on-secondary": "#ffffff",
+                      "on-primary-container": "#3e5000",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface": "#1a1c1c",
+                      "background": "#f9f9f9",
+                      "secondary-container": "#e2e2e2",
+                      "on-secondary-fixed": "#1b1b1b",
+                      "tertiary": "#5d5f5f",
+                      "outline": "#757965",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "surface-container-low": "#f3f3f3",
+                      "on-tertiary-container": "#484a4a",
+                      "on-primary-fixed-variant": "#3c4d00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "unit": "4px",
+                      "container-max": "1280px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Space Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg-mobile": [
+                              "Space Grotesk"
+                      ],
+                      "display-lg": [
+                              "Space Grotesk"
+                      ],
+                      "button-text": [
+                              "Space Grotesk"
+                      ],
+                      "headline-lg": [
+                              "Space Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "72px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "button-text": [
+                              "18px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "52px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .neo-shadow {
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-shadow-sm {
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-border {
+            border: 3px solid #1a1c1c;
+        }
+        .neo-border-sm {
+            border: 2px solid #1a1c1c;
+        }
+        
+        .floating-shape-1 {
+            animation: float 6s ease-in-out infinite;
+        }
+        .floating-shape-2 {
+            animation: float 8s ease-in-out infinite reverse;
+        }
+        .floating-shape-3 {
+            animation: float 7s ease-in-out infinite 1s;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .check-anim {
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transform: scale(0);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- TopNavBar (Suppressed due to Linear/Transactional intent, but requested by prompt. Nav links hidden per guidelines for transactional screens, keeping brand only) -->
+<header class="bg-surface dark:bg-background w-full border-b-2 border-on-surface dark:border-surface-variant shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] flex justify-between items-center w-full px-margin-desktop py-4 sticky top-0 z-50 max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg text-headline-lg font-black tracking-tighter text-on-surface dark:text-on-background">CHUCHUDU</span>
+</div>
+<!-- Nav links and actions suppressed on transactional success screen -->
+</header>
+<main class="flex-grow flex items-center justify-center relative px-margin-mobile md:px-margin-desktop py-24">
+<!-- Decorative Background Elements -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+<div class="absolute top-[10%] left-[15%] w-32 h-32 bg-primary-fixed neo-border floating-shape-1"></div>
+<div class="absolute bottom-[20%] right-[10%] w-24 h-24 rounded-full bg-secondary-fixed neo-border floating-shape-2"></div>
+<div class="absolute top-[30%] right-[25%] w-16 h-16 bg-error-container neo-border rotate-45 floating-shape-3"></div>
+<div class="absolute bottom-[15%] left-[20%] w-20 h-20 bg-tertiary-fixed neo-border rounded-full floating-shape-1" style="animation-delay: 2s;"></div>
+<!-- Grid Pattern Background -->
+<div class="absolute inset-0" style="background-image: radial-gradient(#1a1c1c 1px, transparent 1px); background-size: 40px 40px; opacity: 0.1;"></div>
+</div>
+<!-- Main Success Card -->
+<div class="bg-surface-lowest neo-border neo-shadow w-full max-w-[600px] p-8 md:p-12 relative z-10 flex flex-col items-center text-center bg-white">
+<!-- Icon -->
+<div class="w-32 h-32 bg-primary-fixed neo-border rounded-full flex items-center justify-center mb-8 check-anim shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<span class="material-symbols-outlined text-[80px] text-on-primary-fixed font-bold" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<!-- Headline -->
+<h1 class="font-display-lg text-display-lg text-on-surface uppercase mb-4 break-words w-full">STORAGE UNLOCKED</h1>
+<!-- Confirmation Text -->
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-[400px]">
+                Boom! Your account has been upgraded successfully. You now have access to unlimited RAW power and speed.
+            </p>
+<!-- Receipt Info Snippet -->
+<div class="w-full bg-surface-container-low neo-border-sm p-4 mb-10 text-left flex flex-col gap-2 font-label-caps text-label-caps">
+<div class="flex justify-between border-b-2 border-on-surface pb-2">
+<span class="text-on-surface-variant">TRANSACTION ID</span>
+<span class="text-on-surface font-bold">#CHX-99824-A</span>
+</div>
+<div class="flex justify-between pt-2">
+<span class="text-on-surface-variant">PLAN UPGRADE</span>
+<span class="text-primary-container font-bold text-base bg-on-surface px-2 py-1">PRO TIER</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row gap-6 w-full justify-center">
+<button class="bg-primary-fixed text-on-primary-fixed font-button-text text-button-text uppercase px-8 py-4 neo-border-sm neo-shadow-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] duration-75">
+                    BACK TO FILES
+                </button>
+<button class="bg-surface text-on-surface font-button-text text-button-text uppercase px-8 py-4 neo-border-sm hover:bg-surface-variant transition-colors">
+                    VIEW RECEIPT
+                </button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-on-surface dark:bg-surface-dim w-full border-t-4 border-on-surface flex flex-col md:flex-row justify-between items-center px-margin-desktop py-12 gap-gutter z-10 relative">
+<div class="font-headline-md text-headline-md text-primary-fixed">CHUCHUDU</div>
+<div class="flex gap-6 font-label-caps text-label-caps uppercase text-on-primary dark:text-on-surface-variant">
+<a class="hover:text-primary-fixed-dim transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="hover:text-primary-fixed-dim transition-colors duration-200" href="#">Terms of Service</a>
+<a class="hover:text-primary-fixed-dim transition-colors duration-200" href="#">Help Center</a>
+<a class="hover:text-primary-fixed-dim transition-colors duration-200" href="#">API Docs</a>
+</div>
+<div class="font-label-caps text-label-caps uppercase text-on-primary dark:text-on-surface-variant">
+            © 2024 CHUCHUDU. FAST. RAW. SECURE.
+        </div>
+</footer>
+</body></html>

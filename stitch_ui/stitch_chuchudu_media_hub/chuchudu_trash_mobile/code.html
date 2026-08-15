@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Trash</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#b1d446",
+                        "inverse-on-surface": "#f1f1f1",
+                        "tertiary": "#5d5f5f",
+                        "surface-bright": "#f9f9f9",
+                        "surface-tint": "#506600",
+                        "primary-fixed": "#ccf05f",
+                        "outline-variant": "#c5c9b1",
+                        "secondary-container": "#e2e2e2",
+                        "primary-fixed-dim": "#b1d446",
+                        "outline": "#757965",
+                        "secondary": "#5e5e5e",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "on-background": "#1a1c1c",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-primary-container": "#3e5000",
+                        "surface-container-highest": "#e2e2e2",
+                        "primary-container": "#a4c639",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "on-secondary-fixed-variant": "#474747",
+                        "on-secondary-container": "#646464",
+                        "surface": "#f9f9f9",
+                        "primary": "#506600",
+                        "surface-variant": "#e2e2e2",
+                        "on-surface-variant": "#454937",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-container": "#484a4a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "surface-dim": "#dadada",
+                        "tertiary-container": "#b8b9b9",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#eeeeee",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f3f3f3",
+                        "background": "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-primary-fixed": "#161e00",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#3c4d00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Space Grotesk"],
+                        "display-lg": ["Space Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "button-text": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "button-text": ["18px", { "lineHeight": "20px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Neo-brutalist specific utilities */
+        .brutal-border { border: 2px solid #1a1c1c; }
+        .brutal-border-thick { border: 4px solid #1a1c1c; }
+        .brutal-shadow { box-shadow: 4px 4px 0px 0px #1a1c1c; }
+        .brutal-shadow-lg { box-shadow: 8px 8px 0px 0px #1a1c1c; }
+        .brutal-card {
+            background-color: #ffffff;
+            border: 2px solid #1a1c1c;
+            box-shadow: 4px 4px 0px 0px #1a1c1c;
+            transition: all 0.2s ease;
+        }
+        .brutal-card:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #1a1c1c;
+        }
+        
+        /* Swipe to delete/restore animation classes */
+        .swipe-item {
+            position: relative;
+            touch-action: pan-y;
+        }
+        .swipe-content {
+            position: relative;
+            z-index: 10;
+            background: white;
+            transition: transform 0.2s ease-out;
+        }
+        .swipe-actions {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: space-between;
+            z-index: 1;
+        }
+        .swipe-action-left {
+            background-color: #a4c639; /* primary-container */
+            border: 2px solid #1a1c1c;
+            width: 50%;
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+        }
+        .swipe-action-right {
+            background-color: #ffdad6; /* error-container */
+            border: 2px solid #1a1c1c;
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 20px;
+            margin-left: auto;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col pb-24 selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 bg-surface-bright dark:bg-surface-dim w-full border-b-4 border-on-background dark:border-white shadow-[0_4px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-black text-on-surface dark:text-inverse-on-surface italic">Chuchudu</span>
+<span class="font-headline-md text-headline-md ml-2 border-l-4 border-on-background pl-4">Trash</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-surface border-2 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-primary-container transition-colors active:translate-y-1 active:shadow-none px-4 py-2 flex items-center gap-2">
+<span class="font-button-text text-button-text uppercase">Empty</span>
+<span class="material-symbols-outlined" data-icon="delete_sweep">delete_sweep</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full px-margin-mobile md:px-gutter pt-8 max-w-container-max mx-auto">
+<!-- Trash Info Banner -->
+<div class="mb-8 bg-surface-container-high border-2 border-on-background p-4 flex items-start gap-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<span class="material-symbols-outlined text-primary mt-1" data-icon="info">info</span>
+<div>
+<h3 class="font-headline-md text-headline-md mb-1">Items in trash</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Items will be permanently deleted after 30 days. Swipe right to restore, left to delete forever.</p>
+</div>
+</div>
+<!-- File List -->
+<div class="flex flex-col gap-4">
+<!-- File Item 1 -->
+<div class="swipe-item brutal-border overflow-hidden bg-surface">
+<div class="swipe-actions">
+<div class="swipe-action-left text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="restore">restore</span>
+</div>
+<div class="swipe-action-right text-on-error-container">
+<span class="material-symbols-outlined" data-icon="delete_forever">delete_forever</span>
+</div>
+</div>
+<div class="swipe-content p-4 border-l-4 border-l-primary flex items-center justify-between gap-4">
+<div class="flex items-center gap-4 flex-grow overflow-hidden">
+<div class="w-12 h-12 bg-primary-container brutal-border flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container fill-icon" data-icon="image">image</span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="font-headline-md text-headline-md truncate w-full text-lg">Project_Q3_Moodboard.png</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">2.4 MB • 29 days left</span>
+</div>
+</div>
+<button class="shrink-0 p-2 border-2 border-on-background hover:bg-surface-variant active:bg-primary-container rounded-none transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- File Item 2 -->
+<div class="swipe-item brutal-border overflow-hidden bg-surface">
+<div class="swipe-actions">
+<div class="swipe-action-left text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="restore">restore</span>
+</div>
+<div class="swipe-action-right text-on-error-container">
+<span class="material-symbols-outlined" data-icon="delete_forever">delete_forever</span>
+</div>
+</div>
+<div class="swipe-content p-4 border-l-4 border-l-primary flex items-center justify-between gap-4">
+<div class="flex items-center gap-4 flex-grow overflow-hidden">
+<div class="w-12 h-12 bg-surface-variant brutal-border flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant fill-icon" data-icon="description">description</span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="font-headline-md text-headline-md truncate w-full text-lg">Old_Contract_Draft.pdf</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">156 KB • 12 days left</span>
+</div>
+</div>
+<button class="shrink-0 p-2 border-2 border-on-background hover:bg-surface-variant active:bg-primary-container rounded-none transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- File Item 3 -->
+<div class="swipe-item brutal-border overflow-hidden bg-surface">
+<div class="swipe-actions">
+<div class="swipe-action-left text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="restore">restore</span>
+</div>
+<div class="swipe-action-right text-on-error-container">
+<span class="material-symbols-outlined" data-icon="delete_forever">delete_forever</span>
+</div>
+</div>
+<div class="swipe-content p-4 border-l-4 border-l-primary flex items-center justify-between gap-4">
+<div class="flex items-center gap-4 flex-grow overflow-hidden">
+<div class="w-12 h-12 bg-tertiary-container brutal-border flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-tertiary-container fill-icon" data-icon="folder_zip">folder_zip</span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="font-headline-md text-headline-md truncate w-full text-lg">Archive_2022.zip</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">450 MB • 2 days left</span>
+</div>
+</div>
+<button class="shrink-0 p-2 border-2 border-on-background hover:bg-surface-variant active:bg-primary-container rounded-none transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- File Item 4 -->
+<div class="swipe-item brutal-border overflow-hidden bg-surface opacity-75">
+<div class="swipe-actions">
+<div class="swipe-action-left text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="restore">restore</span>
+</div>
+<div class="swipe-action-right text-on-error-container">
+<span class="material-symbols-outlined" data-icon="delete_forever">delete_forever</span>
+</div>
+</div>
+<div class="swipe-content p-4 border-l-4 border-l-error flex items-center justify-between gap-4">
+<div class="flex items-center gap-4 flex-grow overflow-hidden">
+<div class="w-12 h-12 bg-error-container brutal-border flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-error-container fill-icon" data-icon="movie">movie</span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="font-headline-md text-headline-md truncate w-full text-lg text-error">Funny_Cat_Fail.mp4</span>
+<span class="font-label-caps text-label-caps text-error font-bold">1.2 GB • Deleting tomorrow</span>
+</div>
+</div>
+<button class="shrink-0 p-2 border-2 border-on-background hover:bg-surface-variant active:bg-primary-container rounded-none transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center bg-surface px-2 py-3 border-t-4 border-on-background dark:border-white shadow-[0_-4px_0px_0px_rgba(0,0,0,1)]">
+<button class="flex flex-col items-center gap-1 p-2 min-w-[64px] text-on-surface dark:text-inverse-on-surface hover:bg-primary-container transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="folder">folder</span>
+<span class="font-label-caps text-label-caps text-[10px]">Files</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 min-w-[64px] text-on-surface dark:text-inverse-on-surface hover:bg-primary-container transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+<span class="font-label-caps text-label-caps text-[10px]">Shared</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 min-w-[64px] text-on-surface dark:text-inverse-on-surface hover:bg-primary-container transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="cloud">cloud</span>
+<span class="font-label-caps text-label-caps text-[10px]">Cloud</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 min-w-[64px] text-on-surface dark:text-inverse-on-surface hover:bg-primary-container transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-caps text-label-caps text-[10px]">Logs</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 min-w-[64px] bg-primary text-on-primary border-2 border-on-background rounded-none px-4 py-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-primary-container active:scale-95 transition-transform">
+<span class="material-symbols-outlined fill-icon" data-icon="delete">delete</span>
+<span class="font-label-caps text-label-caps text-[10px]">Trash</span>
+</button>
+</nav>
+<script>
+        // Simple swipe logic implementation for visual demonstration
+        document.querySelectorAll('.swipe-item').forEach(item => {
+            const content = item.querySelector('.swipe-content');
+            let startX = 0;
+            let currentX = 0;
+            const threshold = 60; // drag threshold
+
+            item.addEventListener('touchstart', e => {
+                startX = e.touches[0].clientX;
+                content.style.transition = 'none';
+            }, {passive: true});
+
+            item.addEventListener('touchmove', e => {
+                const touch = e.touches[0];
+                currentX = touch.clientX - startX;
+                
+                // Limit drag
+                if (currentX > 100) currentX = 100;
+                if (currentX < -100) currentX = -100;
+                
+                content.style.transform = `translateX(${currentX}px)`;
+            }, {passive: true});
+
+            item.addEventListener('touchend', e => {
+                content.style.transition = 'transform 0.2s ease-out';
+                if (currentX > threshold) {
+                    content.style.transform = `translateX(100px)`;
+                    setTimeout(() => {
+                        content.style.transform = `translateX(0)`;
+                        // In real app, trigger restore here
+                    }, 1000);
+                } else if (currentX < -threshold) {
+                    content.style.transform = `translateX(-100px)`;
+                    setTimeout(() => {
+                        content.style.transform = `translateX(0)`;
+                         // In real app, trigger delete here
+                    }, 1000);
+                } else {
+                    content.style.transform = `translateX(0)`;
+                }
+            });
+        });
+    </script>
+</body></html>

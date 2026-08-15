@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CHUCHUDU - Photos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@700&amp;family=Space+Grotesk:wght@700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#3c4d00",
+                    "primary-fixed": "#ccf05f",
+                    "on-primary-fixed": "#161e00",
+                    "secondary-container": "#e2e2e2",
+                    "on-secondary-fixed": "#1b1b1b",
+                    "on-error": "#ffffff",
+                    "surface-container": "#eeeeee",
+                    "secondary": "#5e5e5e",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#1a1c1c",
+                    "on-tertiary-container": "#484a4a",
+                    "on-secondary-container": "#646464",
+                    "surface-container-high": "#e8e8e8",
+                    "primary": "#506600",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#a4c639",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "tertiary-container": "#b8b9b9",
+                    "outline": "#757965",
+                    "secondary-fixed": "#e2e2e2",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#c5c9b1",
+                    "surface-variant": "#e2e2e2",
+                    "surface": "#f9f9f9",
+                    "on-surface-variant": "#454937",
+                    "surface-dim": "#dadada",
+                    "surface-bright": "#f9f9f9",
+                    "secondary-fixed-dim": "#c6c6c6",
+                    "surface-container-highest": "#e2e2e2",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "on-background": "#1a1c1c",
+                    "surface-tint": "#506600",
+                    "primary-fixed-dim": "#b1d446",
+                    "tertiary": "#5d5f5f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#e2e2e2",
+                    "on-secondary-fixed-variant": "#474747",
+                    "inverse-primary": "#b1d446",
+                    "inverse-on-surface": "#f1f1f1",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "inverse-surface": "#2f3131",
+                    "background": "#f9f9f9",
+                    "surface-container-low": "#f3f3f3",
+                    "on-primary-container": "#3e5000"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "container-max": "1280px",
+                    "unit": "4px",
+                    "gutter": "24px",
+                    "margin-desktop": "64px"
+            },
+            "fontFamily": {
+                    "headline-lg": [
+                            "Space Grotesk"
+                    ],
+                    "headline-lg-mobile": [
+                            "Space Grotesk"
+                    ],
+                    "body-md": [
+                            "Hanken Grotesk"
+                    ],
+                    "button-text": [
+                            "Space Grotesk"
+                    ],
+                    "headline-md": [
+                            "Space Grotesk"
+                    ],
+                    "body-lg": [
+                            "Hanken Grotesk"
+                    ],
+                    "label-caps": [
+                            "JetBrains Mono"
+                    ],
+                    "display-lg": [
+                            "Space Grotesk"
+                    ]
+            },
+            "fontSize": {
+                    "headline-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "52px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "32px",
+                            {
+                                    "lineHeight": "36px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "button-text": [
+                            "18px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "display-lg": [
+                            "72px",
+                            {
+                                    "lineHeight": "72px",
+                                    "letterSpacing": "-0.04em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+          },
+        }
+      }
+    </script>
+<style>
+        .neo-brutal-border { border: 3px solid #1a1c1c; }
+        .neo-brutal-shadow { box-shadow: 6px 6px 0px 0px #1a1c1c; }
+        .neo-brutal-shadow-sm { box-shadow: 4px 4px 0px 0px #1a1c1c; }
+        .neo-brutal-hover:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #1a1c1c;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
+<!-- TopNavBar -->
+<nav class="bg-background border-b-4 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] w-full sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop h-20 max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<a class="text-headline-md font-headline-md font-black text-on-background uppercase tracking-tighter" href="#">CHUCHUDU</a>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-primary border-b-4 border-primary pb-1 font-label-caps text-label-caps uppercase hover:bg-primary-container hover:text-on-primary-container transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none duration-100 px-2 py-1" href="#">My Files</a>
+<a class="text-on-surface font-bold uppercase font-label-caps text-label-caps hover:bg-primary-container hover:text-on-primary-container transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none duration-100 px-2 py-1" href="#">Transfers</a>
+<a class="text-on-surface font-bold uppercase font-label-caps text-label-caps hover:bg-primary-container hover:text-on-primary-container transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none duration-100 px-2 py-1" href="#">Activity</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary-fixed text-on-primary-fixed border-[2px] border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-100 font-button-text text-button-text uppercase px-6 py-2">
+                    START SHARING
+                </button>
+<button class="text-on-background hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full hover:bg-surface-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-desktop py-12 flex flex-col gap-12">
+<!-- Header & Filters -->
+<header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b-4 border-on-background pb-6">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-background mb-2 tracking-tighter uppercase">Photos</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Viewing 24 items in your visual library.</p>
+</div>
+<div class="flex gap-4">
+<div class="relative">
+<input class="bg-surface-container-lowest border-2 border-on-background focus:border-4 focus:ring-0 font-label-caps text-label-caps p-3 w-64 h-12 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:translate-x-[2px] focus:translate-y-[2px] transition-all outline-none placeholder:text-on-surface-variant" placeholder="Search photos..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-3 text-on-background">search</span>
+</div>
+<button class="bg-surface-container-lowest border-2 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-100 w-12 h-12 flex items-center justify-center">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</header>
+<!-- Photo Grid -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<!-- Photo Card 1 -->
+<article class="bg-surface-container-lowest neo-brutal-border neo-brutal-shadow flex flex-col group hover:-translate-y-1 transition-transform cursor-pointer">
+<div class="aspect-square w-full border-b-3 border-on-background relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A striking digital photograph of a vibrant, abstract architectural structure under bright, high-key lighting. The scene is dominated by raw concrete textures juxtaposed with neon lime green accents. The composition is highly geometric and angular, reflecting a modern, brutalist aesthetic. The mood is energetic and bold." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGDsmQ-ZDhzrITC5KyQulMg8t2n8mwhy6LercEvArVWNGfxsAH_RoBtDx9VoKRr0-KWha99TZMVTaXH8UntXmI3bObHjEYsVBBtNtniRyM4n3MXRsgIpuWKyPunaFU9j6e9cSWeLNMlBdRWcNUePRYOad1glElhCqoLXB8ddYVco6-06ysCRjObDZrE9Nvif8QeT2H3ILE9DEA4qqgAoI77e-WnGKfjRvKiDLirzZTcM486yQXeYVEV80hA-JNyiMHf8QrjI_IWKU5"/>
+<div class="absolute top-2 right-2 bg-primary-fixed text-on-primary-fixed border-2 border-on-background px-2 py-1 font-label-caps text-label-caps">
+                        JPG
+                    </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<h3 class="font-headline-md text-headline-md truncate" title="IMG_20231015_093021.jpg">IMG_20231015_...</h3>
+<div class="flex justify-between items-center text-on-surface-variant font-label-caps text-label-caps">
+<span>4.2 MB</span>
+<span>Oct 15, 2023</span>
+</div>
+</div>
+</article>
+<!-- Photo Card 2 -->
+<article class="bg-surface-container-lowest neo-brutal-border neo-brutal-shadow flex flex-col group hover:-translate-y-1 transition-transform cursor-pointer">
+<div class="aspect-square w-full border-b-3 border-on-background relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-contrast macro photograph of urban street art, focusing on dripping lime green paint over stark black and white posters. The lighting is harsh and direct, highlighting the textures of torn paper and thick paint. The overall vibe is chaotic, raw, and unapologetic, fitting a neo-brutalist digital mood board." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG9DiNZiKH-fdLZLNSpKI0ond33jnt1zOXEtSvTYV1TVZzY7avHOWAq-2ikwdY0k5_5iOUGNzSYMGFr6U-SR1bZQzGbOqEhx8bcL5Hlb_68qUf0LuWPPc31aeq0J-wJbdN7i2yo4go0EYgGrTVZeeEAjdMKR3q1FZotjlr-1oDZpcdLeO1j15wz8DVz0AvnQISCJdnjU2vG37zDGVRPdLTORA4HWPOtyUc71noIXQxp46zWRbZDa0aTH4ZOkJyRwRRzL1k3wJL60nG"/>
+<div class="absolute top-2 right-2 bg-primary-fixed text-on-primary-fixed border-2 border-on-background px-2 py-1 font-label-caps text-label-caps">
+                        PNG
+                    </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<h3 class="font-headline-md text-headline-md truncate" title="Urban_Decay_V2.png">Urban_Decay_V2...</h3>
+<div class="flex justify-between items-center text-on-surface-variant font-label-caps text-label-caps">
+<span>8.1 MB</span>
+<span>Oct 12, 2023</span>
+</div>
+</div>
+</article>
+<!-- Photo Card 3 (Selected State Example) -->
+<article class="bg-primary-container neo-brutal-border neo-brutal-shadow flex flex-col group hover:-translate-y-1 transition-transform cursor-pointer ring-4 ring-primary ring-offset-2">
+<div class="aspect-square w-full border-b-3 border-on-background relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 mix-blend-multiply" data-alt="A clean, minimalist workspace setup photographed from a top-down perspective. It features a matte black mechanical keyboard, a stark white notepad, and a single lime green pen. The lighting is diffused but bright, casting sharp, distinct shadows that emphasize the geometric arrangement of the objects. High-energy functional vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8dTCaO9xIBP2RsMk8KiBXcJCO6hSZX4CTsQ9FBhKh4iUy3LyfxUAuSvnE9qH10MB2Q8gEXgxZ_wArX30U4d7o9mX8vsfHbZtW1jRHd1KZzkK8u1AKHBU3NQ0uLKHdk_UL49TSe-agQpVSMrtBRiEQJYsbuimodCMrT7Wd0pcQBlQKivwUd9c2Z4S9A4sIqcc0M0l8u2akL0t4jLC8GWqGfUbBOGnBU1b-b0YgijKDWP1AWf_pCakUSewmdb6jpFgP4Snbks42YdrX"/>
+<div class="absolute top-2 right-2 bg-on-background text-primary-fixed px-2 py-1 font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span> RAW
+                    </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<h3 class="font-headline-md text-headline-md truncate text-on-primary-container" title="Workspace_Topdown.raw">Workspace_Topd...</h3>
+<div class="flex justify-between items-center text-on-primary-container font-label-caps text-label-caps opacity-80">
+<span>24.5 MB</span>
+<span>Oct 10, 2023</span>
+</div>
+</div>
+</article>
+<!-- Photo Card 4 -->
+<article class="bg-surface-container-lowest neo-brutal-border neo-brutal-shadow flex flex-col group hover:-translate-y-1 transition-transform cursor-pointer">
+<div class="aspect-square w-full border-b-3 border-on-background relative overflow-hidden bg-surface-container flex items-center justify-center">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A dynamic action shot of a skater performing a trick against a stark, brutalist concrete wall. The image is stylized with high contrast, blown-out highlights, and deep, pitch-black shadows. A splash of neon green graffiti in the background adds a vibrant accent. Fast-paced, gritty, and urban atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvJhHtYYJyK0sv_L8bD3Is3c4-xWkBeBzFXDyfKMpshN6yRZa5zGAUE_nh_xrwsxaaE-vMeClRN28trYOwI2Pd25DEmwcNPG_4Bb8eyQGxhFfEAJ2Ozbx06RCDWAfKnostqI9Jb6imcUx9eGlz-oP1toX9WWjzxz0WdRsbNHVAESQw8BjNhGkAuMdT3IcuLDfBmP_S4l7NGcP2mOSlq-eYdPPWtXxm1kNxh4eRTkaZwPrPuK_iW3V-UsNtz-Mh10vQsNjNm8YoFl1J"/>
+<div class="absolute top-2 right-2 bg-primary-fixed text-on-primary-fixed border-2 border-on-background px-2 py-1 font-label-caps text-label-caps">
+                        JPG
+                    </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<h3 class="font-headline-md text-headline-md truncate" title="Skate_Session_04.jpg">Skate_Session_...</h3>
+<div class="flex justify-between items-center text-on-surface-variant font-label-caps text-label-caps">
+<span>3.7 MB</span>
+<span>Oct 08, 2023</span>
+</div>
+</div>
+</article>
+</section>
+<!-- Pagination / Load More -->
+<div class="flex justify-center mt-8">
+<button class="bg-surface-container-lowest border-[2px] border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-100 font-button-text text-button-text uppercase px-8 py-3 flex items-center gap-2">
+<span class="material-symbols-outlined">refresh</span>
+                LOAD MORE PHOTOS
+            </button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter bg-surface-container-highest border-t-4 border-on-background mt-auto">
+<div class="font-headline-md text-headline-md font-black text-on-background uppercase tracking-tighter">
+            CHUCHUDU
+        </div>
+<div class="flex flex-wrap gap-6 justify-center">
+<a class="text-on-secondary-container font-label-caps text-label-caps uppercase hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Terms</a>
+<a class="text-on-secondary-container font-label-caps text-label-caps uppercase hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Privacy</a>
+<a class="text-on-secondary-container font-label-caps text-label-caps uppercase hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Support</a>
+<a class="text-on-secondary-container font-label-caps text-label-caps uppercase hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Twitter</a>
+<a class="text-on-secondary-container font-label-caps text-label-caps uppercase hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Instagram</a>
+</div>
+<div class="font-body-md text-body-md text-on-secondary-container">
+            © 2024 CHUCHUDU. NO LIMITS.
+        </div>
+</footer>
+</body></html>

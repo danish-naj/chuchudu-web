@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CHUCHUDU - UNSTOPPABLE SHARING</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Space Grotesk (Headlines), Hanken Grotesk (Body), JetBrains Mono (Labels) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@700&amp;family=Space+Grotesk:wght@700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary": "#ffffff",
+                      "on-primary-container": "#3e5000",
+                      "surface-container-highest": "#e2e2e2",
+                      "on-surface-variant": "#454937",
+                      "tertiary-fixed": "#e2e2e2",
+                      "secondary-container": "#e2e2e2",
+                      "on-background": "#1a1c1c",
+                      "tertiary-container": "#b8b9b9",
+                      "on-secondary-container": "#646464",
+                      "on-error": "#ffffff",
+                      "on-surface": "#1a1c1c",
+                      "inverse-primary": "#b1d446",
+                      "error": "#ba1a1a",
+                      "surface": "#f9f9f9",
+                      "outline": "#757965",
+                      "surface-container-high": "#e8e8e8",
+                      "secondary-fixed": "#e2e2e2",
+                      "primary": "#506600",
+                      "on-tertiary-container": "#484a4a",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "surface-dim": "#dadada",
+                      "inverse-surface": "#2f3131",
+                      "surface-container-lowest": "#ffffff",
+                      "background": "#f9f9f9",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed": "#1b1b1b",
+                      "on-secondary-fixed-variant": "#474747",
+                      "on-primary": "#ffffff",
+                      "outline-variant": "#c5c9b1",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "inverse-on-surface": "#f1f1f1",
+                      "surface-tint": "#506600",
+                      "surface-bright": "#f9f9f9",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "primary-container": "#a4c639",
+                      "tertiary": "#5d5f5f",
+                      "surface-variant": "#e2e2e2",
+                      "secondary": "#5e5e5e",
+                      "on-error-container": "#93000a",
+                      "on-primary-fixed-variant": "#3c4d00",
+                      "on-primary-fixed": "#161e00",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "error-container": "#ffdad6",
+                      "surface-container-low": "#f3f3f3",
+                      "surface-container": "#eeeeee",
+                      "primary-fixed-dim": "#b1d446",
+                      "primary-fixed": "#ccf05f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px",
+                      "none": "0px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "64px",
+                      "gutter": "24px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Hanken Grotesk"],
+                      "display-lg": ["Space Grotesk"],
+                      "button-text": ["Space Grotesk"],
+                      "headline-lg": ["Space Grotesk"],
+                      "label-caps": ["JetBrains Mono"],
+                      "headline-md": ["Space Grotesk"],
+                      "body-md": ["Hanken Grotesk"],
+                      "headline-lg-mobile": ["Space Grotesk"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                      "display-lg": ["72px", {"lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                      "button-text": ["18px", {"lineHeight": "20px", "fontWeight": "700"}],
+                      "headline-lg": ["48px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "28px", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["32px", {"lineHeight": "36px", "fontWeight": "700"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .neo-shadow {
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-shadow-sm {
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-hover:hover {
+            transform: translate(4px, 4px);
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-hover:active {
+            transform: translate(8px, 8px);
+            box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+        }
+        
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 15s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-lg">
+<!-- TopNavBar -->
+<header class="bg-background border-b-4 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sticky top-0 z-50 w-full">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 max-w-container-max mx-auto">
+<div class="text-headline-md font-headline-md font-black text-on-background uppercase tracking-tighter cursor-pointer">
+                CHUCHUDU
+            </div>
+<!-- Removed internal nav links for landing page as requested, keeping trailing actions -->
+<div class="flex items-center gap-gutter">
+<a class="bg-primary-container text-on-primary-container font-button-text text-button-text uppercase px-6 py-3 border-2 border-on-background neo-shadow-sm neo-hover transition-all" href="{{DATA:SCREEN:SCREEN_62}}">
+                    START SHARING
+                </a>
+<a class="text-on-background hover:bg-primary-container hover:text-on-primary-container p-2 border-2 border-transparent hover:border-on-background rounded-none transition-all hidden md:flex items-center justify-center" href="{{DATA:SCREEN:SCREEN_62}}">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</a>
+</div>
+</div>
+</header>
+<main class="flex-grow flex flex-col">
+<!-- Hero Section -->
+<section class="relative w-full overflow-hidden border-b-4 border-on-background bg-surface-container-lowest">
+<!-- WebGL Background -->
+<div class="absolute inset-0 z-0">
+
+</div>
+<div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-24 md:py-32 flex flex-col items-center justify-center text-center">
+<h1 class="font-display-lg text-display-lg md:text-[120px] md:leading-[110px] font-black italic uppercase tracking-tighter text-on-background mb-8 drop-shadow-[8px_8px_0px_rgba(164,198,57,1)] md:drop-shadow-[16px_16px_0px_rgba(164,198,57,1)]">
+                    UNSTOPPABLE<br/>SHARING
+                </h1>
+<p class="font-body-lg text-body-lg md:text-[24px] max-w-2xl bg-white border-2 border-on-background p-4 neo-shadow mb-12">
+                    Raw speed. Absolute security. No bullshit limits. Transfer massive files instantly with zero compression.
+                </p>
+<!-- Interactive Three.js Scene Container -->
+<div class="w-full h-64 md:h-96 border-4 border-on-background neo-shadow mb-12 relative bg-surface">
+
+<!-- Overlay Drop Zone UI -->
+<a class="absolute inset-0 flex flex-col items-center justify-center bg-black/10 hover:bg-primary-container/20 transition-colors backdrop-blur-[2px] cursor-pointer group" href="{{DATA:SCREEN:SCREEN_62}}">
+<div class="bg-primary-container border-4 border-on-background p-6 rounded-none neo-shadow group-hover:translate-y-1 group-hover:translate-x-1 group-hover:box-shadow-[4px_4px_0_0_#000] transition-all flex flex-col items-center">
+<span class="material-symbols-outlined text-[64px] mb-4 text-on-background">upload_file</span>
+<span class="font-headline-md text-headline-md font-bold uppercase tracking-tight text-on-background">DROP FILES HERE</span>
+<span class="font-label-caps text-label-caps mt-2 text-on-background opacity-80">OR CLICK TO BROWSE</span>
+</div>
+</a>
+</div>
+</div>
+</section>
+<!-- Marquee Ticker -->
+<div class="w-full bg-primary-container border-b-4 border-on-background py-4 marquee-container overflow-hidden flex items-center">
+<div class="marquee-content font-display-lg text-[32px] md:text-[48px] font-black uppercase tracking-tight text-on-background">
+                FAST // SECURE // RAW // NO LIMITS // FAST // SECURE // RAW // NO LIMITS // FAST // SECURE // RAW // NO LIMITS // FAST // SECURE // RAW // NO LIMITS //
+            </div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest border-t-4 border-on-background w-full py-12 px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter">
+<div class="font-headline-md text-headline-md font-black text-on-background uppercase tracking-tighter">
+            CHUCHUDU
+        </div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-label-caps text-label-caps text-on-secondary-container hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Terms</a>
+<a class="font-label-caps text-label-caps text-on-secondary-container hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Privacy</a>
+<a class="font-label-caps text-label-caps text-on-secondary-container hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Support</a>
+<a class="font-label-caps text-label-caps text-on-secondary-container hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Twitter</a>
+<a class="font-label-caps text-label-caps text-on-secondary-container hover:text-primary underline decoration-4 transition-colors duration-200" href="#">Instagram</a>
+</div>
+<div class="font-body-md text-body-md text-on-secondary-container">
+            © 2024 CHUCHUDU. NO LIMITS.
+        </div>
+</footer>
+</body></html>

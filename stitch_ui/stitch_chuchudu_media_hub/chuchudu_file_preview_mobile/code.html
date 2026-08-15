@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - File Preview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&amp;family=JetBrains+Mono:wght@700&amp;family=Space+Grotesk:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#1a1c1c",
+                      "on-tertiary-container": "#484a4a",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "on-primary-container": "#3e5000",
+                      "outline": "#757965",
+                      "tertiary-container": "#b8b9b9",
+                      "on-secondary-container": "#646464",
+                      "surface-bright": "#f9f9f9",
+                      "primary-container": "#a4c639",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "secondary-container": "#e2e2e2",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed": "#e2e2e2",
+                      "on-secondary-fixed": "#1b1b1b",
+                      "surface-container": "#eeeeee",
+                      "on-secondary-fixed-variant": "#474747",
+                      "surface": "#f9f9f9",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "on-secondary": "#ffffff",
+                      "surface-tint": "#506600",
+                      "primary-fixed": "#ccf05f",
+                      "on-background": "#1a1c1c",
+                      "inverse-primary": "#b1d446",
+                      "primary": "#506600",
+                      "tertiary": "#5d5f5f",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed": "#161e00",
+                      "surface-container-highest": "#e2e2e2",
+                      "outline-variant": "#c5c9b1",
+                      "on-error": "#ffffff",
+                      "surface-dim": "#dadada",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "inverse-surface": "#2f3131",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-surface-variant": "#454937",
+                      "inverse-on-surface": "#f1f1f1",
+                      "surface-container-low": "#f3f3f3",
+                      "secondary": "#5e5e5e",
+                      "on-primary-fixed-variant": "#3c4d00",
+                      "error-container": "#ffdad6",
+                      "surface-variant": "#e2e2e2",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-high": "#e8e8e8",
+                      "primary-fixed-dim": "#b1d446",
+                      "background": "#f9f9f9"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-md": [
+                              "Space Grotesk"
+                      ],
+                      "button-text": [
+                              "Space Grotesk"
+                      ],
+                      "headline-lg-mobile": [
+                              "Space Grotesk"
+                      ],
+                      "display-lg": [
+                              "Space Grotesk"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg": [
+                              "Space Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "button-text": [
+                              "18px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "72px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "52px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-shadow-lg {
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-border {
+            border: 2px solid #1a1c1c;
+        }
+        .neo-border-thick {
+            border: 4px solid #1a1c1c;
+        }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Header -->
+<header class="w-full neo-border-thick border-x-0 border-t-0 bg-surface z-50 sticky top-0">
+<div class="flex justify-between items-center px-margin-mobile py-4 max-w-container-max mx-auto">
+<button aria-label="Go back" class="w-12 h-12 flex items-center justify-center neo-border bg-surface hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all neo-shadow active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md truncate px-4 max-w-[200px]">Summer_Trip_24.jpg</h1>
+<div class="w-12"></div> <!-- Spacer for centering -->
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col pb-32">
+<!-- Image Preview -->
+<div class="w-full p-margin-mobile">
+<div class="w-full aspect-square neo-border-thick neo-shadow-lg bg-surface-container-highest overflow-hidden relative group">
+<div class="absolute inset-0 bg-[url('placeholder')] bg-cover bg-center" data-alt="A vibrant, sunny beach scene during a summer trip, featuring bright cyan waters, golden sand, and a clear blue sky. The image should look like a high-quality photograph, perfectly capturing the energetic, fun, and warm vibe of a perfect summer vacation, fitting the bold, high-contrast Neo-Brutalist design aesthetic with its intense colors." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCTcngPa_TAYS4uP6MYQLA_HZoezDsKm-hWN2JSQ4bC6vqFM9xwTWiOyFLM_6XicxYQ1rO1TsdtykOBUkPEoCa2WFi19RmqIqREAsuaJIteeULX-GF3epr9OzDfuArlMxwW-NG9xGmX09Nt0zi2d41PL-wU6YYX8vF50hwP5KbpU3r2nxHvz8lZAIzwteEt8WH-NDFRbUsDtMS-hCqaqphe2hxo9aZNZjr91pDu1pc0FaUDWaZHns4-UFU4kmw7zl__1UiehfCKHLJg')"></div>
+</div>
+</div>
+<!-- Details Section -->
+<div class="px-margin-mobile flex flex-col gap-4 mt-4">
+<div class="grid grid-cols-2 gap-4">
+<!-- Size Card -->
+<div class="neo-border bg-surface-container-lowest p-4 flex flex-col gap-2 neo-shadow hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Size</span>
+<span class="font-headline-md text-headline-md">2.4 GB</span>
+</div>
+<!-- Type Card -->
+<div class="neo-border bg-primary-fixed p-4 flex flex-col gap-2 neo-shadow hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+<span class="font-label-caps text-label-caps text-on-primary-fixed uppercase">Type</span>
+<span class="font-headline-md text-headline-md text-on-primary-fixed">JPG</span>
+</div>
+</div>
+<!-- Date Card -->
+<div class="neo-border bg-surface-container-lowest p-4 flex justify-between items-center neo-shadow hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Date Added</span>
+<span class="font-headline-md text-headline-md">Today</span>
+</div>
+<!-- Description/Notes (Optional visual filler for realism) -->
+<div class="neo-border bg-surface-container p-4 neo-shadow mt-4">
+<p class="font-body-md text-body-md text-on-surface">
+                    Vacation photos from the coast. Includes raw files and edited jpegs. High resolution needed for printing.
+                </p>
+</div>
+</div>
+</main>
+<!-- Sticky Bottom Actions -->
+<div class="fixed bottom-0 left-0 w-full p-margin-mobile bg-surface neo-border-thick border-x-0 border-b-0 z-50 flex gap-4">
+<!-- Secondary Action: Share -->
+<button aria-label="Share file" class="w-16 h-16 flex-shrink-0 flex items-center justify-center neo-border bg-surface hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all neo-shadow active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">share</span>
+</button>
+<!-- Primary Action: Download -->
+<button class="flex-grow h-16 flex items-center justify-center neo-border bg-primary-fixed hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all neo-shadow active:scale-95 text-on-primary-fixed font-button-text text-button-text uppercase tracking-wide">
+            DOWNLOAD
+        </button>
+<!-- Secondary Action: Delete -->
+<button aria-label="Delete file" class="w-16 h-16 flex-shrink-0 flex items-center justify-center neo-border bg-error-container hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all neo-shadow active:scale-95">
+<span class="material-symbols-outlined text-on-error-container" style="font-variation-settings: 'FILL' 1;">delete</span>
+</button>
+</div>
+</body></html>

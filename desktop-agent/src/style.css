@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@700&family=Space+Grotesk:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { height: 100%; width: 100%; }
+body { -webkit-font-smoothing: antialiased; user-select: none; }
+input, textarea, code { user-select: text; }
+
+.neo-shadow { box-shadow: 4px 4px 0px 0px #1a1c1c; }
+.neo-shadow-lg { box-shadow: 8px 8px 0px 0px #1a1c1c; }
+.neo-shadow-hover:hover { box-shadow: none; transform: translate(4px, 4px); }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #f9f9f9; }
+::-webkit-scrollbar-thumb { background: #a4c639; }

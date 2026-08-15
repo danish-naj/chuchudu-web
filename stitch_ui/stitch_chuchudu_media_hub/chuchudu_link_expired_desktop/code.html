@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Link Expired | CHUCHUDU</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&amp;family=JetBrains+Mono:wght@700&amp;family=Space+Grotesk:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary": "#5e5e5e",
+                        "surface-variant": "#e2e2e2",
+                        "primary-fixed": "#ccf05f",
+                        "secondary-container": "#e2e2e2",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "surface-container-low": "#f3f3f3",
+                        "on-primary-fixed": "#161e00",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-tint": "#506600",
+                        "primary-fixed-dim": "#b1d446",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-background": "#1a1c1c",
+                        "tertiary-fixed": "#e2e2e2",
+                        "primary": "#506600",
+                        "surface-bright": "#f9f9f9",
+                        "outline": "#757965",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#454937",
+                        "on-secondary-container": "#646464",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#dadada",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary-fixed-variant": "#474747",
+                        "background": "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#b8b9b9",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "tertiary": "#5d5f5f",
+                        "outline-variant": "#c5c9b1",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#b1d446",
+                        "on-primary-container": "#3e5000",
+                        "surface-container": "#eeeeee",
+                        "surface": "#f9f9f9",
+                        "inverse-surface": "#2f3131",
+                        "primary-container": "#a4c639",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-container": "#484a4a"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "unit": "4px"
+                    },
+                    fontFamily: {
+                        "display-lg": ["Space Grotesk", "sans-serif"],
+                        "label-caps": ["JetBrains Mono", "monospace"],
+                        "body-lg": ["Hanken Grotesk", "sans-serif"],
+                        "headline-md": ["Space Grotesk", "sans-serif"],
+                        "headline-lg-mobile": ["Space Grotesk", "sans-serif"],
+                        "headline-lg": ["Space Grotesk", "sans-serif"],
+                        "button-text": ["Space Grotesk", "sans-serif"],
+                        "body-md": ["Hanken Grotesk", "sans-serif"]
+                    },
+                    fontSize: {
+                        "display-lg": ["72px", { lineHeight: "72px", letterSpacing: "-0.04em", fontWeight: "700" }],
+                        "label-caps": ["12px", { lineHeight: "16px", fontWeight: "700" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "500" }],
+                        "headline-md": ["24px", { lineHeight: "28px", fontWeight: "700" }],
+                        "headline-lg-mobile": ["32px", { lineHeight: "36px", fontWeight: "700" }],
+                        "headline-lg": ["48px", { lineHeight: "52px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "button-text": ["18px", { lineHeight: "20px", fontWeight: "700" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }]
+                    },
+                    boxShadow: {
+                        'neo': '4px 4px 0px 0px rgba(0,0,0,1)',
+                        'neo-lg': '8px 8px 0px 0px rgba(0,0,0,1)',
+                        'neo-focus': '0px 0px 0px 4px rgba(164, 198, 57, 1)',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f9f9f9; /* background */
+            color: #1a1c1c; /* on-background */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* Utility for 0px radius enforcement on inputs/buttons per style guidance if needed, though config says 0.25rem DEFAULT, we override manually for brutalism */
+        .brutal-border {
+            border: 2px solid #1a1c1c; /* on-background */
+            border-radius: 0;
+        }
+        .brutal-border-thick {
+            border: 4px solid #1a1c1c; /* on-background */
+            border-radius: 0;
+        }
+        .brutal-shadow {
+            box-shadow: 4px 4px 0px 0px #1a1c1c;
+        }
+        .brutal-shadow-lg {
+            box-shadow: 8px 8px 0px 0px #1a1c1c;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 bg-background z-50 border-b-4 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="flex items-center gap-2 group cursor-pointer hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] duration-100">
+<span class="material-symbols-outlined text-primary font-headline-md text-headline-md" data-icon="bolt">bolt</span>
+<span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-background">CHUCHUDU</span>
+</div>
+<button class="brutal-border brutal-shadow bg-surface text-on-background font-button-text text-button-text px-6 py-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] duration-100 uppercase">
+            LOG IN
+        </button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full gap-12 relative overflow-hidden">
+<!-- Background decorative elements for brutalist vibe -->
+<div class="absolute top-10 left-10 w-24 h-24 bg-primary-container brutal-border-thick brutal-shadow-lg -rotate-12 z-0 hidden md:block"></div>
+<div class="absolute bottom-20 right-20 w-32 h-32 bg-surface-variant brutal-border-thick rounded-full border-dashed z-0 hidden md:block animate-[spin_10s_linear_infinite]"></div>
+<!-- Expired Card Container -->
+<section class="relative z-10 w-full max-w-3xl bg-surface brutal-border-thick brutal-shadow-lg p-8 md:p-12 flex flex-col items-center text-center gap-8 group">
+<!-- Graphic Illustration Area -->
+<div class="relative w-full max-w-[400px] aspect-video bg-primary-container brutal-border brutal-shadow mb-4 overflow-hidden flex items-center justify-center hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200">
+<img class="w-full h-full object-cover" data-alt="A highly stylized, bold neo-brutalist graphic illustration representing an expired timer or broken hourglass. The design uses aggressive high contrast with stark black outlines against a vibrant lime green background. There are no soft shadows, only hard, solid offset dropshadows. The visual style is reminiscent of modern digital sticker art, conveying urgency and a digital error state." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBC9GYcmsTIg6HoIgmsejWhIYwWEBE5On1d6gZ1_PxvwBJzBB5GkCEy2rPauVx5INsnLsf_7lNTUWIIP3mac166QxdlFoYIQZf8PL1TgJbpMTgRoivg6qNdVKAi-BkADp8uizOYZ3fRbbkKnRUl0-Q9P8vCZxg8nsoJVwfvCeQ2iuP9g_k9rdO_wqMvfP7t1zA5lDmD_XBjc9m8AyNXR488AO7OPT--UD2YMj_bbjfvy3dAgWQiyFSIG_tP3sZ4jTX-cC3a_da4W4kv"/>
+<!-- Overlay badge -->
+<div class="absolute -top-4 -right-4 bg-error text-on-error font-label-caps text-label-caps uppercase px-4 py-2 brutal-border brutal-shadow rotate-12">
+                    00:00:00
+                </div>
+</div>
+<div class="flex flex-col gap-4 max-w-xl">
+<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg uppercase tracking-tighter">
+                    TIME'S UP.<br/>LINK EXPIRED.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                    The sender set an expiration date or download limit that has been reached. Want to share files with no limits? Join the Chuchudu movement today.
+                </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col sm:flex-row gap-6 w-full justify-center mt-4">
+<button class="w-full sm:w-auto bg-primary-container text-on-primary-container brutal-border brutal-shadow px-8 py-4 font-button-text text-button-text uppercase hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] duration-100 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+                    GET CHUCHUDU NOW
+                </button>
+<button class="w-full sm:w-auto bg-surface text-on-surface brutal-border brutal-shadow px-8 py-4 font-button-text text-button-text uppercase hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] duration-100 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+                    BACK TO HOME
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-auto flex flex-col md:flex-row justify-between items-center gap-4 px-margin-mobile md:px-margin-desktop py-8 bg-on-background text-surface-variant border-t-4 border-on-background z-50">
+<div class="font-headline-md text-headline-md text-primary-fixed">
+            CHUCHUDU
+        </div>
+<div class="font-label-caps text-label-caps text-center">
+            © 2024 CHUCHUDU. NO FILES? NO PROBLEM.
+        </div>
+<nav class="flex gap-6 font-label-caps text-label-caps text-surface-variant">
+<a class="hover:text-primary-fixed-dim transition-colors cursor-pointer" href="#">Support</a>
+<a class="hover:text-primary-fixed-dim transition-colors cursor-pointer" href="#">Privacy</a>
+<a class="hover:text-primary-fixed-dim transition-colors cursor-pointer" href="#">Terms</a>
+</nav>
+</footer>
+</body></html>

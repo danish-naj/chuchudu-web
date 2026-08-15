@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Send It. No Limits.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&amp;family=JetBrains+Mono:wght@700&amp;family=Space+Grotesk:wght@700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f9f9f9",
+                        "on-surface-variant": "#454937",
+                        "on-surface": "#1a1c1c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "on-primary-container": "#3e5000",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "tertiary-fixed": "#e2e2e2",
+                        "tertiary": "#5d5f5f",
+                        "on-secondary-fixed-variant": "#474747",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "primary-fixed-dim": "#b1d446",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "tertiary-container": "#b8b9b9",
+                        "surface-container-high": "#e8e8e8",
+                        "primary": "#506600",
+                        "primary-fixed": "#ccf05f",
+                        "surface-tint": "#506600",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "inverse-primary": "#b1d446",
+                        "surface-variant": "#e2e2e2",
+                        "outline": "#757965",
+                        "on-error": "#ffffff",
+                        "primary-container": "#a4c639",
+                        "on-background": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#161e00",
+                        "surface-container-low": "#f3f3f3",
+                        "on-tertiary-container": "#484a4a",
+                        "surface": "#f9f9f9",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-secondary-container": "#646464",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary": "#5e5e5e",
+                        "outline-variant": "#c5c9b1",
+                        "secondary-container": "#e2e2e2",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#2f3131"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "display-lg": ["Space Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg": ["Space Grotesk"],
+                        "button-text": ["Space Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "button-text": ["18px", { "lineHeight": "20px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .neo-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+        .neo-shadow-lg { box-shadow: 8px 8px 0px 0px rgba(0,0,0,1); }
+        .neo-shadow-hover:hover { box-shadow: 2px 2px 0px 0px rgba(0,0,0,1); transform: translate(2px, 2px); }
+        .neo-border { border: 2px solid #1a1c1c; }
+        .neo-border-thick { border: 4px solid #1a1c1c; }
+        
+        /* Disable Top Nav on Mobile, Hide Bottom Nav on Desktop */
+        @media (min-width: 768px) {
+            .mobile-only { display: none !important; }
+        }
+        @media (max-width: 767px) {
+            .desktop-only { display: none !important; }
+        }
+        
+        /* Grid backgrounds */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden pb-[100px] bg-grid-pattern">
+<!-- TopAppBar (Hidden on strictly linear flows, but landing page shows it for brand) -->
+<header class="w-full top-0 sticky z-50 bg-background dark:bg-surface border-b-2 border-on-background dark:border-on-surface-variant shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between px-margin-mobile h-16 transition-transform duration-100 active:translate-y-1">
+<div class="flex items-center gap-4">
+<button class="text-primary dark:text-primary-fixed hover:bg-primary-container hover:translate-y-0.5 p-2 rounded-none transition-all border-2 border-transparent active:border-on-background">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu</span>
+</button>
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed uppercase tracking-tighter">CHUCHUDU</span>
+</div>
+<button class="text-on-surface-variant hover:bg-primary-container hover:translate-y-0.5 p-2 rounded-none transition-all border-2 border-transparent active:border-on-background">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</header>
+<main class="w-full px-margin-mobile pt-8 pb-12 flex flex-col gap-12">
+<!-- Hero Section -->
+<section class="flex flex-col gap-6">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface uppercase tracking-tighter w-full max-w-sm mx-auto text-center leading-tight">
+<span class="block bg-primary text-on-primary px-2 py-1 neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -rotate-2 transform inline-block mb-2">SEND IT.</span>
+<span class="block bg-surface-container-lowest px-2 py-1 neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rotate-1 transform inline-block">NO LIMITS.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant text-center px-4">
+                Fast, secure, and unapologetically raw file transfers for the modern creative.
+            </p>
+</section>
+<!-- Dropzone (Mobile Adapted) -->
+<section class="w-full">
+<div class="bg-surface-container-lowest neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col items-center justify-center gap-6 relative overflow-hidden group cursor-pointer active:scale-95 transition-transform duration-200" id="dropzone-area">
+<!-- Decorative background elements -->
+<div class="absolute -top-10 -right-10 text-primary opacity-20 transform rotate-12 transition-transform group-hover:rotate-45 duration-500">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">cloud_upload</span>
+</div>
+<div class="w-24 h-24 bg-primary rounded-none neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center z-10 animate-bounce">
+<span class="material-symbols-outlined text-on-primary text-5xl" style="font-variation-settings: 'FILL' 1;">add</span>
+</div>
+<div class="text-center z-10">
+<h2 class="font-headline-md text-headline-md text-on-surface uppercase mb-2">Tap to Select</h2>
+<p class="font-body-md text-body-md text-on-surface-variant font-label-caps uppercase text-xs">Or drag &amp; drop files here</p>
+</div>
+<button class="bg-primary text-on-primary font-button-text text-button-text uppercase px-8 py-4 neo-border neo-shadow neo-shadow-hover transition-all z-10 w-full max-w-xs mt-4">
+                    Browse Files
+                </button>
+</div>
+</section>
+<!-- Specs / Features (Stacked for mobile) -->
+<section class="flex flex-col gap-6">
+<h3 class="font-headline-md text-headline-md text-on-surface uppercase border-b-4 border-on-surface pb-2 inline-block">The Specs</h3>
+<div class="grid grid-cols-1 gap-6">
+<!-- Feature 1 -->
+<div class="bg-surface-container-lowest p-6 neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-start gap-4">
+<div class="bg-primary-fixed p-3 neo-border shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] shrink-0">
+<span class="material-symbols-outlined text-on-primary-fixed">rocket_launch</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-base uppercase mb-1">Blazing Speed</h4>
+<p class="font-body-md text-body-md text-sm text-on-surface-variant">P2P connections mean your files fly directly to their destination.</p>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface-container-lowest p-6 neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-start gap-4">
+<div class="bg-primary-fixed p-3 neo-border shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] shrink-0">
+<span class="material-symbols-outlined text-on-primary-fixed">lock</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-base uppercase mb-1">End-to-End</h4>
+<p class="font-body-md text-body-md text-sm text-on-surface-variant">Military-grade encryption. Nobody peeks at your stash.</p>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface-container-lowest p-6 neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-start gap-4">
+<div class="bg-primary-fixed p-3 neo-border shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] shrink-0">
+<span class="material-symbols-outlined text-on-primary-fixed">all_inclusive</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-base uppercase mb-1">No Limits</h4>
+<p class="font-body-md text-body-md text-sm text-on-surface-variant">Send a 1KB text file or a 100GB video project. We don't care.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Shell) - Context: Landing/New Transfer is active -->
+<nav class="mobile-only bg-background dark:bg-surface text-primary dark:text-primary-fixed font-headline-md text-headline-md fixed bottom-0 w-full z-50 border-t-2 border-on-background dark:border-on-surface-variant flex justify-around items-center h-20 px-2 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-primary-container transition-all active:scale-95 flex-1 h-full" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">folder_open</span>
+<span class="font-label-caps text-[10px] uppercase">FILES</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-primary-container transition-all active:scale-95 flex-1 h-full" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">swap_horiz</span>
+<span class="font-label-caps text-[10px] uppercase">TRANSFERS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-primary-container transition-all active:scale-95 flex-1 h-full" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">switch_account</span>
+<span class="font-label-caps text-[10px] uppercase">ACTIVITY</span>
+</a>
+<!-- Active Tab: NEW (Since it's a landing page meant to send files) -->
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary border-2 border-on-background shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rounded-none px-3 py-1 hover:bg-primary-container transition-all active:scale-95 flex-1 h-14 -mt-4 mr-1" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl" style="font-variation-settings: 'FILL' 1;">add_box</span>
+<span class="font-label-caps text-[10px] uppercase">NEW</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for the dropzone
+        const dropzone = document.getElementById('dropzone-area');
+        dropzone.addEventListener('click', () => {
+            dropzone.style.transform = 'scale(0.95) translateY(4px)';
+            dropzone.style.boxShadow = '2px 2px 0px 0px rgba(0,0,0,1)';
+            setTimeout(() => {
+                dropzone.style.transform = '';
+                dropzone.style.boxShadow = '';
+            }, 150);
+        });
+    </script>
+</body></html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Chuchudu - Login</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "surface-container-high": "#e8e8e8",
+                    "surface-container-low": "#f3f3f3",
+                    "on-tertiary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface": "#f9f9f9",
+                    "secondary": "#5e5e5e",
+                    "inverse-surface": "#2f3131",
+                    "background": "#f9f9f9",
+                    "secondary-container": "#e2e2e2",
+                    "on-primary-fixed-variant": "#3c4d00",
+                    "primary-fixed-dim": "#b1d446",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e2e2e2",
+                    "inverse-primary": "#b1d446",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1a1c1c",
+                    "tertiary-container": "#b8b9b9",
+                    "tertiary-fixed": "#e2e2e2",
+                    "primary-container": "#a4c639",
+                    "primary": "#506600",
+                    "on-secondary-fixed-variant": "#474747",
+                    "surface-dim": "#dadada",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "surface-tint": "#506600",
+                    "outline-variant": "#c5c9b1",
+                    "on-primary-fixed": "#161e00",
+                    "tertiary": "#5d5f5f",
+                    "surface-bright": "#f9f9f9",
+                    "primary-fixed": "#ccf05f",
+                    "outline": "#757965",
+                    "on-primary-container": "#3e5000",
+                    "error": "#ba1a1a",
+                    "on-surface-variant": "#454937",
+                    "on-secondary-fixed": "#1b1b1b",
+                    "secondary-fixed": "#e2e2e2",
+                    "surface-variant": "#e2e2e2",
+                    "surface-container": "#eeeeee",
+                    "secondary-fixed-dim": "#c6c6c6",
+                    "on-secondary-container": "#646464",
+                    "on-tertiary-container": "#484a4a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#1a1c1c",
+                    "inverse-on-surface": "#f1f1f1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-desktop": "64px",
+                    "unit": "4px",
+                    "container-max": "1280px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Space Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "button-text": ["Space Grotesk"],
+                    "headline-md": ["Space Grotesk"],
+                    "headline-lg-mobile": ["Space Grotesk"],
+                    "headline-lg": ["Space Grotesk"],
+                    "label-caps": ["JetBrains Mono"],
+                    "body-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                    "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                    "button-text": ["18px", { "lineHeight": "20px", "fontWeight": "700" }],
+                    "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                    "headline-lg-mobile": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                    "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                    "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Grain texture overlay */
+        .noise-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="bg-primary-container text-on-background min-h-screen font-body-md relative overflow-hidden flex items-center justify-center p-4">
+<div class="noise-bg"></div>
+<main class="w-full max-w-md relative z-10">
+<!-- Main Card -->
+<div class="bg-surface border-4 border-on-background shadow-[8px_8px_0px_0px_rgba(26,28,28,1)] p-8 flex flex-col gap-8">
+<!-- Header / Logo -->
+<div class="flex flex-col items-center gap-4">
+<img alt="CHUCHUDU Logo" class="w-32 h-auto object-contain drop-shadow-[4px_4px_0px_rgba(26,28,28,1)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLQWIgcOvPp3no5czSciDP6fp-BH3b0xDQ7tQ5SVRU6zx23NSRfpb1kjbHtjjJkPLFIYTuFSLYijZ9wu1I96IvfNpRBzjVQqGyzEtkOrgLtzCL_mWKiVkrpmOGercGtQe-rsbQseN9AFh-QMFvdp7p3TBiL1Nfpe2FznDK_1me5zQdd0bZ7-1Xl-E4bwvjoTjmEB5Fif838n4psy2Al4F6VSQVaQTydQNiPHxWcBK851OrS5BG6qdPONtzTYrFaWQOZuKHWfOIRz0n">
+<h1 class="font-headline-lg text-headline-lg uppercase text-center mt-4">Login</h1>
+</div>
+<!-- Form -->
+<form class="flex flex-col gap-6">
+<!-- Email Input -->
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps uppercase" for="email">Email Address</label>
+<input class="w-full bg-surface-container-lowest border-2 border-on-background p-4 font-label-caps text-label-caps focus:outline-none focus:border-4 focus:shadow-[4px_4px_0px_0px_#a4c639] transition-all" id="email" placeholder="USER@CHUCHUDU.COM" type="email">
+</div>
+<!-- Password Input -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps uppercase" for="password">Password</label>
+<a class="font-label-caps text-label-caps text-primary underline decoration-2 hover:text-on-background transition-colors" href="#">Forgot?</a>
+</div>
+<input class="w-full bg-surface-container-lowest border-2 border-on-background p-4 font-label-caps text-label-caps focus:outline-none focus:border-4 focus:shadow-[4px_4px_0px_0px_#a4c639] transition-all" id="password" placeholder="••••••••" type="password">
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-primary-container border-2 border-on-background shadow-[4px_4px_0px_0px_rgba(26,28,28,1)] p-4 font-button-text text-button-text uppercase hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all mt-4 flex items-center justify-center gap-2" type="button">
+<span class="">ENTER SYSTEM</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">login</span>
+</button>
+</form>
+<div class="w-full h-1 border-t-2 border-on-background border-dashed my-2"></div>
+<!-- Social Logins -->
+<div class="flex flex-col gap-4">
+<button class="w-full bg-surface-container-lowest border-2 border-on-background p-3 font-button-text text-button-text uppercase hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2" type="button">
+<span class="">SIGN IN WITH GOOGLE</span>
+</button>
+<button class="w-full bg-on-background text-on-primary border-2 border-on-background p-3 font-button-text text-button-text uppercase hover:bg-on-tertiary-fixed-variant transition-colors flex items-center justify-center gap-2" type="button">
+<span class="">SIGN IN WITH GITHUB</span>
+</button>
+</div>
+<p class="text-center font-label-caps text-label-caps mt-4">
+                DON'T HAVE AN ACCOUNT? <a class="text-primary font-button-text underline decoration-2 hover:text-on-background transition-all hover:translate-x-[2px] hover:translate-y-[2px]" href="#">SIGN UP</a>
+</p>
+</div>
+</main>
+
+
+</body></html>

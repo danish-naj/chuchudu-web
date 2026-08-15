@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Send It. No Limits.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&amp;family=JetBrains+Mono:wght@700&amp;family=Space+Grotesk:wght@700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- WebGL setup -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f9f9f9",
+                        "on-surface-variant": "#454937",
+                        "on-surface": "#1a1c1c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "on-primary-container": "#3e5000",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "tertiary-fixed": "#e2e2e2",
+                        "tertiary": "#5d5f5f",
+                        "on-secondary-fixed-variant": "#474747",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "primary-fixed-dim": "#b1d446",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "tertiary-container": "#b8b9b9",
+                        "surface-container-high": "#e8e8e8",
+                        "primary": "#506600",
+                        "primary-fixed": "#ccf05f",
+                        "surface-tint": "#506600",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "inverse-primary": "#b1d446",
+                        "surface-variant": "#e2e2e2",
+                        "outline": "#757965",
+                        "on-error": "#ffffff",
+                        "primary-container": "#a4c639",
+                        "on-background": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#161e00",
+                        "surface-container-low": "#f3f3f3",
+                        "on-tertiary-container": "#484a4a",
+                        "surface": "#f9f9f9",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-secondary-container": "#646464",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary": "#5e5e5e",
+                        "outline-variant": "#c5c9b1",
+                        "secondary-container": "#e2e2e2",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#2f3131"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "display-lg": ["Space Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg": ["Space Grotesk"],
+                        "button-text": ["Space Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "button-text": ["18px", { "lineHeight": "20px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    },
+                    "animation": {
+                        'marquee': 'marquee 15s linear infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    "keyframes": {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .neo-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+        .neo-shadow-lg { box-shadow: 8px 8px 0px 0px rgba(0,0,0,1); }
+        .neo-shadow-xl { box-shadow: 12px 12px 0px 0px rgba(0,0,0,1); }
+        .neo-shadow-hover:hover { box-shadow: 2px 2px 0px 0px rgba(0,0,0,1); transform: translate(6px, 6px); }
+        .neo-border { border: 4px solid #1a1c1c; }
+        
+        .tilt-hover:hover { transform: perspective(500px) rotateX(5deg) rotateY(-5deg) scale(1.02); }
+        
+        /* Disable Top Nav on Mobile, Hide Bottom Nav on Desktop */
+        @media (min-width: 768px) {
+            .mobile-only { display: none !important; }
+        }
+        @media (max-width: 767px) {
+            .desktop-only { display: none !important; }
+        }
+        
+        /* Grid backgrounds */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(0,0,0,0.08) 2px, transparent 2px),
+                linear-gradient(to bottom, rgba(0,0,0,0.08) 2px, transparent 2px);
+        }
+        
+        #shader-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        #three-canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="text-on-background font-body-md overflow-x-hidden flex flex-col bg-transparent">
+<!-- Background Layers -->
+<canvas id="shader-bg"></canvas>
+<div id="three-canvas-container"></div>
+<!-- Marquee Top -->
+<div class="w-full bg-primary-container text-on-background border-b-4 border-on-background overflow-hidden whitespace-nowrap py-2 z-50 sticky top-0">
+<div class="inline-block animate-marquee font-label-caps text-lg tracking-widest font-black uppercase">
+        FAST // SECURE // RAW // NO LIMITS // CHUCHUDU // FAST // SECURE // RAW // NO LIMITS // CHUCHUDU // FAST // SECURE // RAW // NO LIMITS // CHUCHUDU // FAST // SECURE // RAW // NO LIMITS // CHUCHUDU //
+    </div>
+</div>
+<!-- Minimal Top Bar -->
+<header class="w-full z-40 bg-surface-container-lowest border-b-4 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between px-4 h-20 relative">
+<span class="font-display-lg text-[32px] font-black text-on-surface uppercase tracking-tighter">CHUCHUDU</span>
+<a class="bg-primary-container text-on-background font-button-text uppercase px-6 py-3 neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] neo-shadow-hover transition-all" href="#">
+    Log In
+</a>
+</header>
+<main class="w-full px-4 pt-16 pb-32 flex flex-col gap-24 relative z-10">
+<!-- Hero Section -->
+<section class="flex flex-col gap-8 relative z-10">
+<h1 class="font-display-lg text-[64px] sm:text-[96px] text-on-surface uppercase tracking-tighter w-full mx-auto text-center leading-[0.85]">
+<span class="block bg-primary-container text-on-background px-6 py-2 neo-border shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] -rotate-3 transform inline-block mb-6">SEND IT.</span>
+<span class="block bg-surface-container-lowest px-6 py-2 neo-border shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] rotate-2 transform inline-block">NO LIMITS.</span>
+</h1>
+<p class="font-body-lg text-[20px] text-on-background font-bold text-center px-4 max-w-md mx-auto bg-surface-container-lowest/80 py-4 neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                Fast, secure, and unapologetically raw file transfers for the modern creative.
+            </p>
+</section>
+<!-- Oversized CTA -->
+<section class="w-full flex justify-center py-8 relative z-10">
+<a class="w-full max-w-md bg-primary-container text-on-background neo-border shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] p-12 flex flex-col items-center justify-center gap-8 relative group cursor-pointer hover:scale-105 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 active:scale-95" href="/login">
+<div class="w-40 h-40 bg-surface-container-lowest rounded-full neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center z-10 group-hover:-rotate-12 transition-transform duration-300">
+<span class="material-symbols-outlined text-[80px]" style="font-variation-settings: 'FILL' 1;">upload_file</span>
+</div>
+<div class="text-center z-10">
+<h2 class="font-display-lg text-[48px] leading-none text-on-surface uppercase font-black tracking-tight">Upload<br/>Anything</h2>
+</div>
+</a>
+</section>
+<!-- Specs / Features -->
+<section class="flex flex-col gap-12 relative z-10 pt-12">
+<h3 class="font-display-lg text-5xl text-on-surface uppercase text-center bg-surface-container-lowest py-4 px-8 neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform -rotate-1 inline-block w-max mx-auto">The Specs</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 max-w-6xl mx-auto">
+<!-- Feature 1 -->
+<div class="bg-surface-container-lowest p-8 neo-border shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center text-center gap-6 relative overflow-hidden tilt-hover transition-transform duration-300 opacity-0" style="animation: fadeInUp 0.8s ease-out 0.2s forwards;">
+<div class="absolute top-0 left-0 w-full h-3 bg-primary-container border-b-4 border-on-background"></div>
+<div class="bg-primary-container p-6 neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mt-4 rounded-full">
+<span class="material-symbols-outlined text-5xl">rocket_launch</span>
+</div>
+<div>
+<h4 class="font-display-lg text-3xl font-black uppercase mb-4 tracking-tighter">Blazing Speed</h4>
+<p class="font-body-md text-lg text-on-surface-variant font-bold leading-snug">P2P connections mean your files fly directly to their destination.</p>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface-container-lowest p-8 neo-border shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center text-center gap-6 relative overflow-hidden tilt-hover transition-transform duration-300 opacity-0" style="animation: fadeInUp 0.8s ease-out 0.4s forwards;">
+<div class="absolute top-0 left-0 w-full h-3 bg-primary-container border-b-4 border-on-background"></div>
+<div class="bg-primary-container p-6 neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mt-4 rounded-full">
+<span class="material-symbols-outlined text-5xl">lock</span>
+</div>
+<div>
+<h4 class="font-display-lg text-3xl font-black uppercase mb-4 tracking-tighter">End-to-End</h4>
+<p class="font-body-md text-lg text-on-surface-variant font-bold leading-snug">Military-grade encryption. Nobody peeks at your stash.</p>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface-container-lowest p-8 neo-border shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center text-center gap-6 relative overflow-hidden tilt-hover transition-transform duration-300 opacity-0" style="animation: fadeInUp 0.8s ease-out 0.6s forwards;">
+<div class="absolute top-0 left-0 w-full h-3 bg-primary-container border-b-4 border-on-background"></div>
+<div class="bg-primary-container p-6 neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mt-4 rounded-full">
+<span class="material-symbols-outlined text-5xl">all_inclusive</span>
+</div>
+<div>
+<h4 class="font-display-lg text-3xl font-black uppercase mb-4 tracking-tighter">No Limits</h4>
+<p class="font-body-md text-lg text-on-surface-variant font-bold leading-snug">Send a 1KB text file or a 100GB video project. We don't care.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<script>
+    // --- Shader Background Setup ---
+    const canvas = document.getElementById('shader-bg');
+    const gl = canvas.getContext('webgl');
+
+    if (gl) {
+        // Vertex shader program
+        const vsSource = `
+            attribute vec4 aVertexPosition;
+            varying vec2 v_texCoord;
+            void main() {
+                gl_Position = aVertexPosition;
+                v_texCoord = aVertexPosition.xy * 0.5 + 0.5;
+            }
+        `;
+
+        // Fragment shader program (from DATA:ANIMATION:ANIMATION_65)
+        const fsSource = `
+            precision highp float;
+            uniform float u_time;
+            uniform vec2 u_resolution;
+            uniform vec2 u_mouse;
+            varying vec2 v_texCoord;
+
+            float hash(vec2 p) {
+                p = fract(p * vec2(123.34, 456.21));
+                p += dot(p, p + 45.32);
+                return fract(p.x * p.y);
+            }
+
+            void main() {
+                vec2 uv = v_texCoord;
+                vec2 p = (gl_FragCoord.xy * 2.0 - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
+                
+                // Grid pattern
+                vec2 grid = fract(uv * 10.0);
+                float gridLine = step(0.98, grid.x) + step(0.98, grid.y);
+                
+                // Kinetic noise
+                float t = u_time * 0.5;
+                vec3 color = vec3(0.97, 0.97, 0.97); // surface-bright #f9f9f9
+                
+                // Distorted grid lines in kinetic movement
+                float distort = sin(uv.x * 5.0 + t) * cos(uv.y * 5.0 - t) * 0.1;
+                vec2 uv2 = uv + distort;
+                vec2 grid2 = fract(uv2 * 20.0);
+                float gridLine2 = step(0.99, grid2.x) + step(0.99, grid2.y);
+                
+                color = mix(color, vec4(0.0, 0.0, 0.0, 0.1).rgb, gridLine);
+                color = mix(color, vec4(0.64, 0.77, 0.22, 0.2).rgb, gridLine2); // primary #a4c639 with alpha
+                
+                // Large "CHUCHUDU" background text effect (simplified as scanlines/bars)
+                float bars = step(0.5, sin(uv.y * 40.0 - u_time * 2.0));
+                color = mix(color, vec3(0.0), bars * 0.02);
+
+                gl_FragColor = vec4(color, 1.0);
+            }
+        `;
+
+        // Initialize a shader program
+        function initShaderProgram(gl, vsSource, fsSource) {
+            const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
+            const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
+            const shaderProgram = gl.createProgram();
+            gl.attachShader(shaderProgram, vertexShader);
+            gl.attachShader(shaderProgram, fragmentShader);
+            gl.linkProgram(shaderProgram);
+            return shaderProgram;
+        }
+
+        // Creates a shader of the given type, uploads the source and compiles it.
+        function loadShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            return shader;
+        }
+
+        const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
+        const programInfo = {
+            program: shaderProgram,
+            attribLocations: {
+                vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+            },
+            uniformLocations: {
+                time: gl.getUniformLocation(shaderProgram, 'u_time'),
+                resolution: gl.getUniformLocation(shaderProgram, 'u_resolution'),
+            },
+        };
+
+        const positions = [
+            1.0,  1.0,
+            -1.0,  1.0,
+            1.0, -1.0,
+            -1.0, -1.0,
+        ];
+        const positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+        function resizeCanvasToDisplaySize(canvas) {
+            const displayWidth  = canvas.clientWidth;
+            const displayHeight = canvas.clientHeight;
+            if (canvas.width  !== displayWidth || canvas.height !== displayHeight) {
+                canvas.width  = displayWidth;
+                canvas.height = displayHeight;
+            }
+        }
+
+        function render(time) {
+            time *= 0.001; // convert to seconds
+            resizeCanvasToDisplaySize(gl.canvas);
+            gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+            gl.useProgram(programInfo.program);
+            
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.vertexAttribPointer(programInfo.attribLocations.vertexPosition, 2, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition);
+            
+            gl.uniform1f(programInfo.uniformLocations.time, time);
+            gl.uniform2f(programInfo.uniformLocations.resolution, gl.canvas.width, gl.canvas.height);
+            
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+    }
+</script>
+<script>
+    // --- Three.js Setup (from DATA:ANIMATION:ANIMATION_66) ---
+    const container = document.getElementById('three-canvas-container');
+    const width = container.clientWidth || window.innerWidth;
+    const height = container.clientHeight || window.innerHeight;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    // Group to hold our "files"
+    const group = new THREE.Group();
+    scene.add(group);
+
+    // Create representative "file" geometries
+    const boxGeom = new THREE.BoxGeometry(1, 1.4, 0.1);
+    const cylinderGeom = new THREE.CylinderGeometry(0.5, 0.5, 0.1, 32);
+
+    const primaryColor = 0xa4c639;
+    const darkColor = 0x000000;
+
+    function createFile(geometry, color, pos) {
+        const material = new THREE.MeshPhongMaterial({ 
+            color: color, 
+            flatShading: true,
+            shininess: 100
+        });
+        const mesh = new THREE.Mesh(geometry, material);
+        
+        // Add a "border" effect with edges geometry
+        const edges = new THREE.EdgesGeometry(geometry);
+        const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 2 }));
+        mesh.add(line);
+        
+        mesh.position.set(pos.x, pos.y, pos.z);
+        mesh.userData.initialPos = pos.clone();
+        mesh.userData.rotationSpeed = Math.random() * 0.02;
+        group.add(mesh);
+        return mesh;
+    }
+
+    const files = [];
+    for(let i = 0; i < 12; i++) {
+        const isBox = Math.random() > 0.5;
+        const geom = isBox ? boxGeom : cylinderGeom;
+        const color = Math.random() > 0.4 ? primaryColor : 0xffffff;
+        const pos = new THREE.Vector3(
+            (Math.random() - 0.5) * 15,
+            (Math.random() - 0.5) * 15,
+            (Math.random() - 0.5) * 8 - 4
+        );
+        files.push(createFile(geom, color, pos));
+    }
+
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(5, 5, 5);
+    scene.add(light);
+    scene.add(new THREE.AmbientLight(0x404040));
+
+    camera.position.z = 8;
+
+    const mouse = new THREE.Vector2();
+    window.addEventListener('mousemove', (event) => {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    function animateThree() {
+        requestAnimationFrame(animateThree);
+        
+        const time = Date.now() * 0.001;
+        
+        files.forEach((file, i) => {
+            file.rotation.x += file.userData.rotationSpeed;
+            file.rotation.y += file.userData.rotationSpeed;
+            
+            // Floating motion
+            file.position.y = file.userData.initialPos.y + Math.sin(time + i) * 0.5;
+            
+            // React to mouse
+            file.position.x += (mouse.x * 2 - (file.position.x - file.userData.initialPos.x)) * 0.05;
+        });
+
+        renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+        const w = container.clientWidth || window.innerWidth;
+        const h = container.clientHeight || window.innerHeight;
+        renderer.setSize(w, h);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+    });
+
+    animateThree();
+</script>
+</body></html>

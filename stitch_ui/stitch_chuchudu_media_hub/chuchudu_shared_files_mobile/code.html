@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Shared</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&amp;family=Space+Grotesk:wght@700;900&amp;family=Hanken+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#f3f3f3",
+                        "on-surface-variant": "#454937",
+                        "on-secondary-fixed-variant": "#474747",
+                        "on-primary-container": "#3e5000",
+                        "on-background": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#b1d446",
+                        "secondary-fixed": "#e2e2e2",
+                        "inverse-on-surface": "#f1f1f1",
+                        "background": "#f9f9f9",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "inverse-surface": "#2f3131",
+                        "surface": "#f9f9f9",
+                        "secondary-container": "#e2e2e2",
+                        "primary-fixed": "#ccf05f",
+                        "surface-tint": "#506600",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#506600",
+                        "surface-dim": "#dadada",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#161e00",
+                        "primary-container": "#a4c639",
+                        "on-tertiary-container": "#484a4a",
+                        "outline": "#757965",
+                        "secondary": "#5e5e5e",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-secondary-container": "#646464",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#b8b9b9",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "outline-variant": "#c5c9b1",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#5d5f5f",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "inverse-primary": "#b1d446",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "surface-container-high": "#e8e8e8",
+                        "on-surface": "#1a1c1c",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "surface-bright": "#f9f9f9",
+                        "tertiary-fixed-dim": "#c6c6c7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "display-lg": ["Space Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "button-text": ["Space Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "button-text": ["18px", { "lineHeight": "20px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .neo-border { border: 3px solid #1a1c1c; }
+        .neo-shadow { box-shadow: 6px 6px 0px 0px #1a1c1c; }
+        .neo-shadow-sm { box-shadow: 4px 4px 0px 0px #1a1c1c; }
+        .neo-shadow-hover:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0px 0px #1a1c1c; }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col pt-[72px] pb-[80px]">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-surface-container border-b-4 border-on-background dark:border-on-surface-variant shadow-[4px_0px_0px_0px_rgba(0,0,0,1)] z-40">
+<div class="flex items-center justify-between px-margin-mobile py-4 w-full">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full neo-border object-cover bg-primary-container" data-alt="A stylized 2D avatar illustration of a young creative professional with brightly colored hair and trendy glasses, set against a solid lime green background in a neo-brutalist pop-art style with thick black outlines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPIPXCpc0SzA9t7ipNoO3DXwrF0CXwSkZVmQxXfMScm54Xhm05W0F2zwzzvbk-Ry_rHNcsW4uZSbeL2UQuFMh7Hw8PC_7mNaeHVD-w-xJ6kYHmgiNOwNCl0-KCKGvWpj6A2_boCXsjd-5VkBcLHiENtV25H-GeiqOiHAye-yetk6jCj-p8hWTYR8uydd2jrloZ4f6hMZ9_FHyEZlExXj751uClEFvq-mrlO577SMrEj1sGk-OeyAHyLPXmbCFA_WHW8TAXr80sr7Zf"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-black text-on-surface dark:text-on-surface tracking-tighter uppercase">CHUCHUDU</h1>
+<button class="w-10 h-10 flex items-center justify-center neo-border bg-surface-container-lowest neo-shadow-sm neo-shadow-hover transition-transform duration-100 text-on-surface">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-margin-mobile py-6 flex flex-col gap-6 relative">
+<!-- Header & Tabs -->
+<div class="flex flex-col gap-4">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile">Shared</h2>
+<div class="flex neo-border bg-surface-container-lowest p-1">
+<button class="flex-1 py-2 bg-primary-container text-on-primary-container font-button-text text-button-text neo-border text-center uppercase">Shared by me</button>
+<button class="flex-1 py-2 bg-transparent text-on-surface font-button-text text-button-text hover:bg-surface-variant transition-colors text-center uppercase">Shared with me</button>
+</div>
+</div>
+<!-- Shared Items List -->
+<div class="flex flex-col gap-5">
+<!-- Item 1 -->
+<div class="bg-surface-container-lowest neo-border neo-shadow p-4 flex flex-col gap-3 relative overflow-hidden group hover:-translate-y-1 transition-transform">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-primary-fixed flex items-center justify-center neo-border">
+<span class="material-symbols-outlined text-[28px]">folder_zip</span>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] font-bold leading-none">Project_Alpha_V2.zip</h3>
+<p class="text-on-surface-variant mt-1">1.2 GB • 3 files</p>
+</div>
+</div>
+<button class="p-2 border-2 border-on-background bg-surface-container-low hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-t-2 border-on-background border-dashed">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-on-background object-cover bg-secondary-fixed" data-alt="A stylized 2D avatar of a person with short blue hair, neon green highlights, and futuristic goggles. Solid pink background, thick black comic-style outlines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD95wJ_oMFRk3pRB1qsB1uIpHdymrvTLXqCz1kzk1qzUDhIw-Ep2G5jFwLPhz-eiFuOX2_pzhvR69OwF6v2Jk_R42MfIo_jfx_6WilDG7_pnihwKzq4hNPU0alMnLTwmc1vBWpZFgC6VFPyiKuj_AUxvbjTorFTAuN9-Qa_RHV5ggdHOyRtx6-KvCsa8N4nO06-ZM8YhpVHXDLPQno3ZvltuamAspTQ8Cfeo2NiO5IKu-CIwSLJ8WqNo2QpjOUP45PayIuGXpOR8n4D"/>
+<img class="w-8 h-8 rounded-full border-2 border-on-background object-cover bg-tertiary-fixed" data-alt="A graphic 2D avatar of a user wearing a bright orange beanie and a yellow jacket. Solid cyan background, heavy black stroke around the character in neo-brutalist style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD--J4jQXsy17avgmSzF2sM8OJSwA53_hrVCeNZ-15WY2BGuqcJkXALaTRCfSJfFvsJ0r9A4D35Cl99LI7TkujK4C5WAB_mwr39goXzl3Gqw20symAyzWG5HrAtvio30N5xni6qWIZL3egnA4ajPL93ZbuTKTuWp-vnAr_yLPcbi-MSUse6SNbB2QvYnxMmI32kRHANKTdY61Wn_CMg0AlCJ8jaBqmZL6sMC1L2ADxIqbYYgnx2fp3JPt-bxX8Bh9xlA8ZoftnPiJdx"/>
+<div class="w-8 h-8 rounded-full border-2 border-on-background bg-surface-variant flex items-center justify-center font-label-caps text-[10px]">+2</div>
+</div>
+<div class="font-label-caps text-label-caps uppercase bg-error-container text-on-error-container px-2 py-1 border-2 border-on-background">
+                        Expiring in 2h
+                    </div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest neo-border neo-shadow p-4 flex flex-col gap-3 relative overflow-hidden group hover:-translate-y-1 transition-transform">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-[#ff9900] flex items-center justify-center neo-border text-on-background">
+<span class="material-symbols-outlined text-[28px]">image</span>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] font-bold leading-none">Campaign_Assets</h3>
+<p class="text-on-surface-variant mt-1">450 MB • Album</p>
+</div>
+</div>
+<button class="p-2 border-2 border-on-background bg-surface-container-low hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-t-2 border-on-background border-dashed">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-on-background object-cover bg-surface-variant" data-alt="A stylized 2D portrait of a woman with large hoop earrings and a bright purple turtleneck. Graphic novel illustration style with thick black outlines, set on a yellow background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApPoqkYSYo-RMV0i1Q2xHhR8SLvpJ-Y2qT1_WPMtHbDSv5qPzBprmtRX3dc032OcUYwgPqZnd1XZ1Mx4K-UQNJVxBOmrTAkCF7DMc1O8PeS98TDhE-GMFFgfrfOOIZZkN2S043Bdo_C4uRN4ESWxX2ncbURBHIYKPVrGr9TutxOuRyvgR1B6h0TvYH_bZiI-K8DbJmzAhGVU7pIvE8MkbXOTOGBszjfbKr60t4xsjtnFp3JF8cNNrFkiwSwDP3mp7CZmWIaUN4NsI8"/>
+</div>
+<div class="font-label-caps text-label-caps uppercase bg-surface-variant text-on-surface px-2 py-1 border-2 border-on-background">
+                        Active
+                    </div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 px-margin-mobile bg-surface dark:bg-surface-container border-t-4 border-on-background dark:border-on-surface-variant md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface dark:text-on-surface-variant px-4 py-1 hover:bg-primary-fixed dark:hover:bg-primary-fixed-variant transition-all duration-75 active:scale-95 group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform">folder_open</span>
+<span class="font-label-caps text-label-caps uppercase">Files</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface dark:text-on-surface-variant px-4 py-1 hover:bg-primary-fixed dark:hover:bg-primary-fixed-variant transition-all duration-75 active:scale-95 group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform">swap_horiz</span>
+<span class="font-label-caps text-label-caps uppercase">Transfers</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary border-2 border-on-background dark:border-on-surface rounded-xl px-4 py-1 translate-y-[-4px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-75 active:scale-95 group" href="#">
+<span class="material-symbols-outlined fill mb-1">bolt</span>
+<span class="font-label-caps text-label-caps uppercase">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface dark:text-on-surface-variant px-4 py-1 hover:bg-primary-fixed dark:hover:bg-primary-fixed-variant transition-all duration-75 active:scale-95 group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform">person</span>
+<span class="font-label-caps text-label-caps uppercase">Account</span>
+</a>
+</nav>
+</body></html>

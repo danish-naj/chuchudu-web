@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CHUCHUDU - NO LIMITS.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Space+Grotesk:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "surface-container-low": "#f3f3f3",
+                      "on-secondary-container": "#646464",
+                      "on-surface-variant": "#454937",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#1a1c1c",
+                      "surface-bright": "#f9f9f9",
+                      "primary-container": "#a4c639",
+                      "on-primary-fixed": "#161e00",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed-variant": "#3c4d00",
+                      "primary-fixed": "#ccf05f",
+                      "primary": "#506600",
+                      "on-primary-container": "#3e5000",
+                      "surface-container-highest": "#e2e2e2",
+                      "inverse-surface": "#2f3131",
+                      "surface-container": "#eeeeee",
+                      "tertiary-container": "#b8b9b9",
+                      "secondary": "#5e5e5e",
+                      "tertiary-fixed": "#e2e2e2",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#dadada",
+                      "inverse-on-surface": "#f1f1f1",
+                      "on-primary": "#ffffff",
+                      "outline": "#757965",
+                      "on-background": "#1a1c1c",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "on-secondary-fixed-variant": "#474747",
+                      "primary-fixed-dim": "#b1d446",
+                      "tertiary": "#5d5f5f",
+                      "error": "#ba1a1a",
+                      "on-tertiary": "#ffffff",
+                      "surface-tint": "#506600",
+                      "on-error-container": "#93000a",
+                      "background": "#f9f9f9",
+                      "surface-container-high": "#e8e8e8",
+                      "surface": "#f9f9f9",
+                      "secondary-container": "#e2e2e2",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-tertiary-container": "#484a4a",
+                      "inverse-primary": "#b1d446",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "outline-variant": "#c5c9b1",
+                      "on-secondary-fixed": "#1b1b1b",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "surface-variant": "#e2e2e2"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "margin-desktop": "64px",
+                      "gutter": "24px",
+                      "unit": "4px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Space Grotesk"],
+                      "headline-lg": ["Space Grotesk"],
+                      "label-caps": ["JetBrains Mono"],
+                      "display-lg": ["Space Grotesk"],
+                      "headline-md": ["Space Grotesk"],
+                      "button-text": ["Space Grotesk"],
+                      "body-lg": ["Hanken Grotesk"],
+                      "body-md": ["Hanken Grotesk"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["32px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "headline-lg": ["48px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                      "display-lg": ["72px", {"lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "28px", "fontWeight": "700"}],
+                      "button-text": ["18px", {"lineHeight": "20px", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+      </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        
+        .neo-border {
+            border: 3px solid #000;
+        }
+        
+        .neo-shadow {
+            box-shadow: 6px 6px 0px 0px #000;
+            transition: all 0.1s ease-in-out;
+        }
+        
+        .neo-shadow:active, .neo-interactive:active .neo-shadow-inner {
+            box-shadow: 2px 2px 0px 0px #000;
+            transform: translate(4px, 4px);
+        }
+
+        .neo-interactive:hover .neo-shadow-inner {
+             box-shadow: 4px 4px 0px 0px #000;
+             transform: translate(2px, 2px);
+        }
+
+        .neo-shadow-hover:hover {
+            box-shadow: 2px 2px 0px 0px #000;
+            transform: translate(4px, 4px);
+        }
+
+        .bg-lime { background-color: theme('colors.primary-container'); }
+        .text-lime { color: theme('colors.primary-container'); }
+
+        .floating-icon {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .progress-bar-stripes {
+            background-image: linear-gradient(45deg, 
+                #000 25%, transparent 25%, 
+                transparent 50%, #000 50%, 
+                #000 75%, transparent 75%, 
+                transparent);
+            background-size: 1rem 1rem;
+            animation: move-stripes 1s linear infinite;
+        }
+        @keyframes move-stripes {
+            from { background-position: 1rem 0; }
+            to { background-position: 0 0; }
+        }
+    </style>
+</head>
+<body class="font-body-md antialiased min-h-screen flex flex-col relative overflow-x-hidden selection:bg-primary-container selection:text-on-background">
+<!-- TopNavBar -->
+<header class="bg-background dark:bg-background border-b-4 border-on-background dark:border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-black text-on-background dark:text-on-background uppercase tracking-tighter">CHUCHUDU</span>
+</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-primary dark:text-primary-fixed border-b-4 border-primary dark:border-primary-fixed pb-1 font-label-caps text-label-caps hover:bg-primary-container dark:hover:bg-primary-fixed-dim hover:text-on-primary-container transition-all" href="#">My Files</a>
+<a class="text-on-surface dark:text-on-surface-variant font-bold uppercase font-label-caps text-label-caps hover:bg-primary-container dark:hover:bg-primary-fixed-dim hover:text-on-primary-container transition-all" href="#">Transfers</a>
+<a class="text-on-surface dark:text-on-surface-variant font-bold uppercase font-label-caps text-label-caps hover:bg-primary-container dark:hover:bg-primary-fixed-dim hover:text-on-primary-container transition-all" href="#">Activity</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden md:block bg-lime neo-border neo-shadow px-6 py-2 font-button-text text-button-text uppercase tracking-wide neo-shadow-hover">START SHARING</button>
+<button aria-label="Account" class="neo-interactive p-2 border-2 border-transparent hover:border-black rounded-sm transition-all">
+<span class="material-symbols-outlined text-3xl">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col items-center w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 gap-24">
+<!-- Hero Section -->
+<section class="w-full flex flex-col items-center text-center relative gap-8 z-10 pt-10">
+<!-- Decorative Background Elements -->
+<div class="absolute top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden opacity-20">
+<div class="absolute top-10 left-10 w-32 h-32 bg-primary-fixed rotate-12 neo-border"></div>
+<div class="absolute bottom-20 right-20 w-48 h-48 bg-tertiary-fixed rounded-full neo-border"></div>
+<div class="absolute top-1/2 left-1/4 w-16 h-16 bg-error-container rotate-45 neo-border"></div>
+</div>
+<img alt="CHUCHUDU Logo" class="w-32 h-32 md:w-48 md:h-48 neo-border neo-shadow bg-surface-container-lowest object-contain p-2 rounded-lg -rotate-3 hover:rotate-0 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTWQTOhkjovAVm4HD37KDRm0NAEvSZxI4JoPqFQ0_P1USOIMXfpVYzVMkaPEEGu3GGn_yiJdgrX5964KxHYWz1bQMcl3NUXY2UWjqmP-A_m-Ua5UDODCrOgeE1I1vPm8p2QfS7c5a_eqzemOWeAIy-Qd57eozpWcnGqbTnGYLqo6aCERtClKKrcIQdGRb-EGzwsjQvFr2RCwsZUNyPGMeHRDXgbnlD3HHe6Yi_IsD1UOXIptE1xQBw_uiYgyqNiJwpTT3-i_VELdXU"/>
+<h1 class="font-display-lg text-display-lg md:text-[96px] md:leading-[96px] uppercase font-black tracking-tighter mix-blend-multiply relative inline-block">
+                SEND IT.<br/>
+<span class="text-primary-container" style="-webkit-text-stroke: 3px black;">NO LIMITS.</span>
+</h1>
+<p class="font-body-lg text-body-lg max-w-2xl mx-auto neo-border bg-surface-container-lowest p-4 neo-shadow rotate-1">
+                The most aggressive file-sharing platform on the web. Drop your stuff. Get a link. Move on.
+            </p>
+<!-- Upload Area -->
+<div class="w-full max-w-3xl mt-12 relative">
+<!-- Floating Icons -->
+<div class="absolute -left-12 -top-12 floating-icon delay-100 hidden md:block">
+<div class="bg-surface-container-lowest neo-border p-4 neo-shadow rotate-[-15deg] flex items-center justify-center">
+<span class="material-symbols-outlined text-5xl text-error">picture_as_pdf</span>
+</div>
+</div>
+<div class="absolute -right-8 top-1/2 floating-icon delay-300 hidden md:block">
+<div class="bg-primary-container neo-border p-4 neo-shadow rotate-[10deg] flex items-center justify-center">
+<span class="material-symbols-outlined text-5xl text-on-primary-container">image</span>
+</div>
+</div>
+<div class="absolute left-1/4 -bottom-16 floating-icon delay-500 hidden md:block z-20">
+<div class="bg-tertiary-container neo-border p-4 neo-shadow rotate-[-5deg] flex items-center justify-center">
+<span class="material-symbols-outlined text-5xl text-on-tertiary-container">movie</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest neo-border-4 border-black neo-shadow-8 border-4 border-dashed border-spacing-4 p-12 md:p-24 flex flex-col items-center justify-center gap-6 cursor-pointer hover:bg-surface-container-low transition-colors group relative overflow-hidden bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSI+PC9yZWN0Pgo8Y2lyY2xlIGN4PSIyIiBjeT0iMiIgcj0iMiIgZmlsbD0iI2U1ZTVlNSI+PC9jaXJjbGU+Cjwvc3ZnPg==')]">
+<div class="absolute inset-0 bg-lime opacity-0 group-hover:opacity-10 transition-opacity"></div>
+<div class="w-24 h-24 bg-on-background rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-white text-6xl" style="font-variation-settings: 'FILL' 1;">upload_file</span>
+</div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-center uppercase tracking-tight">Drop Files Here</h2>
+<p class="font-body-md text-on-surface-variant text-center border-b-2 border-black pb-1 hover:text-black transition-colors">or click to browse</p>
+</div>
+</div>
+<!-- Mock Progress Widget -->
+<div class="w-full max-w-xl bg-surface-container-lowest neo-border p-6 neo-shadow mt-8 flex flex-col gap-4 text-left rotate-1 hidden" id="mock-progress">
+<div class="flex justify-between items-center border-b-2 border-black pb-2">
+<span class="font-label-caps text-label-caps font-bold">UPLOADING...</span>
+<span class="font-label-caps text-label-caps">69%</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="bg-primary-container neo-border p-2">
+<span class="material-symbols-outlined text-2xl">folder_zip</span>
+</div>
+<div class="flex-grow">
+<p class="font-bold truncate">project_assets_final_v2.zip</p>
+<p class="text-sm text-on-surface-variant">420 MB / 1.2 GB</p>
+</div>
+</div>
+<div class="h-6 w-full neo-border bg-surface-container overflow-hidden">
+<div class="h-full bg-lime progress-bar-stripes border-r-2 border-black" style="width: 69%;"></div>
+</div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="w-full">
+<h2 class="font-headline-lg text-headline-lg uppercase mb-8 border-b-4 border-black pb-2 inline-block">The Specs</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="bg-primary-container neo-border p-8 neo-shadow flex flex-col gap-4 hover:-translate-y-2 transition-transform duration-300 group">
+<div class="w-16 h-16 bg-surface-container-lowest neo-border flex items-center justify-center rounded-full group-hover:rotate-12 transition-transform">
+<span class="material-symbols-outlined text-4xl">public</span>
+</div>
+<h3 class="font-headline-md text-headline-md uppercase mt-4">Anywhere Access</h3>
+<p class="font-body-md text-on-primary-container font-bold">Your files are available globally, instantly. No sign-ups needed for downloaders.</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest neo-border p-8 neo-shadow flex flex-col gap-4 hover:-translate-y-2 transition-transform duration-300 group">
+<div class="w-16 h-16 bg-error-container neo-border flex items-center justify-center rounded-full group-hover:rotate-12 transition-transform">
+<span class="material-symbols-outlined text-4xl">timer</span>
+</div>
+<h3 class="font-headline-md text-headline-md uppercase mt-4">Temporary Links</h3>
+<p class="font-body-md text-on-surface">Links self-destruct after 24 hours or 100 downloads. You control the lifespan.</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-inverse-surface text-inverse-on-surface neo-border p-8 neo-shadow flex flex-col gap-4 hover:-translate-y-2 transition-transform duration-300 group">
+<div class="w-16 h-16 bg-primary-fixed neo-border border-white flex items-center justify-center rounded-full group-hover:rotate-12 transition-transform">
+<span class="material-symbols-outlined text-4xl text-black">all_inclusive</span>
+</div>
+<h3 class="font-headline-md text-headline-md uppercase mt-4 text-white">No Limits</h3>
+<p class="font-body-md text-surface-variant">Send massive files without hitting arbitrary caps. If it fits on your drive, it fits here.</p>
+</div>
+</div>
+</section>
+<!-- Image Example Placeholder -->
+<section class="w-full my-12 hidden">
+<div class="w-full h-64 neo-border neo-shadow overflow-hidden relative">
+<div class="bg-cover bg-center w-full h-full absolute inset-0 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBY4E7NLr7EPz_Q5qaXXHMi4tqobagDSFRhAE5KYmZDi2lYHnyeZ9cWaD0OoP_D9Z6LVNSvYEBL5Xv79ph3OUkfxjaKjKKEy_LAPfDznxGL9gIcCAMruvUj1PMODVaTr-Dq-ZRmMG5ODhupFDhLysQITHukQ86VOHEdfqibGDrkqqSGmcnqlLl44Va-wVpvSb4Cw8pkaS3i43e5stV5PrsIQ6EsYh3_oLjyekI9ofHYP0Aewg69lbac_-L9YFk_KW1p5xJkjmSahPpq')"></div>
+<div class="absolute inset-0 bg-primary-container mix-blend-color pointer-events-none opacity-50"></div>
+<div class="absolute bottom-4 left-4 bg-white neo-border px-4 py-2 font-label-caps uppercase font-bold">Example Gallery View</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-surface-container-highest border-t-4 border-on-background w-full py-12 px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter mt-auto z-10 relative">
+<div class="font-headline-md text-headline-md font-black text-on-background uppercase tracking-tighter">
+            CHUCHUDU
+        </div>
+<div class="flex flex-wrap justify-center gap-6 md:gap-8">
+<a class="text-on-secondary-container dark:text-on-secondary-container font-label-caps text-label-caps hover:text-primary dark:hover:text-primary-fixed underline decoration-4 transition-colors duration-200" href="#">Terms</a>
+<a class="text-on-secondary-container dark:text-on-secondary-container font-label-caps text-label-caps hover:text-primary dark:hover:text-primary-fixed underline decoration-4 transition-colors duration-200" href="#">Privacy</a>
+<a class="text-on-secondary-container dark:text-on-secondary-container font-label-caps text-label-caps hover:text-primary dark:hover:text-primary-fixed underline decoration-4 transition-colors duration-200" href="#">Support</a>
+<a class="text-on-secondary-container dark:text-on-secondary-container font-label-caps text-label-caps hover:text-primary dark:hover:text-primary-fixed underline decoration-4 transition-colors duration-200" href="#">Twitter</a>
+<a class="text-on-secondary-container dark:text-on-secondary-container font-label-caps text-label-caps hover:text-primary dark:hover:text-primary-fixed underline decoration-4 transition-colors duration-200" href="#">Instagram</a>
+</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant font-bold">
+            © 2024 CHUCHUDU. NO LIMITS.
+        </div>
+</footer>
+<script>
+        // Simple interaction for the mock upload area
+        document.querySelector('.border-dashed').addEventListener('click', function() {
+            const progressWidget = document.getElementById('mock-progress');
+            progressWidget.classList.remove('hidden');
+            
+            // Basic animation just for show
+            setTimeout(() => {
+                const bar = progressWidget.querySelector('.bg-lime');
+                bar.style.width = '100%';
+                progressWidget.querySelector('.font-label-caps:last-child').textContent = '100%';
+                progressWidget.querySelector('.font-label-caps:first-child').textContent = 'DONE.';
+                
+                setTimeout(() => {
+                    progressWidget.classList.add('hidden');
+                    bar.style.width = '69%'; // Reset
+                    progressWidget.querySelector('.font-label-caps:last-child').textContent = '69%';
+                    progressWidget.querySelector('.font-label-caps:first-child').textContent = 'UPLOADING...';
+                }, 2000);
+            }, 500);
+        });
+    </script>
+</body></html>

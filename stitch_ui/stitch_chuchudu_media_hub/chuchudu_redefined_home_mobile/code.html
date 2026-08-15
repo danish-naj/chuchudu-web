@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Send It. No Limits.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&amp;family=JetBrains+Mono:wght@700&amp;family=Space+Grotesk:wght@700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f9f9f9",
+                        "on-surface-variant": "#454937",
+                        "on-surface": "#1a1c1c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "on-primary-container": "#3e5000",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "tertiary-fixed": "#e2e2e2",
+                        "tertiary": "#5d5f5f",
+                        "on-secondary-fixed-variant": "#474747",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "primary-fixed-dim": "#b1d446",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "tertiary-container": "#b8b9b9",
+                        "surface-container-high": "#e8e8e8",
+                        "primary": "#506600",
+                        "primary-fixed": "#ccf05f",
+                        "surface-tint": "#506600",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "inverse-primary": "#b1d446",
+                        "surface-variant": "#e2e2e2",
+                        "outline": "#757965",
+                        "on-error": "#ffffff",
+                        "primary-container": "#a4c639",
+                        "on-background": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#161e00",
+                        "surface-container-low": "#f3f3f3",
+                        "on-tertiary-container": "#484a4a",
+                        "surface": "#f9f9f9",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-secondary-container": "#646464",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary": "#5e5e5e",
+                        "outline-variant": "#c5c9b1",
+                        "secondary-container": "#e2e2e2",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#2f3131"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "display-lg": ["Space Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg": ["Space Grotesk"],
+                        "button-text": ["Space Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "button-text": ["18px", { "lineHeight": "20px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .neo-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+        .neo-shadow-lg { box-shadow: 12px 12px 0px 0px rgba(0,0,0,1); }
+        .neo-shadow-hover:hover { box-shadow: 2px 2px 0px 0px rgba(0,0,0,1); transform: translate(4px, 4px); }
+        .neo-border { border: 4px solid #1a1c1c; }
+        
+        /* Disable Top Nav on Mobile, Hide Bottom Nav on Desktop */
+        @media (min-width: 768px) {
+            .mobile-only { display: none !important; }
+        }
+        @media (max-width: 767px) {
+            .desktop-only { display: none !important; }
+        }
+        
+        /* Grid backgrounds */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(0,0,0,0.08) 2px, transparent 2px),
+                linear-gradient(to bottom, rgba(0,0,0,0.08) 2px, transparent 2px);
+        }
+        
+        .kinetic-bg {
+            background: linear-gradient(45deg, #a4c639 25%, transparent 25%, transparent 75%, #a4c639 75%, #a4c639),
+                        linear-gradient(45deg, #a4c639 25%, transparent 25%, transparent 75%, #a4c639 75%, #a4c639);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden pb-20 bg-grid-pattern flex flex-col">
+<!-- Minimal Top Bar -->
+<header class="w-full top-0 sticky z-50 bg-background border-b-4 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between px-4 h-20 transition-transform duration-100">
+<span class="font-display-lg text-[32px] font-black text-on-surface uppercase tracking-tighter">CHUCHUDU</span>
+<a class="bg-primary-container text-on-background font-button-text uppercase px-5 py-2 neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)] transition-all" href="#">
+    Log In
+</a>
+</header>
+<main class="w-full px-4 pt-12 pb-24 flex flex-col gap-16 relative">
+<!-- Hero Section -->
+<section class="flex flex-col gap-8 relative z-10">
+<h1 class="font-display-lg text-[56px] sm:text-[72px] text-on-surface uppercase tracking-tighter w-full mx-auto text-center leading-[0.9]">
+<span class="block bg-primary-container text-on-background px-4 py-2 neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] -rotate-3 transform inline-block mb-4">SEND IT.</span>
+<span class="block bg-surface-container-lowest px-4 py-2 neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rotate-2 transform inline-block">NO LIMITS.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant font-bold text-center px-2 max-w-sm mx-auto">
+                Fast, secure, and unapologetically raw file transfers for the modern creative.
+            </p>
+</section>
+<!-- Kinetic Divider -->
+<div class="w-full h-8 bg-on-background -mx-4 px-8 transform -skew-y-3 neo-border relative overflow-hidden flex items-center">
+<div class="absolute inset-0 kinetic-bg opacity-50"></div>
+</div>
+<!-- Oversized CTA -->
+<section class="w-full flex justify-center py-4 relative z-10">
+<a class="w-full max-w-sm bg-primary-container text-on-background neo-border shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-8 flex flex-col items-center justify-center gap-6 relative group cursor-pointer hover:translate-y-2 hover:translate-x-2 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200" href="#">
+<div class="w-32 h-32 bg-surface-container-lowest rounded-full neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center z-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[64px]" style="font-variation-settings: 'FILL' 1;">upload_file</span>
+</div>
+<div class="text-center z-10">
+<h2 class="font-display-lg text-[40px] leading-none text-on-surface uppercase">Upload<br/>Anything</h2>
+</div>
+</a>
+</section>
+<!-- Specs / Features -->
+<section class="flex flex-col gap-8 relative z-10 pt-8">
+<h3 class="font-display-lg text-4xl text-on-surface uppercase text-center bg-surface-container-lowest py-2 neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform rotate-1 inline-block w-max mx-auto px-6">The Specs</h3>
+<div class="grid grid-cols-1 gap-8">
+<!-- Feature 1 -->
+<div class="bg-surface-container-lowest p-6 neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center text-center gap-4 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-2 bg-primary-container border-b-4 border-on-background"></div>
+<div class="bg-primary-container p-4 neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mt-4">
+<span class="material-symbols-outlined text-4xl">rocket_launch</span>
+</div>
+<div>
+<h4 class="font-display-lg text-2xl uppercase mb-2">Blazing Speed</h4>
+<p class="font-body-md text-base text-on-surface-variant font-bold">P2P connections mean your files fly directly to their destination.</p>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface-container-lowest p-6 neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center text-center gap-4 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-2 bg-primary-container border-b-4 border-on-background"></div>
+<div class="bg-primary-container p-4 neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mt-4">
+<span class="material-symbols-outlined text-4xl">lock</span>
+</div>
+<div>
+<h4 class="font-display-lg text-2xl uppercase mb-2">End-to-End</h4>
+<p class="font-body-md text-base text-on-surface-variant font-bold">Military-grade encryption. Nobody peeks at your stash.</p>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface-container-lowest p-6 neo-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center text-center gap-4 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-2 bg-primary-container border-b-4 border-on-background"></div>
+<div class="bg-primary-container p-4 neo-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mt-4">
+<span class="material-symbols-outlined text-4xl">all_inclusive</span>
+</div>
+<div>
+<h4 class="font-display-lg text-2xl uppercase mb-2">No Limits</h4>
+<p class="font-body-md text-base text-on-surface-variant font-bold">Send a 1KB text file or a 100GB video project. We don't care.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

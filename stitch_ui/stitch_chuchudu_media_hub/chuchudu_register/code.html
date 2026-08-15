@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Create Account</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-dim": "#dadada",
+                      "surface-container-highest": "#e2e2e2",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary": "#5d5f5f",
+                      "secondary-container": "#e2e2e2",
+                      "inverse-primary": "#b1d446",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "primary-container": "#a4c639",
+                      "surface-container-low": "#f3f3f3",
+                      "surface": "#f9f9f9",
+                      "primary": "#506600",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "surface-variant": "#e2e2e2",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-tertiary-container": "#484a4a",
+                      "primary-fixed-dim": "#b1d446",
+                      "on-surface": "#1a1c1c",
+                      "on-primary-container": "#3e5000",
+                      "surface-bright": "#f9f9f9",
+                      "on-primary-fixed": "#161e00",
+                      "tertiary-fixed": "#e2e2e2",
+                      "error": "#ba1a1a",
+                      "on-surface-variant": "#454937",
+                      "on-primary-fixed-variant": "#3c4d00",
+                      "on-primary": "#ffffff",
+                      "secondary": "#5e5e5e",
+                      "on-secondary-fixed": "#1b1b1b",
+                      "on-secondary": "#ffffff",
+                      "outline": "#757965",
+                      "on-secondary-container": "#646464",
+                      "background": "#f9f9f9",
+                      "error-container": "#ffdad6",
+                      "surface-container-high": "#e8e8e8",
+                      "inverse-surface": "#2f3131",
+                      "surface-container": "#eeeeee",
+                      "on-error": "#ffffff",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed": "#ccf05f",
+                      "on-secondary-fixed-variant": "#474747",
+                      "tertiary-container": "#b8b9b9",
+                      "surface-tint": "#506600",
+                      "on-background": "#1a1c1c",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "outline-variant": "#c5c9b1",
+                      "inverse-on-surface": "#f1f1f1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "64px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": [
+                              "Space Grotesk"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-md": [
+                              "Space Grotesk"
+                      ],
+                      "headline-lg": [
+                              "Space Grotesk"
+                      ],
+                      "button-text": [
+                              "Space Grotesk"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "display-lg": [
+                              "Space Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "52px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "button-text": [
+                              "18px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "72px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .neo-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+        .neo-shadow-lg { box-shadow: 8px 8px 0px 0px rgba(0,0,0,1); }
+        .neo-border { border: 2px solid #000; }
+        .neo-border-thick { border: 4px solid #000; }
+        .neo-input:focus {
+            outline: none;
+            box-shadow: 4px 4px 0px 0px #a4c639; /* Lime green shadow on focus */
+            border-color: #000;
+        }
+        .neo-button:hover {
+            transform: translate(2px, 2px);
+            box-shadow: none;
+        }
+      </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex items-center justify-center font-body-md p-margin-mobile md:p-margin-desktop">
+<!-- Suppressed Shell Navigations because this is a Transactional/Linear page (Sign-up) -->
+<div class="w-full max-w-md bg-surface-container-lowest neo-border-thick neo-shadow-lg p-8 md:p-12 relative z-10 flex flex-col items-center">
+<!-- Logo -->
+<div class="mb-8 w-24 h-24">
+<img alt="Chuchudu Logo" class="w-full h-full object-contain rounded-full neo-border" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbzVDXSrVBZpDLTruMGBQSrf14Aa107Vgt3dhPemFMpP8o07oIGnXMX7bbpoQUR00v9x0Oih7e2DJZE8Bq_BSW8SXHGgfnlcxpAILuwPKqX4IzH6po7k4Z5ixRWmNo7A6sySN603roMFldhhXlFf19vNoaoWC6nvEiLIYjz9YoK1bmdimzfsrfofxccxU3HvVdCdCMM6UwqFzJCIdhI3hGedR4GZagNYw35DJ6di7sMOOnQkgeS2OoQJwkR3wKxilz3CCMBFLV9RK5"/>
+</div>
+<h1 class="font-headline-md text-headline-md mb-2 text-center uppercase font-black tracking-tighter w-full">Join the Chaos</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 text-center">Create your Chuchudu account.</p>
+<!-- Sign Up Form -->
+<form class="w-full flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps uppercase text-on-surface" for="fullName">Full Name</label>
+<input class="w-full h-12 px-4 bg-surface-container-lowest neo-border neo-shadow font-label-caps text-label-caps neo-input transition-all placeholder:text-outline" id="fullName" placeholder="JOHN DOE" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps uppercase text-on-surface" for="email">Email Address</label>
+<input class="w-full h-12 px-4 bg-surface-container-lowest neo-border neo-shadow font-label-caps text-label-caps neo-input transition-all placeholder:text-outline" id="email" placeholder="JOHN@CHUCHUDU.COM" type="email"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps uppercase text-on-surface" for="password">Password</label>
+<input class="w-full h-12 px-4 bg-surface-container-lowest neo-border neo-shadow font-label-caps text-label-caps neo-input transition-all placeholder:text-outline" id="password" placeholder="••••••••" type="password"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps uppercase text-on-surface" for="confirmPassword">Confirm Password</label>
+<input class="w-full h-12 px-4 bg-surface-container-lowest neo-border neo-shadow font-label-caps text-label-caps neo-input transition-all placeholder:text-outline" id="confirmPassword" placeholder="••••••••" type="password"/>
+</div>
+<button class="w-full h-14 bg-primary-container text-on-primary-container font-button-text text-button-text uppercase neo-border neo-shadow neo-button transition-all flex items-center justify-center mt-4" type="button">
+                Create Account
+            </button>
+</form>
+<div class="w-full flex items-center gap-4 my-8">
+<div class="flex-1 h-[2px] bg-black"></div>
+<span class="font-label-caps text-label-caps uppercase text-on-surface">Or</span>
+<div class="flex-1 h-[2px] bg-black"></div>
+</div>
+<!-- Social Logins -->
+<div class="w-full flex flex-col gap-4">
+<button class="w-full h-12 bg-surface-container-lowest neo-border neo-shadow neo-button transition-all flex items-center justify-center gap-3">
+<!-- SVG Google Icon (Simplified) -->
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.56 12.25C22.56 11.47 22.49 10.72 22.36 10H12V14.26H17.92C17.67 15.63 16.89 16.81 15.73 17.58V20.34H19.29C21.37 18.42 22.56 15.6 22.56 12.25Z" fill="#4285F4"></path>
+<path d="M12 23C14.97 23 17.46 22.02 19.29 20.34L15.73 17.58C14.74 18.24 13.48 18.65 12 18.65C9.13 18.65 6.71 16.71 5.84 14.12H2.17V16.97C3.99 20.58 7.7 23 12 23Z" fill="#34A853"></path>
+<path d="M5.84 14.12C5.62 13.46 5.49 12.74 5.49 12C5.49 11.26 5.62 10.54 5.84 9.88V7.03H2.17C1.42 8.52 1 10.21 1 12C1 13.79 1.42 15.48 2.17 16.97L5.84 14.12Z" fill="#FBBC05"></path>
+<path d="M12 5.35C13.62 5.35 15.07 5.91 16.21 7.01L19.38 3.84C17.45 2.05 14.97 1 12 1C7.7 1 3.99 3.42 2.17 7.03L5.84 9.88C6.71 7.29 9.13 5.35 12 5.35Z" fill="#EA4335"></path>
+</svg>
+<span class="font-button-text text-[16px] uppercase text-on-surface">Google</span>
+</button>
+<button class="w-full h-12 bg-on-surface text-surface-container-lowest neo-border neo-shadow neo-button transition-all flex items-center justify-center gap-3">
+<!-- SVG Github Icon (Simplified) -->
+<svg fill="currentColor" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12C2 16.418 4.865 20.166 8.839 21.493C9.339 21.585 9.52 21.276 9.52 21.011C9.52 20.776 9.511 19.986 9.506 19.112C6.726 19.715 6.139 17.95 6.139 17.95C5.684 16.797 5.029 16.488 5.029 16.488C4.122 15.867 5.098 15.88 5.098 15.88C6.102 15.95 6.631 16.91 6.631 16.91C7.522 18.438 8.966 17.996 9.539 17.741C9.629 17.094 9.889 16.653 10.178 16.398C7.961 16.147 5.631 15.289 5.631 11.478C5.631 10.392 6.019 9.503 6.643 8.809C6.541 8.558 6.2 7.545 6.739 6.177C6.739 6.177 7.564 5.914 9.497 7.225C10.281 7.006 11.139 6.897 11.992 6.892C12.845 6.897 13.702 7.006 14.487 7.225C16.419 5.914 17.243 6.177 17.243 6.177C17.783 7.545 17.442 8.558 17.34 8.809C17.965 9.503 18.351 10.392 18.351 11.478C18.351 15.299 16.018 16.143 13.796 16.388C14.159 16.702 14.483 17.319 14.483 18.271C14.483 19.638 14.471 20.739 14.471 21.011C14.471 21.28 14.65 21.593 15.158 21.492C19.13 20.163 22 16.417 22 12C22 6.477 17.523 2 12 2Z" fill-rule="evenodd"></path>
+</svg>
+<span class="font-button-text text-[16px] uppercase">GitHub</span>
+</button>
+</div>
+<a class="mt-8 font-label-caps text-label-caps text-on-surface hover:text-primary-container uppercase underline decoration-2 transition-colors" href="#">
+            Already have an account? Log In
+        </a>
+</div>
+</body></html>

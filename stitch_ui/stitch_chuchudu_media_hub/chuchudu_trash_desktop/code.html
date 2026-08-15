@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chuchudu - Trash</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#b1d446",
+                      "inverse-on-surface": "#f1f1f1",
+                      "tertiary": "#5d5f5f",
+                      "surface-bright": "#f9f9f9",
+                      "surface-tint": "#506600",
+                      "primary-fixed": "#ccf05f",
+                      "outline-variant": "#c5c9b1",
+                      "secondary-container": "#e2e2e2",
+                      "primary-fixed-dim": "#b1d446",
+                      "outline": "#757965",
+                      "secondary": "#5e5e5e",
+                      "on-secondary-fixed": "#1b1b1b",
+                      "on-background": "#1a1c1c",
+                      "on-error": "#ffffff",
+                      "inverse-surface": "#2f3131",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "on-primary-container": "#3e5000",
+                      "surface-container-highest": "#e2e2e2",
+                      "primary-container": "#a4c639",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "on-secondary-fixed-variant": "#474747",
+                      "on-secondary-container": "#646464",
+                      "surface": "#f9f9f9",
+                      "primary": "#506600",
+                      "surface-variant": "#e2e2e2",
+                      "on-surface-variant": "#454937",
+                      "surface-container-high": "#e8e8e8",
+                      "on-tertiary-container": "#484a4a",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface": "#1a1c1c",
+                      "surface-dim": "#dadada",
+                      "tertiary-container": "#b8b9b9",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#eeeeee",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "tertiary-fixed": "#e2e2e2",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f3f3f3",
+                      "background": "#f9f9f9",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-primary-fixed": "#161e00",
+                      "on-secondary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed-variant": "#3c4d00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "64px",
+                      "gutter": "24px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Space Grotesk"
+                      ],
+                      "display-lg": [
+                              "Space Grotesk"
+                      ],
+                      "headline-md": [
+                              "Space Grotesk"
+                      ],
+                      "headline-lg-mobile": [
+                              "Space Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "button-text": [
+                              "Space Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "52px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "72px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "button-text": [
+                              "18px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        /* Base Component Overrides for Neo-Brutalism */
+        .neo-btn {
+            @apply bg-primary-container text-on-surface border-2 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all font-button-text text-button-text uppercase px-6 py-3 flex items-center justify-center gap-2;
+        }
+        .neo-btn-secondary {
+            @apply bg-surface text-on-surface border-2 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all font-button-text text-button-text uppercase px-6 py-3 flex items-center justify-center gap-2;
+        }
+        .neo-btn-danger {
+            @apply bg-error-container text-on-error-container border-2 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all font-button-text text-button-text uppercase px-6 py-3 flex items-center justify-center gap-2;
+        }
+        
+        .neo-card {
+            @apply bg-surface border-2 border-on-background shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6;
+        }
+        
+        .neo-list-item {
+            @apply flex items-center justify-between p-4 border-b-2 border-on-background hover:bg-surface-variant transition-colors group;
+        }
+        .neo-list-item:last-child {
+            @apply border-b-0;
+        }
+
+        .neo-chip {
+            @apply border-2 border-on-background bg-surface px-2 py-1 font-label-caps text-label-caps inline-flex items-center gap-1;
+        }
+        
+        .neo-icon-wrapper {
+            @apply w-12 h-12 flex items-center justify-center border-2 border-on-background bg-primary-container;
+        }
+
+        /* Checkbox styling */
+        .neo-checkbox {
+            @apply appearance-none w-6 h-6 border-2 border-on-background bg-surface checked:bg-primary-container checked:bg-[url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%231a1c1c%22%3E%3Cpath%20d%3D%22M9%2016.17L4.83%2012l-1.42%201.41L9%2019%2021%207l-1.41-1.41z%22%2F%3E%3C%2Fsvg%3E')] checked:background-center checked:bg-no-repeat cursor-pointer;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row overflow-x-hidden selection:bg-primary-container selection:text-on-surface">
+<!-- SideNavBar (Hidden on Mobile, Flex on MD) -->
+<nav class="hidden md:flex flex-col h-screen w-64 border-r-4 border-on-background dark:border-white bg-surface dark:bg-inverse-surface p-gutter shrink-0 sticky top-0">
+<!-- Header -->
+<div class="mb-12 flex items-center gap-4">
+<img class="w-12 h-12 rounded-none border-2 border-on-background object-cover bg-surface-variant" data-alt="A stylized, neo-brutalist avatar illustration featuring sharp geometric shapes, high contrast primary colors (lime green, black, white), and thick outlines. A modern tech aesthetic, vibrant and energetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlIaZVtzuI4BlVzOd09RuHPPOJuviLMyWawn1jIhQb79ChS4PXbRUOVpIv6_ioBY6d8krtE2vUXWhHPMJEXU_Nshtd9gMQrlJi8_CL08JGaXMRgNp7ZWMmcwJhYZ2AGW1AK9f8AaptVqbpYkq748YHrv7ZLUXwNYQUNyy5rIWbVfv9MWRpqlvmwtMd7E0zg6xojYwjResDEFLYdWIcu0wyT1x1yuyaVVXM6YowNEN3bbUo-MlK1hRZddVVVE4wWreB1TOc1ZwEvX_f"/>
+<div>
+<h1 class="font-headline-md text-headline-md font-black text-on-surface dark:text-inverse-on-surface uppercase">Chuchudu</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Pro Plan</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<ul class="flex-1 space-y-2 flex flex-col">
+<li class="w-full">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant dark:text-surface-variant hover:translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all font-label-caps text-label-caps uppercase border-2 border-transparent hover:border-on-background" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+                    My Files
+                </a>
+</li>
+<li class="w-full">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant dark:text-surface-variant hover:translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all font-label-caps text-label-caps uppercase border-2 border-transparent hover:border-on-background" href="#">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+                    Shared
+                </a>
+</li>
+<li class="w-full">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant dark:text-surface-variant hover:translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all font-label-caps text-label-caps uppercase border-2 border-transparent hover:border-on-background" href="#">
+<span class="material-symbols-outlined" data-icon="cloud">cloud</span>
+                    Storage
+                </a>
+</li>
+<li class="w-full">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant dark:text-surface-variant hover:translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all font-label-caps text-label-caps uppercase border-2 border-transparent hover:border-on-background" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+                    Activity
+                </a>
+</li>
+<li class="w-full">
+<a class="flex items-center gap-3 p-3 bg-primary-container text-on-primary-container border-2 border-on-background font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] font-label-caps text-label-caps uppercase" href="#">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+                    Trash
+                </a>
+</li>
+</ul>
+<!-- CTA -->
+<div class="mt-auto pt-8">
+<button class="w-full neo-btn">
+                Upload File
+            </button>
+</div>
+</nav>
+<!-- TopAppBar (Mobile Only - Simplified Header) -->
+<header class="md:hidden flex justify-between items-center w-full px-margin-mobile py-4 bg-surface-bright border-b-4 border-on-background sticky top-0 z-40">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-black text-on-surface italic">Chuchudu</h1>
+<div class="flex gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<img class="w-10 h-10 border-2 border-on-background" data-alt="A small, square profile picture in a neo-brutalist style, featuring sharp contrast and lime green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHFWGA9jQXKl6-7FQrWqdnjoe4hVCWhT8-M3OxQGsnw8IH1ra0Cf-oiKvCJrBb-wgW7NncTfv0jFzthHogZ5RuUQnu614N0GSqioWNJJhti1ModKVhQs1FPwckXCoGir_bz-VFvmpm3WkAaPPqgYd5KBYM3cRhEzA3epSWAKbNsNF07szJcwWGn9Zccu5TmvqbSXdm-PgWn_srIMtuIKFjuhpaEv_uNGGO0h1CVkiNTvv5AMzKR17z_kSr8EK8FGy0MvpWd58yNwsy"/>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 w-full p-margin-mobile md:p-margin-desktop bg-surface-container-low min-h-screen pb-32 md:pb-margin-desktop">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6 border-b-4 border-on-background pb-8">
+<div>
+<h2 class="font-display-lg text-display-lg mb-2">Trash</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Items in trash are automatically deleted after 30 days. Don't worry, we won't judge what you threw away.</p>
+</div>
+<div class="flex flex-wrap gap-4 w-full md:w-auto">
+<button class="neo-btn-secondary flex-1 md:flex-none" onclick="alert('Restore all selected items')">
+<span class="material-symbols-outlined" data-icon="restore">restore</span>
+                    Restore Selected
+                </button>
+<button class="neo-btn-danger flex-1 md:flex-none" onclick="alert('Empty Trash confirmed')">
+<span class="material-symbols-outlined" data-icon="delete_forever">delete_forever</span>
+                    Empty Trash
+                </button>
+</div>
+</div>
+<!-- Warning Banner -->
+<div class="bg-primary-container border-2 border-on-background shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 mb-12 flex items-start gap-4 transform rotate-1">
+<span class="material-symbols-outlined text-4xl" data-icon="warning">warning</span>
+<div>
+<h3 class="font-headline-md text-headline-md mb-2 uppercase">Storage Warning</h3>
+<p class="font-body-md text-body-md font-bold">Your trash is taking up 4.2GB of space. Empty it to free up room for more brutal designs.</p>
+</div>
+</div>
+<!-- List Container -->
+<div class="neo-card p-0 overflow-hidden bg-surface-container-lowest">
+<!-- List Header (Desktop Only) -->
+<div class="hidden md:grid grid-cols-[auto_1fr_1fr_auto_auto] gap-4 p-4 border-b-4 border-on-background bg-surface font-label-caps text-label-caps uppercase text-on-surface-variant">
+<div class="w-6 flex items-center justify-center">
+<input class="neo-checkbox" id="selectAll" type="checkbox"/>
+</div>
+<div>Name</div>
+<div>Original Location</div>
+<div>Date Deleted</div>
+<div class="text-right w-24">Actions</div>
+</div>
+<!-- List Items -->
+<div class="flex flex-col">
+<!-- Item 1 -->
+<div class="neo-list-item grid grid-cols-[auto_1fr] md:grid-cols-[auto_1fr_1fr_auto_auto] gap-4 items-center">
+<div class="flex items-center gap-4 col-span-2 md:col-span-1">
+<input class="neo-checkbox item-checkbox" type="checkbox"/>
+<div class="neo-icon-wrapper">
+<span class="material-symbols-outlined" data-icon="image">image</span>
+</div>
+<div class="flex flex-col md:hidden ml-2">
+<span class="font-headline-md text-[18px] font-bold leading-tight">final_v2_FINAL_for_real.psd</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant mt-1">/Projects/Client A</span>
+</div>
+</div>
+<div class="hidden md:block font-headline-md text-[20px] font-bold truncate">
+                        final_v2_FINAL_for_real.psd
+                    </div>
+<div class="hidden md:flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="folder">folder</span>
+                        /Projects/Client A
+                    </div>
+<div class="hidden md:block font-label-caps text-label-caps text-on-surface-variant">
+                        Oct 24, 2023
+                    </div>
+<div class="flex items-center justify-end gap-2 col-span-2 md:col-span-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-primary-container border-2 border-transparent hover:border-on-background transition-colors" title="Restore">
+<span class="material-symbols-outlined" data-icon="restore">restore</span>
+</button>
+<button class="p-2 hover:bg-error-container text-error border-2 border-transparent hover:border-on-background transition-colors" title="Delete Forever">
+<span class="material-symbols-outlined" data-icon="delete_forever">delete_forever</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="neo-list-item grid grid-cols-[auto_1fr] md:grid-cols-[auto_1fr_1fr_auto_auto] gap-4 items-center bg-surface-variant/30">
+<div class="flex items-center gap-4 col-span-2 md:col-span-1">
+<input class="neo-checkbox item-checkbox" type="checkbox"/>
+<div class="neo-icon-wrapper bg-surface">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div class="flex flex-col md:hidden ml-2">
+<span class="font-headline-md text-[18px] font-bold leading-tight">Q3_Financials_Draft.pdf</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant mt-1">/Company/Reports</span>
+</div>
+</div>
+<div class="hidden md:block font-headline-md text-[20px] font-bold truncate">
+                        Q3_Financials_Draft.pdf
+                    </div>
+<div class="hidden md:flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="folder">folder</span>
+                        /Company/Reports
+                    </div>
+<div class="hidden md:block font-label-caps text-label-caps text-on-surface-variant">
+                        Oct 22, 2023
+                    </div>
+<div class="flex items-center justify-end gap-2 col-span-2 md:col-span-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-primary-container border-2 border-transparent hover:border-on-background transition-colors" title="Restore">
+<span class="material-symbols-outlined" data-icon="restore">restore</span>
+</button>
+<button class="p-2 hover:bg-error-container text-error border-2 border-transparent hover:border-on-background transition-colors" title="Delete Forever">
+<span class="material-symbols-outlined" data-icon="delete_forever">delete_forever</span>
+</button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="neo-list-item grid grid-cols-[auto_1fr] md:grid-cols-[auto_1fr_1fr_auto_auto] gap-4 items-center">
+<div class="flex items-center gap-4 col-span-2 md:col-span-1">
+<input class="neo-checkbox item-checkbox" type="checkbox"/>
+<div class="neo-icon-wrapper">
+<span class="material-symbols-outlined" data-icon="video_file">video_file</span>
+</div>
+<div class="flex flex-col md:hidden ml-2">
+<span class="font-headline-md text-[18px] font-bold leading-tight">Zoom_Meeting_0920.mp4</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant mt-1">/Recordings</span>
+</div>
+</div>
+<div class="hidden md:block font-headline-md text-[20px] font-bold truncate">
+                        Zoom_Meeting_0920.mp4
+                    </div>
+<div class="hidden md:flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="folder">folder</span>
+                        /Recordings
+                    </div>
+<div class="hidden md:block font-label-caps text-label-caps text-error font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span>
+                        Expires in 2 days
+                    </div>
+<div class="flex items-center justify-end gap-2 col-span-2 md:col-span-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-primary-container border-2 border-transparent hover:border-on-background transition-colors" title="Restore">
+<span class="material-symbols-outlined" data-icon="restore">restore</span>
+</button>
+<button class="p-2 hover:bg-error-container text-error border-2 border-transparent hover:border-on-background transition-colors" title="Delete Forever">
+<span class="material-symbols-outlined" data-icon="delete_forever">delete_forever</span>
+</button>
+</div>
+</div>
+<!-- Item 4 (Folder) -->
+<div class="neo-list-item grid grid-cols-[auto_1fr] md:grid-cols-[auto_1fr_1fr_auto_auto] gap-4 items-center bg-surface-variant/30">
+<div class="flex items-center gap-4 col-span-2 md:col-span-1">
+<input class="neo-checkbox item-checkbox" type="checkbox"/>
+<div class="neo-icon-wrapper bg-surface border-dashed">
+<span class="material-symbols-outlined" data-icon="folder_zip">folder_zip</span>
+</div>
+<div class="flex flex-col md:hidden ml-2">
+<span class="font-headline-md text-[18px] font-bold leading-tight">Old_Assets_Archive</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant mt-1">/Root</span>
+</div>
+</div>
+<div class="hidden md:block font-headline-md text-[20px] font-bold truncate">
+                        Old_Assets_Archive
+                    </div>
+<div class="hidden md:flex items-center gap-2 font-label-caps text-label-caps text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="folder">folder</span>
+                        /Root
+                    </div>
+<div class="hidden md:block font-label-caps text-label-caps text-on-surface-variant">
+                        Oct 15, 2023
+                    </div>
+<div class="flex items-center justify-end gap-2 col-span-2 md:col-span-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-primary-container border-2 border-transparent hover:border-on-background transition-colors" title="Restore">
+<span class="material-symbols-outlined" data-icon="restore">restore</span>
+</button>
+<button class="p-2 hover:bg-error-container text-error border-2 border-transparent hover:border-on-background transition-colors" title="Delete Forever">
+<span class="material-symbols-outlined" data-icon="delete_forever">delete_forever</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Empty State (Hidden by default, shown when list is empty) -->
+<div class="hidden p-12 flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-6xl text-surface-dim mb-4" data-icon="delete_sweep">delete_sweep</span>
+<h3 class="font-headline-md text-headline-md">Trash is empty</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Nothing to see here. You're keeping it clean.</p>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center bg-surface px-2 py-3 border-t-4 border-on-background dark:border-white shadow-[0_-4px_0px_0px_rgba(0,0,0,1)]">
+<a class="flex flex-col items-center gap-1 p-2 text-on-surface dark:text-inverse-on-surface hover:bg-primary-container font-label-caps text-label-caps active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="folder">folder</span>
+            Files
+        </a>
+<a class="flex flex-col items-center gap-1 p-2 text-on-surface dark:text-inverse-on-surface hover:bg-primary-container font-label-caps text-label-caps active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+            Shared
+        </a>
+<a class="flex flex-col items-center gap-1 p-2 text-on-surface dark:text-inverse-on-surface hover:bg-primary-container font-label-caps text-label-caps active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="cloud">cloud</span>
+            Cloud
+        </a>
+<a class="flex flex-col items-center gap-1 p-2 text-on-surface dark:text-inverse-on-surface hover:bg-primary-container font-label-caps text-label-caps active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+            Logs
+        </a>
+<a class="flex flex-col items-center gap-1 p-2 bg-primary text-on-primary border-2 border-on-background rounded-none px-4 py-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] font-label-caps text-label-caps active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+            Trash
+        </a>
+</nav>
+<script>
+        // Simple select all logic
+        document.getElementById('selectAll').addEventListener('change', function(e) {
+            const checkboxes = document.querySelectorAll('.item-checkbox');
+            checkboxes.forEach(cb => cb.checked = e.target.checked);
+        });
+    </script>
+</body></html>
