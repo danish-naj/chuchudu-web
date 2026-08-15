@@ -83,13 +83,21 @@ export default function GetApps() {
               </li>
             </ul>
 
-            <a
-              href="/downloads/Chuchudu-Agent-Setup.exe"
-              download
-              className="w-full bg-primary-fixed text-on-primary-fixed border-2 border-on-background brutal-shadow py-4 font-button-text text-button-text uppercase hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:bg-primary-fixed-dim relative z-10 text-center font-bold block"
-            >
-              Download .exe Setup
-            </a>
+            <div className="flex flex-col gap-3 relative z-10">
+              <a
+                href="https://github.com/danish-naj/chuchudu-web/releases/download/v1.0.0/Chuchudu-Setup.exe"
+                className="w-full bg-primary-fixed text-on-primary-fixed border-2 border-on-background brutal-shadow py-4 font-button-text text-button-text uppercase hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:bg-primary-fixed-dim text-center font-bold block"
+              >
+                Download .exe Setup (v1.0.0)
+              </a>
+              <a
+                href="/downloads/Chuchudu-Agent-Setup.exe"
+                download
+                className="text-xs text-on-surface-variant hover:text-on-background text-center font-bold uppercase underline"
+              >
+                Direct Mirror Download (.exe)
+              </a>
+            </div>
           </article>
 
           {/* Card B: Android */}
