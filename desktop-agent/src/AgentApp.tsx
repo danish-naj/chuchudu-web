@@ -51,43 +51,23 @@ function fmtDate(d: string): string {
   catch { return '—'; }
 }
 
+import chuchuduLogo from './assets/chuchudu_logo.jpg';
+
 const isTauri = () => typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 
-// ─── Logo Component — matches real Chuchudu brand logo ───────────────────────
-function ChuchuduLogo({ size = 40 }: { size?: number }) {
+// ─── Real Brand Logo Component ───────────────────────────────────────────────
+function ChuchuduLogo({ size = 40, className = "" }: { size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-      {/* Green rounded-square background */}
-      <rect width="512" height="512" rx="90" ry="90" fill="#8DB83A"/>
-
-      {/* 3D shadow of the ticket badge (offset down-right) */}
-      <g transform="rotate(-8, 256, 256)">
-        <g transform="translate(18, 18)">
-          {/* Shadow shape — ticket with notch top-right */}
-          <path d="M72,148 L440,148 L440,198 L468,198 L468,228 L440,228 L440,364 L72,364 Z" fill="#111"/>
-        </g>
-        {/* White ticket badge with notch cut from top-right corner */}
-        <path d="M72,148 L440,148 L440,198 L468,198 L468,228 L440,228 L440,364 L72,364 Z" fill="white" stroke="#111" strokeWidth="10"/>
-
-        {/* "CHU" text */}
-        <text x="256" y="262" textAnchor="middle"
-          fontFamily="'Arial Black','Impact',sans-serif" fontWeight="900"
-          fontSize="108" fill="#111" letterSpacing="-2">
-          CHU
-        </text>
-        {/* "CHUDU" text */}
-        <text x="248" y="350" textAnchor="middle"
-          fontFamily="'Arial Black','Impact',sans-serif" fontWeight="900"
-          fontSize="108" fill="#111" letterSpacing="-2">
-          CHUDU
-        </text>
-        {/* ® symbol */}
-        <circle cx="444" cy="336" r="18" fill="none" stroke="#111" strokeWidth="6"/>
-        <text x="444" y="342" textAnchor="middle"
-          fontFamily="Arial,sans-serif" fontWeight="bold"
-          fontSize="20" fill="#111">R</text>
-      </g>
-    </svg>
+    <img
+      src={chuchuduLogo}
+      alt="Chuchudu"
+      className={`rounded-xl object-contain select-none pointer-events-none border-2 border-on-background ${className}`}
+      style={{
+        width: size,
+        height: size,
+        boxShadow: '3px 3px 0 #1a1c1c'
+      }}
+    />
   );
 }
 
@@ -541,8 +521,8 @@ export function AgentApp() {
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <div className="w-full max-w-sm flex flex-col gap-6">
         <div className="flex flex-col items-center gap-4 mb-2">
-          <div style={{ transform: 'rotate(-4deg)' }}>
-            <ChuchuduLogo size={64} />
+          <div style={{ transform: 'rotate(-3deg)' }}>
+            <ChuchuduLogo size={108} />
           </div>
           <div className="text-center">
             <h1 className="font-black text-2xl uppercase tracking-tight border-b-4 border-on-background pb-2">
