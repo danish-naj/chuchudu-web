@@ -146,19 +146,19 @@ const Landing: React.FC = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto max-w-xs sm:max-w-none mb-16">
-            <a
-              href="#downloads"
-              className="font-brand text-xs sm:text-sm px-6 sm:px-8 py-3.5 sm:py-4 bg-primary text-on-primary brutal-border brutal-shadow-lg brutal-hover-lg transition-all flex items-center justify-center gap-2 uppercase font-extrabold"
-            >
-              <span className="material-symbols-outlined text-xl">desktop_windows</span>
-              Download Windows Agent (.exe)
-            </a>
             <Link
               to="/signup"
+              className="font-brand text-xs sm:text-sm px-6 sm:px-8 py-3.5 sm:py-4 bg-primary text-on-primary brutal-border brutal-shadow-lg brutal-hover-lg transition-all flex items-center justify-center gap-2 uppercase font-extrabold"
+            >
+              <span className="material-symbols-outlined text-xl">account_circle</span>
+              Get Started &amp; Download App
+            </Link>
+            <Link
+              to="/login"
               className="font-brand text-xs sm:text-sm px-6 sm:px-8 py-3.5 sm:py-4 bg-surface text-on-surface brutal-border brutal-shadow-lg brutal-hover-lg transition-all flex items-center justify-center gap-2 uppercase font-extrabold"
             >
-              <span className="material-symbols-outlined text-xl">cloud_upload</span>
-              Open Mobile Web Uploader
+              <span className="material-symbols-outlined text-xl">lock_open</span>
+              Sign In to Your Vault
             </Link>
           </div>
 
@@ -381,7 +381,7 @@ const Landing: React.FC = () => {
           </div>
         </section>
 
-        {/* ── Downloads Hub Section ── */}
+        {/* ── Apps & Access Hub Section ── */}
         <section id="downloads" className="py-20 sm:py-28 px-4 sm:px-6 md:px-12 bg-surface-container-low border-y-4 border-on-background">
           <div className="max-w-container-max mx-auto">
             
@@ -390,11 +390,11 @@ const Landing: React.FC = () => {
                 GET CHUCHUDU ACROSS PLATFORMS
               </span>
               <h2 className="font-brand font-black text-3xl sm:text-5xl md:text-[56px] leading-tight uppercase scroll-hidden">
-                DOWNLOAD APPS
+                CHUCHUDU APPS
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               
               {/* Windows Agent */}
               <div className="bg-surface brutal-border p-6 sm:p-8 flex flex-col brutal-shadow-lg hover:-translate-y-1 transition-all scroll-hidden">
@@ -408,32 +408,61 @@ const Landing: React.FC = () => {
                     v1.0.0 STABLE
                   </span>
                 </div>
-                <h3 className="font-brand font-black text-2xl uppercase mb-2">Windows Desktop Agent</h3>
+                <h3 className="font-brand font-black text-xl sm:text-2xl uppercase mb-2">Windows Agent</h3>
                 <p className="font-body-md text-xs sm:text-sm text-on-surface-variant mb-6">
-                  Requirement: Windows 10 or 11 (64-bit). Runs quietly in the system tray and manages your vault folder.
+                  Requirement: Windows 10/11 (64-bit). Ingests encrypted chunks and stores files in your vault folder.
                 </p>
                 <ul className="space-y-2 font-body-md text-xs sm:text-sm text-on-surface-variant mb-8 flex-1">
-                  <li className="flex items-center gap-2">✓ Built on Rust &amp; Tauri v2 (&lt;40MB RAM)</li>
-                  <li className="flex items-center gap-2">✓ Automatic AES-256-GCM chunk decryption</li>
-                  <li className="flex items-center gap-2">✓ In-app video, photo, audio &amp; PDF preview</li>
-                  <li className="flex items-center gap-2">✓ Choose custom storage drive / folder</li>
+                  <li className="flex items-center gap-2">✓ Built on Rust &amp; Tauri v2</li>
+                  <li className="flex items-center gap-2">✓ Automatic chunk decryption</li>
+                  <li className="flex items-center gap-2">✓ Custom storage drive selector</li>
+                  <li className="flex items-center gap-2">✓ In-app media &amp; PDF preview</li>
                 </ul>
                 <div className="flex flex-col gap-2">
-                  <a
-                    href="/downloads/Chuchudu-Agent-Setup.exe"
-                    download="Chuchudu-Setup.exe"
-                    className="w-full bg-primary text-on-primary border-2 border-on-background brutal-shadow py-4 font-brand text-xs sm:text-sm uppercase text-center font-black brutal-hover block"
+                  <Link
+                    to="/login"
+                    className="w-full bg-primary text-on-primary border-2 border-on-background brutal-shadow py-3.5 sm:py-4 font-brand text-xs sm:text-sm uppercase text-center font-black brutal-hover block"
                   >
-                    Download Setup (.exe)
-                  </a>
-                  <a
-                    href="https://github.com/danish-naj/chuchudu-web/releases"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-center font-label-caps text-[11px] text-on-surface-variant hover:text-on-background uppercase underline mt-1"
+                    Sign In to Download
+                  </Link>
+                  <p className="text-center font-label-caps text-[10px] text-on-surface-variant uppercase">
+                    Available in portal after login
+                  </p>
+                </div>
+              </div>
+
+              {/* Android App (Coming Soon) */}
+              <div className="bg-surface-container-lowest brutal-border p-6 sm:p-8 flex flex-col brutal-shadow-lg hover:-translate-y-1 transition-all scroll-hidden">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="bg-surface-container-high p-3 border-2 border-on-background brutal-shadow">
+                    <span className="material-symbols-outlined text-4xl text-on-surface">
+                      android
+                    </span>
+                  </div>
+                  <span className="font-label-caps text-xs bg-[#FFB300] text-on-background border-2 border-on-background px-3 py-1 font-bold">
+                    COMING SOON
+                  </span>
+                </div>
+                <h3 className="font-brand font-black text-xl sm:text-2xl uppercase mb-2">Android App</h3>
+                <p className="font-body-md text-xs sm:text-sm text-on-surface-variant mb-6">
+                  Native Android companion app with automatic background camera roll sync to your laptop.
+                </p>
+                <ul className="space-y-2 font-body-md text-xs sm:text-sm text-on-surface-variant mb-8 flex-1">
+                  <li className="flex items-center gap-2">✓ Background camera auto-sync</li>
+                  <li className="flex items-center gap-2">✓ Direct phone-to-laptop chunking</li>
+                  <li className="flex items-center gap-2">✓ Zero background battery drain</li>
+                  <li className="flex items-center gap-2">✓ Push sync notifications</li>
+                </ul>
+                <div className="flex flex-col gap-2">
+                  <button
+                    disabled
+                    className="w-full bg-surface-container-high text-on-surface-variant border-2 border-on-background py-3.5 sm:py-4 font-brand text-xs sm:text-sm uppercase cursor-not-allowed text-center font-black block opacity-75"
                   >
-                    View Source &amp; Releases on GitHub →
-                  </a>
+                    Coming Soon
+                  </button>
+                  <p className="text-center font-label-caps text-[10px] text-primary font-bold uppercase">
+                    Use Web Uploader on mobile now
+                  </p>
                 </div>
               </div>
 
@@ -449,22 +478,27 @@ const Landing: React.FC = () => {
                     PWA READY
                   </span>
                 </div>
-                <h3 className="font-brand font-black text-2xl uppercase mb-2">Web Portal Uploader</h3>
+                <h3 className="font-brand font-black text-xl sm:text-2xl uppercase mb-2">Web Uploader</h3>
                 <p className="font-body-md text-xs sm:text-sm text-on-surface-variant mb-6">
-                  Works instantly on mobile Safari (iOS), Chrome (Android), or any laptop browser. No install needed.
+                  Works instantly on mobile Safari (iOS), Chrome (Android), or any browser. No install needed.
                 </p>
                 <ul className="space-y-2 font-body-md text-xs sm:text-sm text-on-surface-variant mb-8 flex-1">
-                  <li className="flex items-center gap-2">✓ Mobile camera roll upload</li>
-                  <li className="flex items-center gap-2">✓ Drag-and-drop batch file processing</li>
+                  <li className="flex items-center gap-2">✓ Mobile camera roll uploader</li>
+                  <li className="flex items-center gap-2">✓ Drag-and-drop batch processing</li>
                   <li className="flex items-center gap-2">✓ Real-time upload delivery tracker</li>
-                  <li className="flex items-center gap-2">✓ Installable as Progressive Web App</li>
+                  <li className="flex items-center gap-2">✓ PWA home-screen installable</li>
                 </ul>
-                <Link
-                  to="/signup"
-                  className="w-full bg-surface text-on-surface border-2 border-on-background brutal-shadow py-4 font-brand text-xs sm:text-sm uppercase text-center font-black brutal-hover block"
-                >
-                  Open Web Vault
-                </Link>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    to="/signup"
+                    className="w-full bg-surface text-on-surface border-2 border-on-background brutal-shadow py-3.5 sm:py-4 font-brand text-xs sm:text-sm uppercase text-center font-black brutal-hover block"
+                  >
+                    Open Web Portal
+                  </Link>
+                  <p className="text-center font-label-caps text-[10px] text-on-surface-variant uppercase">
+                    Free Instant Access
+                  </p>
+                </div>
               </div>
 
             </div>

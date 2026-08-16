@@ -110,20 +110,20 @@ export default function GetApps() {
                   android
                 </span>
               </div>
-              <span className="font-label-caps text-label-caps uppercase bg-on-background text-background px-3 py-1 font-bold">
-                v1.0.0
+              <span className="font-label-caps text-label-caps uppercase bg-[#FFB300] text-on-background border-2 border-on-background px-3 py-1 font-bold">
+                COMING SOON
               </span>
             </div>
 
             <div className="mb-6 relative z-10">
               <span className="font-label-caps text-label-caps text-secondary uppercase mb-2 block border-b-2 border-on-background pb-1 inline-block font-bold">
-                Mobile Uploader
+                Native Companion App
               </span>
               <h2 className="font-headline-md text-headline-md uppercase mb-2">
                 Android APK
               </h2>
               <p className="font-body-md text-body-md text-on-surface-variant italic">
-                Requirement: Android 8.0+
+                Status: In Active Development
               </p>
             </div>
 
@@ -132,50 +132,35 @@ export default function GetApps() {
                 <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>
                   check_box
                 </span>
-                Direct phone upload to personal laptop vault
+                Background automatic camera roll sync
               </li>
               <li className="flex items-start gap-2">
                 <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>
                   check_box
                 </span>
-                Drag-and-drop / tap to browse media gallery
+                Direct phone-to-laptop encrypted chunk streaming
               </li>
               <li className="flex items-start gap-2">
                 <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>
                   check_box
                 </span>
-                Real-time delivery status (Pending / Delivered)
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  check_box
-                </span>
-                Zero background battery drain
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  check_box
-                </span>
-                Sideload directly without app store restrictions
+                Push delivery notifications
               </li>
             </ul>
 
-            <div className="bg-surface-container p-3 border-2 border-dashed border-on-background mb-6 relative z-10">
-              <p className="font-label-caps text-label-caps text-center uppercase text-xs flex items-center justify-center gap-1">
-                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  info
-                </span>
-                Enable &ldquo;Install from Unknown Sources&rdquo; in settings
+            <div className="bg-primary-container/30 p-3 border-2 border-dashed border-on-background mb-6 relative z-10">
+              <p className="font-label-caps text-center uppercase text-xs flex items-center justify-center gap-1.5 font-bold text-on-surface">
+                <span className="material-symbols-outlined text-sm">info</span>
+                Use the Web Uploader on mobile Chrome in the meantime!
               </p>
             </div>
 
-            <a
-              href="/downloads/chuchudu-mobile.apk"
-              download
-              className="w-full bg-surface-container-lowest text-on-background border-2 border-on-background brutal-shadow py-4 font-button-text text-button-text uppercase hover:bg-primary-fixed hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all relative z-10 mt-auto text-center font-bold block"
+            <button
+              disabled
+              className="w-full bg-surface-container-high text-on-surface-variant border-2 border-on-background py-4 font-button-text text-button-text uppercase cursor-not-allowed relative z-10 mt-auto text-center font-bold block opacity-75"
             >
-              Download Android APK
-            </a>
+              Android App • Coming Soon
+            </button>
           </article>
         </div>
 
