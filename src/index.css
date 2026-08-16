@@ -87,14 +87,80 @@
     100% { background-position: left 24px top, right 24px bottom, left bottom 24px, right top 24px; }
   }
 
+  /* ── Marquee Animation ── */
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 22s linear infinite;
+  }
+
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  /* ── Floating Keyframes ── */
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(1deg); }
+  }
+
+  @keyframes float-reverse {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(8px) rotate(-1deg); }
+  }
+
+  .animate-float {
+    animation: float-slow 4s ease-in-out infinite;
+  }
+
+  .animate-float-reverse {
+    animation: float-reverse 5s ease-in-out infinite;
+  }
+
+  /* ── Data Packet Transit Animation ── */
+  @keyframes packet-move {
+    0% { transform: translateX(0) scale(0.9); opacity: 0.2; }
+    50% { transform: translateX(50%) scale(1.1); opacity: 1; }
+    100% { transform: translateX(100%) scale(0.9); opacity: 0.2; }
+  }
+
+  .animate-packet {
+    animation: packet-move 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
   /* ── Scroll Reveal ── */
   .scroll-hidden {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    transform: translateY(28px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .scroll-hidden.animate-in {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .scroll-hidden-left {
+    opacity: 0;
+    transform: translateX(-32px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .scroll-hidden-left.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .scroll-hidden-right {
+    opacity: 0;
+    transform: translateX(32px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .scroll-hidden-right.animate-in {
+    opacity: 1;
+    transform: translateX(0);
   }
 }

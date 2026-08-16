@@ -57,6 +57,8 @@ export default {
         "inverse-surface": "#2f3131"
       },
       fontFamily: {
+        "brand": ["Unbounded", "Outfit", "Space Grotesk", "sans-serif"],
+        "display": ["Syne", "Space Grotesk", "sans-serif"],
         "headline-md": ["Space Grotesk", "sans-serif"],
         "headline-lg": ["Space Grotesk", "sans-serif"],
         "button-text": ["Space Grotesk", "sans-serif"],
