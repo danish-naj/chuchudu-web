@@ -11,6 +11,7 @@ import Settings from './pages/Settings';
 import Transfers from './pages/Transfers';
 import Activity from './pages/Activity';
 import FilePreview from './pages/FilePreview';
+import Albums from './pages/Albums';
 import SharedLink from './pages/SharedLink';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
@@ -48,6 +49,7 @@ export default function App() {
                 
                 {/* Authenticated Portal Routes */}
                 <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                <Route path="/albums" element={<PrivateRoute><Albums /></PrivateRoute>} />
                 <Route path="/status" element={<PrivateRoute><UploadStatus /></PrivateRoute>} />
                 <Route path="/apps" element={<PrivateRoute><GetApps /></PrivateRoute>} />
                 
