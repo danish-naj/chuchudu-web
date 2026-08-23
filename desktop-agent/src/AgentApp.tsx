@@ -12,7 +12,7 @@ import { writeFile, BaseDirectory } from '@tauri-apps/plugin-fs';
 import { cloudSync, type ActivityEntry } from './services/cloudSync';
 
 type Section = 'all' | 'photos' | 'videos' | 'documents' | 'albums' | 'starred' | 'activity' | 'settings';
-type ViewMode = 'grid' | 'list' | 'timeline';
+type ViewMode = 'grid' | 'list';
 
 const SECTION_INFO: Record<Section, { label: string; icon: string }> = {
   all: { label: 'All Files', icon: 'folder' },
@@ -1754,9 +1754,9 @@ export function AgentApp() {
 
   const activeAlbum = activeAlbumId ? albums[activeAlbumId] : null;
 
-  // Timeline grouping
+  // Timeline grouping automatically integrated in Grid view & albums
   const timelineGroups: { title: string; items: VaultFile[] }[] = [];
-  if (viewMode === 'timeline') {
+  if (viewMode === 'grid') {
     const map = new Map<string, VaultFile[]>();
     filtered.forEach(f => {
       const header = getMonthYearHeader(f.modified);
@@ -2006,13 +2006,12 @@ export function AgentApp() {
           )}
 
           <div className="flex items-center gap-2 ml-auto">
-            {/* View Mode Switcher (Grid / List / Timeline) */}
+            {/* View Mode Switcher (Grid / List) */}
             {!['activity', 'settings', 'albums'].includes(section) && (
               <div className="flex border-2 border-on-background">
                 {[
                   { mode: 'grid' as ViewMode, icon: 'grid_view', title: 'Grid View' },
                   { mode: 'list' as ViewMode, icon: 'view_list', title: 'List View' },
-                  { mode: 'timeline' as ViewMode, icon: 'calendar_month', title: 'Timeline View' },
                 ].map((item, i) => (
                   <button
                     key={item.mode}
@@ -2227,7 +2226,7 @@ export function AgentApp() {
             </div>
           )}
 
-          {/* ── Active Album Details View ── */}
+          {/* ── Active Album Details View (With Timeline Grouping) ── */}
           {section === 'albums' && activeAlbum && (
             <div className="flex flex-col gap-6">
               
@@ -2300,7 +2299,7 @@ export function AgentApp() {
                 </div>
               </div>
 
-              {/* Album Files Content */}
+              {/* Album Files Content - Grouped by Timeline */}
               {filtered.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-64 gap-4 border-2 border-dashed border-on-background bg-surface-container-low p-8 text-center">
                   <span className="material-symbols-outlined text-5xl text-on-surface-variant">photo_library</span>
@@ -2316,44 +2315,57 @@ export function AgentApp() {
                   </button>
                 </div>
               ) : (
-                <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill,minmax(150px,1fr))' }}>
-                  {filtered.map(file => (
-                    <div key={file.id} className="group border-2 border-on-background bg-surface-container-lowest flex flex-col cursor-pointer hover:border-primary transition-colors relative overflow-hidden"
-                      style={{ boxShadow: '4px 4px 0 #1a1c1c' }} onClick={() => setSelectedFile(file)}>
-                      
-                      <div className="aspect-square bg-surface-container flex items-center justify-center overflow-hidden border-b-2 border-on-background relative">
-                        {thumbnails[file.id]
-                          ? <img src={thumbnails[file.id]} alt={file.name} className="w-full h-full object-cover" />
-                          : <span className="material-symbols-outlined text-5xl text-on-surface-variant">{getFileIcon(file.mime || '')}</span>
-                        }
+                <div className="flex flex-col gap-6">
+                  {timelineGroups.map(grp => (
+                    <div key={grp.title} className="flex flex-col gap-3">
+                      <div className="flex items-center gap-2 border-b-2 border-on-background pb-1.5 sticky top-0 bg-background/95 backdrop-blur-sm z-10">
+                        <span className="material-symbols-outlined text-primary text-base">calendar_today</span>
+                        <h3 className="font-black text-xs uppercase tracking-wide">{grp.title}</h3>
+                        <span className="text-[10px] text-on-surface-variant font-bold ml-auto font-label-caps bg-surface-container px-2 py-0.5 border border-on-background">
+                          {grp.items.length} {grp.items.length === 1 ? 'item' : 'items'}
+                        </span>
+                      </div>
+                      <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill,minmax(150px,1fr))' }}>
+                        {grp.items.map(file => (
+                          <div key={file.id} className="group border-2 border-on-background bg-surface-container-lowest flex flex-col cursor-pointer hover:border-primary transition-colors relative overflow-hidden"
+                            style={{ boxShadow: '4px 4px 0 #1a1c1c' }} onClick={() => setSelectedFile(file)}>
+                            
+                            <div className="aspect-square bg-surface-container flex items-center justify-center overflow-hidden border-b-2 border-on-background relative">
+                              {thumbnails[file.id]
+                                ? <img src={thumbnails[file.id]} alt={file.name} className="w-full h-full object-cover" />
+                                : <span className="material-symbols-outlined text-5xl text-on-surface-variant">{getFileIcon(file.mime || '')}</span>
+                              }
 
-                        {activeAlbum.coverFileId === file.id && (
-                          <div className="absolute top-1 left-1 bg-primary-fixed text-on-primary-fixed border border-on-background px-1.5 py-0.5 text-[9px] font-black uppercase">
-                            ★ Cover
+                              {activeAlbum.coverFileId === file.id && (
+                                <div className="absolute top-1 left-1 bg-primary-fixed text-on-primary-fixed border border-on-background px-1.5 py-0.5 text-[9px] font-black uppercase">
+                                  ★ Cover
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="p-2">
+                              <p className="text-xs font-bold truncate" title={file.name}>{file.name}</p>
+                              <p className="text-on-surface-variant text-xs mt-0.5">{fmtSize(file.size || 0)}</p>
+                            </div>
+
+                            <div className="absolute inset-0 bg-background/85 flex items-center justify-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity p-2">
+                              <button onClick={e => { e.stopPropagation(); setSelectedFile(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-surface-container" title="Preview">
+                                <span className="material-symbols-outlined text-sm">visibility</span>
+                              </button>
+                              <button onClick={e => { e.stopPropagation(); setShowShareModal(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Share Link">
+                                <span className="material-symbols-outlined text-sm">share</span>
+                              </button>
+                              {file.mime?.startsWith('image/') && (
+                                <button onClick={e => { e.stopPropagation(); handleSetCover(activeAlbum.id, file.id); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Set as Cover">
+                                  <span className="material-symbols-outlined text-sm">wallpaper</span>
+                                </button>
+                              )}
+                              <button onClick={e => { e.stopPropagation(); handleRemoveFileFromAlbum(activeAlbum.id, file.id); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-error-container" title="Remove from Album">
+                                <span className="material-symbols-outlined text-sm">folder_delete</span>
+                              </button>
+                            </div>
                           </div>
-                        )}
-                      </div>
-
-                      <div className="p-2">
-                        <p className="text-xs font-bold truncate" title={file.name}>{file.name}</p>
-                        <p className="text-on-surface-variant text-xs mt-0.5">{fmtSize(file.size || 0)}</p>
-                      </div>
-
-                      <div className="absolute inset-0 bg-background/85 flex items-center justify-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity p-2">
-                        <button onClick={e => { e.stopPropagation(); setSelectedFile(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-surface-container" title="Preview">
-                          <span className="material-symbols-outlined text-sm">visibility</span>
-                        </button>
-                        <button onClick={e => { e.stopPropagation(); setShowShareModal(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Share Link">
-                          <span className="material-symbols-outlined text-sm">share</span>
-                        </button>
-                        {file.mime?.startsWith('image/') && (
-                          <button onClick={e => { e.stopPropagation(); handleSetCover(activeAlbum.id, file.id); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Set as Cover">
-                            <span className="material-symbols-outlined text-sm">wallpaper</span>
-                          </button>
-                        )}
-                        <button onClick={e => { e.stopPropagation(); handleRemoveFileFromAlbum(activeAlbum.id, file.id); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-error-container" title="Remove from Album">
-                          <span className="material-symbols-outlined text-sm">folder_delete</span>
-                        </button>
+                        ))}
                       </div>
                     </div>
                   ))}
@@ -2362,46 +2374,8 @@ export function AgentApp() {
             </div>
           )}
 
-          {/* ── Timeline View Mode ── */}
-          {!['activity', 'settings', 'albums'].includes(section) && viewMode === 'timeline' && (
-            <div className="flex flex-col gap-8">
-              {timelineGroups.map(grp => (
-                <div key={grp.title} className="flex flex-col gap-4">
-                  <div className="flex items-center gap-3 border-b-2 border-on-background pb-2">
-                    <span className="material-symbols-outlined text-primary text-xl">calendar_today</span>
-                    <h2 className="font-black text-sm uppercase tracking-wide">{grp.title}</h2>
-                    <span className="text-xs text-on-surface-variant font-bold ml-auto font-label-caps">
-                      {grp.items.length} {grp.items.length === 1 ? 'item' : 'items'}
-                    </span>
-                  </div>
-                  <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill,minmax(140px,1fr))' }}>
-                    {grp.items.map(file => (
-                      <div
-                        key={file.id}
-                        onClick={() => setSelectedFile(file)}
-                        className="group border-2 border-on-background bg-surface-container-lowest flex flex-col cursor-pointer hover:border-primary transition-all relative overflow-hidden"
-                        style={{ boxShadow: '3px 3px 0 #1a1c1c' }}
-                      >
-                        <div className="aspect-square bg-surface-container flex items-center justify-center overflow-hidden border-b-2 border-on-background">
-                          {thumbnails[file.id]
-                            ? <img src={thumbnails[file.id]} alt={file.name} className="w-full h-full object-cover" />
-                            : <span className="material-symbols-outlined text-4xl text-on-surface-variant">{getFileIcon(file.mime || '')}</span>
-                          }
-                        </div>
-                        <div className="p-2">
-                          <p className="text-xs font-bold truncate">{file.name}</p>
-                          <p className="text-[10px] text-on-surface-variant mt-0.5">{fmtDate(file.modified)}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
           {/* ── Standard File Grid / List ── */}
-          {!['activity', 'settings', 'albums'].includes(section) && viewMode !== 'timeline' && (
+          {!['activity', 'settings', 'albums'].includes(section) && (
             filtered.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-64 gap-4">
                 <span className="material-symbols-outlined text-6xl text-on-surface-variant">
@@ -2419,50 +2393,63 @@ export function AgentApp() {
                 )}
               </div>
             ) : viewMode === 'grid' ? (
-              <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill,minmax(150px,1fr))' }}>
-                {filtered.map(file => (
-                  <div key={file.id} className="group border-2 border-on-background bg-surface-container-lowest flex flex-col cursor-pointer hover:border-primary transition-colors relative overflow-hidden"
-                    style={{ boxShadow: '4px 4px 0 #1a1c1c' }} onClick={() => setSelectedFile(file)}>
-                    <div className="aspect-square bg-surface-container flex items-center justify-center overflow-hidden border-b-2 border-on-background">
-                      {thumbnails[file.id]
-                        ? <img src={thumbnails[file.id]} alt={file.name} className="w-full h-full object-cover" />
-                        : <span className="material-symbols-outlined text-5xl text-on-surface-variant">{getFileIcon(file.mime || '')}</span>
-                      }
+              <div className="flex flex-col gap-6">
+                {timelineGroups.map(grp => (
+                  <div key={grp.title} className="flex flex-col gap-3">
+                    <div className="flex items-center gap-2 border-b-2 border-on-background pb-1.5 sticky top-0 bg-background/95 backdrop-blur-sm z-10">
+                      <span className="material-symbols-outlined text-primary text-base">calendar_today</span>
+                      <h3 className="font-black text-xs uppercase tracking-wide">{grp.title}</h3>
+                      <span className="text-[10px] text-on-surface-variant font-bold ml-auto font-label-caps bg-surface-container px-2 py-0.5 border border-on-background">
+                        {grp.items.length} {grp.items.length === 1 ? 'item' : 'items'}
+                      </span>
                     </div>
-                    <div className="p-2">
-                      <p className="text-xs font-bold truncate" title={file.name}>{file.name}</p>
-                      <p className="text-on-surface-variant text-xs mt-0.5">{fmtSize(file.size || 0)}</p>
-                    </div>
-                    
-                    {/* Hover Actions */}
-                    <div className="absolute inset-0 bg-background/85 flex items-center justify-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button onClick={e => { e.stopPropagation(); setSelectedFile(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-surface-container" title="Preview">
-                        <span className="material-symbols-outlined text-sm">visibility</span>
-                      </button>
-                      <button onClick={e => { e.stopPropagation(); setShowShareModal(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Share Link">
-                        <span className="material-symbols-outlined text-sm">share</span>
-                      </button>
-                      <button onClick={e => { e.stopPropagation(); setShowAssignFileModal(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Add to Album">
-                        <span className="material-symbols-outlined text-sm">photo_album</span>
-                      </button>
-                      <button onClick={e => { e.stopPropagation(); handleDownload(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-surface-container" title="Download">
-                        <span className="material-symbols-outlined text-sm">download</span>
-                      </button>
-                      <button onClick={e => { e.stopPropagation(); handleDelete(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-error-container" title="Delete">
-                        <span className="material-symbols-outlined text-sm">delete</span>
-                      </button>
-                    </div>
+                    <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill,minmax(150px,1fr))' }}>
+                      {grp.items.map(file => (
+                        <div key={file.id} className="group border-2 border-on-background bg-surface-container-lowest flex flex-col cursor-pointer hover:border-primary transition-colors relative overflow-hidden"
+                          style={{ boxShadow: '4px 4px 0 #1a1c1c' }} onClick={() => setSelectedFile(file)}>
+                          <div className="aspect-square bg-surface-container flex items-center justify-center overflow-hidden border-b-2 border-on-background relative">
+                            {thumbnails[file.id]
+                              ? <img src={thumbnails[file.id]} alt={file.name} className="w-full h-full object-cover" />
+                              : <span className="material-symbols-outlined text-5xl text-on-surface-variant">{getFileIcon(file.mime || '')}</span>
+                            }
+                          </div>
+                          <div className="p-2">
+                            <p className="text-xs font-bold truncate" title={file.name}>{file.name}</p>
+                            <p className="text-on-surface-variant text-xs mt-0.5">{fmtSize(file.size || 0)}</p>
+                          </div>
+                          
+                          {/* Hover Actions */}
+                          <div className="absolute inset-0 bg-background/85 flex items-center justify-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onClick={e => { e.stopPropagation(); setSelectedFile(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-surface-container" title="Preview">
+                              <span className="material-symbols-outlined text-sm">visibility</span>
+                            </button>
+                            <button onClick={e => { e.stopPropagation(); setShowShareModal(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Share Link">
+                              <span className="material-symbols-outlined text-sm">share</span>
+                            </button>
+                            <button onClick={e => { e.stopPropagation(); setShowAssignFileModal(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Add to Album">
+                              <span className="material-symbols-outlined text-sm">photo_album</span>
+                            </button>
+                            <button onClick={e => { e.stopPropagation(); handleDownload(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-surface-container" title="Download">
+                              <span className="material-symbols-outlined text-sm">download</span>
+                            </button>
+                            <button onClick={e => { e.stopPropagation(); handleDelete(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-error-container" title="Delete">
+                              <span className="material-symbols-outlined text-sm">delete</span>
+                            </button>
+                          </div>
 
-                    {file.starred && (
-                      <div className="absolute top-1 right-1 bg-primary-fixed border border-on-background w-5 h-5 flex items-center justify-center">
-                        <span className="material-symbols-outlined text-xs text-on-primary-fixed" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                      </div>
-                    )}
-                    {file.encrypted && (
-                      <div className="absolute top-1 left-1 bg-surface-dim border border-on-background w-5 h-5 flex items-center justify-center">
-                        <span className="material-symbols-outlined text-xs text-on-surface-variant">lock</span>
-                      </div>
-                    )}
+                          {file.starred && (
+                            <div className="absolute top-1 right-1 bg-primary-fixed border border-on-background w-5 h-5 flex items-center justify-center">
+                              <span className="material-symbols-outlined text-xs text-on-primary-fixed" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                            </div>
+                          )}
+                          {file.encrypted && (
+                            <div className="absolute top-1 left-1 bg-surface-dim border border-on-background w-5 h-5 flex items-center justify-center">
+                              <span className="material-symbols-outlined text-xs text-on-surface-variant">lock</span>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
