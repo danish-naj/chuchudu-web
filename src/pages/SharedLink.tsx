@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { decryptChunk } from '../crypto/encryption';
+import { doc, getDoc } from 'firebase/firestore';
+import { ref as dbRef, get as dbGet } from 'firebase/database';
+import { db as firestore, rtdb } from '../config/firebase';
 
 function fmtSize(bytes: number): string {
   if (!bytes) return "0 B";
@@ -50,15 +53,38 @@ export default function SharedLink() {
           throw new Error("Decryption key missing from URL. Please ask the sender for the complete link.");
         }
 
-        const { ref, get } = await import('firebase/database');
-        const { rtdb } = await import('../config/firebase');
-        
-        const snapshot = await get(ref(rtdb, `shares/${linkId}`));
-        if (!snapshot.exists()) {
+        let data: any = null;
+
+        // 1. Try Firestore public_shares
+        try {
+          const docSnap = await getDoc(doc(firestore, 'public_shares', linkId!));
+          if (docSnap.exists()) {
+            data = docSnap.data();
+          }
+        } catch (e) {
+          console.warn("Firestore public_shares lookup:", e);
+        }
+
+        // 2. Try RTDB fallback
+        if (!data) {
+          try {
+            const snapshot = await dbGet(dbRef(rtdb, `shares/${linkId}`));
+            if (snapshot.exists()) {
+              data = snapshot.val();
+            }
+          } catch (e) {
+            console.warn("RTDB lookup:", e);
+          }
+        }
+
+        if (!data) {
           throw new Error("Shared file not found or has expired.");
         }
-        
-        const data = snapshot.val();
+
+        if (data.is_active === false) {
+          throw new Error("This share link has been revoked or turned off by the sender.");
+        }
+
         setMetadata(data);
 
         // Check expiration
@@ -107,33 +133,54 @@ export default function SharedLink() {
         }
         const fileKey = await crypto.subtle.importKey('raw', bytes.buffer, { name: 'AES-GCM' }, false, ['decrypt']);
 
-        const driveUrl = `https://drive.google.com/uc?export=download&id=${linkId}`;
-        const res = await fetch(`https://corsproxy.io/?url=${encodeURIComponent(driveUrl)}`);
-        
-        if (!res.ok) throw new Error("Could not retrieve payload from cloud buffer.");
-        
-        const payloadText = await res.text();
-        const payloadObj = JSON.parse(payloadText);
-        
-        if (!payloadObj.chunks) throw new Error("Corrupted payload file: Missing chunks.");
+        let payloadText: string | null = null;
 
-        const payloadChunks = payloadObj.chunks;
-        const decryptedBuffers: ArrayBuffer[] = [];
-        
-        for (let i = 0; i < payloadChunks.length; i++) {
-          const chunk = payloadChunks[i];
-          const dataBuffer = new Uint8Array(chunk.data).buffer;
-          setProgress(Math.round(((i + 1) / payloadChunks.length) * 100));
-          const decrypted = await decryptChunk(dataBuffer, fileKey, chunk.index);
-          decryptedBuffers.push(decrypted);
+        // 1. Storage URL direct fetch
+        if (metadata.storage_url) {
+          const res = await fetch(metadata.storage_url);
+          if (!res.ok) throw new Error("Could not download payload from cloud storage.");
+          payloadText = await res.text();
+        } else {
+          // 2. Google Drive buffer fetch
+          const driveId = metadata.drive_id || metadata.storage_id || linkId;
+          const driveUrl = `https://drive.google.com/uc?export=download&id=${driveId}`;
+          const res = await fetch(`https://corsproxy.io/?url=${encodeURIComponent(driveUrl)}`);
+          if (!res.ok) throw new Error("Could not retrieve payload from cloud buffer.");
+          payloadText = await res.text();
         }
 
+        const payloadObj = JSON.parse(payloadText);
         const mime = metadata.mime_type || metadata.mime || 'application/octet-stream';
-        const finalBlob = new Blob(decryptedBuffers, { type: mime });
-        setDecryptedBlob(finalBlob);
 
-        activeUrl = URL.createObjectURL(finalBlob);
-        setPreviewBlobUrl(activeUrl);
+        if (payloadObj.encryptedData && payloadObj.iv) {
+          // Single AES-GCM payload format
+          const iv = new Uint8Array(payloadObj.iv);
+          const encBuf = new Uint8Array(payloadObj.encryptedData).buffer;
+          const decBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, fileKey, encBuf);
+          const finalBlob = new Blob([decBuf], { type: mime });
+          setDecryptedBlob(finalBlob);
+          activeUrl = URL.createObjectURL(finalBlob);
+          setPreviewBlobUrl(activeUrl);
+        } else if (payloadObj.chunks) {
+          // Chunked AES-GCM payload format
+          const payloadChunks = payloadObj.chunks;
+          const decryptedBuffers: ArrayBuffer[] = [];
+          
+          for (let i = 0; i < payloadChunks.length; i++) {
+            const chunk = payloadChunks[i];
+            const dataBuffer = new Uint8Array(chunk.data).buffer;
+            setProgress(Math.round(((i + 1) / payloadChunks.length) * 100));
+            const decrypted = await decryptChunk(dataBuffer, fileKey, chunk.index);
+            decryptedBuffers.push(decrypted);
+          }
+
+          const finalBlob = new Blob(decryptedBuffers, { type: mime });
+          setDecryptedBlob(finalBlob);
+          activeUrl = URL.createObjectURL(finalBlob);
+          setPreviewBlobUrl(activeUrl);
+        } else {
+          throw new Error("Corrupted or unsupported payload format.");
+        }
       } catch (e: any) {
         console.error('Preview error:', e);
       } finally {

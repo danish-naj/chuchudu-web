@@ -25,12 +25,31 @@ export interface Album {
   modified: string;
 }
 
+export interface ShareLink {
+  id: string;
+  fileId: string;
+  fileName: string;
+  mime: string;
+  size: number;
+  shareUrl: string;
+  base64Key: string;
+  storageType: 'drive' | 'storage' | 'firestore';
+  storageRefId?: string; // drive file ID or storage path
+  expiresAt: string | null; // ISO string or null for never
+  allowDownload: boolean;
+  isPasswordProtected: boolean;
+  passwordHash?: string;
+  createdAt: string;
+  isActive: boolean;
+}
+
 const isTauri = () => typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 
 export class VaultManager {
   private initialized = false;
   private memoryManifest: Record<string, VaultFile> = {};
   private memoryAlbums: Record<string, Album> = {};
+  private memoryShareLinks: Record<string, ShareLink> = {};
   private memoryFiles: Record<string, Uint8Array> = {};
   private cachedVaultPath: string | null = null;
 
@@ -244,6 +263,70 @@ export class VaultManager {
     albums[albumId].coverFileId = fileId;
     albums[albumId].modified = new Date().toISOString();
     await this.saveAlbums(albums);
+  }
+
+  // ─── Share Link Management ────────────────────────────────────────────────────
+  async getShareLinks(): Promise<Record<string, ShareLink>> {
+    await this.init();
+    if (!isTauri()) return { ...this.memoryShareLinks };
+
+    try {
+      const vaultDir = await this.getVaultDir();
+      const sharesPath = `${vaultDir}/.shares.json`;
+      const existsShares = await exists(sharesPath);
+      if (!existsShares) return {};
+      const data = await readTextFile(sharesPath);
+      return JSON.parse(data);
+    } catch (e) {
+      console.error('[VaultManager] Error reading share links:', e);
+      return {};
+    }
+  }
+
+  async saveShareLinks(links: Record<string, ShareLink>): Promise<void> {
+    await this.init();
+    if (!isTauri()) {
+      this.memoryShareLinks = { ...links };
+      localStorage.setItem('chuchudu_vault_shares', JSON.stringify(links));
+      window.dispatchEvent(new CustomEvent('shares-updated'));
+      return;
+    }
+
+    const vaultDir = await this.getVaultDir();
+    const sharesPath = `${vaultDir}/.shares.json`;
+    await writeTextFile(sharesPath, JSON.stringify(links, null, 2));
+    window.dispatchEvent(new CustomEvent('shares-updated'));
+  }
+
+  async addShareLink(link: ShareLink): Promise<ShareLink> {
+    const links = await this.getShareLinks();
+    links[link.id] = link;
+    await this.saveShareLinks(links);
+    return link;
+  }
+
+  async updateShareLink(id: string, updates: Partial<ShareLink>): Promise<ShareLink | null> {
+    const links = await this.getShareLinks();
+    if (!links[id]) return null;
+    links[id] = { ...links[id], ...updates };
+    await this.saveShareLinks(links);
+    return links[id];
+  }
+
+  async toggleShareLinkActive(id: string, active?: boolean): Promise<ShareLink | null> {
+    const links = await this.getShareLinks();
+    if (!links[id]) return null;
+    links[id].isActive = active !== undefined ? active : !links[id].isActive;
+    await this.saveShareLinks(links);
+    return links[id];
+  }
+
+  async deleteShareLink(id: string): Promise<void> {
+    const links = await this.getShareLinks();
+    if (links[id]) {
+      delete links[id];
+      await this.saveShareLinks(links);
+    }
   }
 
   // ─── File Operations ─────────────────────────────────────────────────────────

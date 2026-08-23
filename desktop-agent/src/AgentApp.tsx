@@ -1,17 +1,19 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { vault, type VaultFile, type Album } from './services/vaultManager';
+import { vault, type VaultFile, type Album, type ShareLink } from './services/vaultManager';
 import { p2pReceiver } from './services/p2pReceiver';
-import { auth, firestore, db as rtdb } from './config/firebase';
+import { auth, firestore, storage, db as rtdb } from './config/firebase';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { doc, setDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
+import { doc, setDoc, onSnapshot, deleteDoc, updateDoc } from 'firebase/firestore';
 import { ref as dbRef, set as dbSet } from 'firebase/database';
+import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { enable, disable, isEnabled } from '@tauri-apps/plugin-autostart';
 import { open as openDialog, save as saveDialog } from '@tauri-apps/plugin-dialog';
 import { open as openUrl } from '@tauri-apps/plugin-shell';
 import { writeFile, BaseDirectory } from '@tauri-apps/plugin-fs';
 import { cloudSync, type ActivityEntry } from './services/cloudSync';
+import { DriveClient } from './services/driveClient';
 
-type Section = 'all' | 'photos' | 'videos' | 'documents' | 'albums' | 'starred' | 'activity' | 'settings';
+type Section = 'all' | 'photos' | 'videos' | 'documents' | 'albums' | 'shares' | 'starred' | 'activity' | 'settings';
 type ViewMode = 'grid' | 'list';
 
 const SECTION_INFO: Record<Section, { label: string; icon: string }> = {
@@ -20,6 +22,7 @@ const SECTION_INFO: Record<Section, { label: string; icon: string }> = {
   videos: { label: 'Videos', icon: 'video_library' },
   documents: { label: 'Documents', icon: 'description' },
   albums: { label: 'Albums', icon: 'photo_album' },
+  shares: { label: 'Shared Links', icon: 'link' },
   starred: { label: 'Starred', icon: 'star' },
   activity: { label: 'Transfer Activity', icon: 'sync' },
   settings: { label: 'Settings', icon: 'settings' },
@@ -50,6 +53,20 @@ function fmtSize(bytes: number): string {
 function fmtDate(d: string): string {
   try { return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
   catch { return '—'; }
+}
+
+function formatTimeRemaining(expiresAt: string): string {
+  const diffMs = new Date(expiresAt).getTime() - Date.now();
+  if (diffMs <= 0) return 'Expired';
+  const hours = Math.floor(diffMs / (3600 * 1000));
+  const days = Math.floor(hours / 24);
+  if (days > 0) {
+    const remHours = hours % 24;
+    return `${days}d ${remHours}h`;
+  }
+  const mins = Math.floor((diffMs % (3600 * 1000)) / (60 * 1000));
+  if (hours > 0) return `${hours}h ${mins}m`;
+  return `${mins}m`;
 }
 
 function getMonthYearHeader(d: string): string {
@@ -506,19 +523,99 @@ function CreateShareLinkModal({
         passwordHash = await sha256Hash(passcode.trim());
       }
 
-      // Store share metadata in RTDB / Firestore
-      await dbSet(dbRef(rtdb, `shares/${shareId}`), {
+      const payloadObj = {
+        iv: Array.from(iv),
+        encryptedData: Array.from(new Uint8Array(encryptedBuf)),
+        name: file.name,
+        mime: file.mime,
+        size: file.size
+      };
+      const payloadBlob = new Blob([JSON.stringify(payloadObj)], { type: 'application/json' });
+
+      let storageType: 'drive' | 'storage' = 'storage';
+      let storageId: string = '';
+      let storageUrl: string = '';
+
+      // 1. Try Google Drive if token exists
+      const driveToken = localStorage.getItem('chuchudu_drive_token');
+      if (driveToken) {
+        try {
+          const driveClient = new DriveClient(driveToken);
+          const folderId = await driveClient.getOrCreateBufferFolder();
+          const driveFileId = await driveClient.uploadFile(payloadBlob, `shared_${file.name}.json`, folderId);
+          storageId = await driveClient.makePublicAndGetLink(driveFileId);
+          storageType = 'drive';
+        } catch (e) {
+          console.warn('Google Drive share upload failed, falling back to cloud storage:', e);
+        }
+      }
+
+      // 2. Fallback to Firebase Storage if not drive
+      if (!storageId) {
+        try {
+          const fileRef = storageRef(storage, `shares/${shareId}/payload.json`);
+          await uploadBytes(fileRef, payloadBlob);
+          storageUrl = await getDownloadURL(fileRef);
+          storageId = storageUrl;
+          storageType = 'storage';
+        } catch (e) {
+          console.error('Cloud storage upload error:', e);
+          throw new Error('Failed to upload encrypted payload to cloud: ' + String(e));
+        }
+      }
+
+      const shareMeta = {
+        id: shareId,
+        file_id: file.id,
         file_name: file.name,
         mime_type: file.mime,
         size: file.size,
+        storage_type: storageType,
+        storage_id: storageId,
+        storage_url: storageUrl || null,
+        drive_id: storageType === 'drive' ? storageId : null,
         expires_at: expiresAt,
         allow_download: allowDownload,
         password_hash: passwordHash || null,
         created_at: new Date().toISOString(),
+        is_active: true,
+      };
+
+      // Write to public_shares in Firestore
+      try {
+        await setDoc(doc(firestore, 'public_shares', shareId), shareMeta);
+        if (auth.currentUser) {
+          await setDoc(doc(firestore, `users/${auth.currentUser.uid}/shares/${shareId}`), shareMeta);
+        }
+      } catch (err) {
+        console.warn('Firestore share metadata write failed:', err);
+      }
+
+      // Optional RTDB sync
+      try {
+        await dbSet(dbRef(rtdb, `shares/${shareId}`), shareMeta);
+      } catch {}
+
+      // Save to local vault
+      const link = `https://chuchudu.in/t/${shareId}#key=${base64Key}`;
+      await vault.addShareLink({
+        id: shareId,
+        fileId: file.id,
+        fileName: file.name,
+        mime: file.mime,
+        size: file.size,
+        shareUrl: link,
+        base64Key,
+        storageType,
+        storageRefId: storageId,
+        expiresAt,
+        allowDownload,
+        isPasswordProtected: !!passwordHash,
+        passwordHash,
+        createdAt: new Date().toISOString(),
+        isActive: true,
       });
 
-      // Construct link
-      const link = `https://chuchudu.in/t/${shareId}#key=${base64Key}`;
       setGeneratedUrl(link);
     } catch (e) {
       console.error('Error creating share link:', e);
@@ -1400,6 +1497,8 @@ export function AgentApp() {
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [files, setFiles] = useState<Record<string, VaultFile>>({});
   const [albums, setAlbums] = useState<Record<string, Album>>({});
+  const [shareLinks, setShareLinks] = useState<Record<string, ShareLink>>({});
+  const [copiedLinkId, setCopiedLinkId] = useState<string | null>(null);
   const [activeAlbumId, setActiveAlbumId] = useState<string | null>(null);
   const [unlockedAlbumIds, setUnlockedAlbumIds] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState('');
@@ -1441,6 +1540,7 @@ export function AgentApp() {
         vault.init().then(() => {
           vault.getManifest().then(setFiles);
           vault.getAlbums().then(setAlbums);
+          vault.getShareLinks().then(setShareLinks);
         });
         p2pReceiver.start();
         cloudSync.start();
@@ -1460,14 +1560,19 @@ export function AgentApp() {
     const refreshAlbums = () => {
       vault.getAlbums().then(setAlbums);
     };
+    const refreshShares = () => {
+      vault.getShareLinks().then(setShareLinks);
+    };
 
     window.addEventListener('vault-updated', refreshFiles);
     window.addEventListener('albums-updated', refreshAlbums);
+    window.addEventListener('shares-updated', refreshShares);
 
     return () => {
       unsub();
       window.removeEventListener('vault-updated', refreshFiles);
       window.removeEventListener('albums-updated', refreshAlbums);
+      window.removeEventListener('shares-updated', refreshShares);
     };
   }, []);
 
@@ -1646,6 +1751,46 @@ export function AgentApp() {
     setShowDuplicateModal(false);
   };
 
+  // ── Share Link Handlers ──────────────────────────────────────────────────
+  const handleToggleShareActive = async (link: ShareLink) => {
+    const updated = await vault.toggleShareLinkActive(link.id);
+    if (updated) {
+      setShareLinks(prev => ({ ...prev, [link.id]: updated }));
+      try {
+        await updateDoc(doc(firestore, 'public_shares', link.id), { is_active: updated.isActive });
+        if (auth.currentUser) {
+          await updateDoc(doc(firestore, `users/${auth.currentUser.uid}/shares/${link.id}`), { is_active: updated.isActive });
+        }
+      } catch (e) {
+        console.warn('Firestore active update error:', e);
+      }
+    }
+  };
+
+  const handleDeleteShareLink = async (link: ShareLink) => {
+    if (!confirm(`Permanently delete shared link for "${link.fileName}"? Anyone with this URL will immediately lose access.`)) return;
+    await vault.deleteShareLink(link.id);
+    setShareLinks(prev => {
+      const copy = { ...prev };
+      delete copy[link.id];
+      return copy;
+    });
+    try {
+      await deleteDoc(doc(firestore, 'public_shares', link.id));
+      if (auth.currentUser) {
+        await deleteDoc(doc(firestore, `users/${auth.currentUser.uid}/shares/${link.id}`));
+      }
+    } catch (e) {
+      console.warn('Firestore share delete error:', e);
+    }
+  };
+
+  const handleCopyShareLink = (url: string, id: string) => {
+    navigator.clipboard.writeText(url);
+    setCopiedLinkId(id);
+    setTimeout(() => setCopiedLinkId(null), 2000);
+  };
+
   const toggleAutostart = async () => {
     if (autostart) { await disable(); setAutostart(false); }
     else { await enable(); setAutostart(true); }
@@ -1749,7 +1894,7 @@ export function AgentApp() {
   const filtered = getFiltered();
   const totalFiles = Object.keys(files).length;
   const totalSize = Object.values(files).reduce((a, f) => a + (f.size || 0), 0);
-  const navItems: Section[] = ['all', 'photos', 'videos', 'documents', 'albums', 'starred'];
+  const navItems: Section[] = ['all', 'photos', 'videos', 'documents', 'albums', 'shares', 'starred'];
   const bottomItems: Section[] = ['activity', 'settings'];
 
   const activeAlbum = activeAlbumId ? albums[activeAlbumId] : null;
@@ -1989,7 +2134,7 @@ export function AgentApp() {
             </h1>
           )}
 
-          {!['activity', 'settings'].includes(section) && (
+          {!['activity', 'settings', 'shares'].includes(section) && (
             <div className="flex-grow max-w-sm">
               <div className="flex items-center gap-2 bg-surface-container-low border-2 border-on-background px-3 py-2">
                 <span className="material-symbols-outlined text-on-surface-variant text-xl">search</span>
@@ -2007,7 +2152,7 @@ export function AgentApp() {
 
           <div className="flex items-center gap-2 ml-auto">
             {/* View Mode Switcher (Grid / List) */}
-            {!['activity', 'settings', 'albums'].includes(section) && (
+            {!['activity', 'settings', 'albums', 'shares'].includes(section) && (
               <div className="flex border-2 border-on-background">
                 {[
                   { mode: 'grid' as ViewMode, icon: 'grid_view', title: 'Grid View' },
@@ -2375,7 +2520,7 @@ export function AgentApp() {
           )}
 
           {/* ── Standard File Grid / List ── */}
-          {!['activity', 'settings', 'albums'].includes(section) && (
+          {!['activity', 'settings', 'albums', 'shares'].includes(section) && (
             filtered.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-64 gap-4">
                 <span className="material-symbols-outlined text-6xl text-on-surface-variant">
@@ -2493,6 +2638,200 @@ export function AgentApp() {
                 </table>
               </div>
             )
+          )}
+
+          {/* ── Shared Links Manager Section ── */}
+          {section === 'shares' && (
+            <div className="flex flex-col gap-6 max-w-5xl">
+              {/* Summary Stats Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="border-2 border-on-background bg-surface-container-lowest p-4 flex items-center gap-3 brutal-shadow">
+                  <div className="w-10 h-10 border-2 border-on-background bg-primary-container flex items-center justify-center">
+                    <span className="material-symbols-outlined text-xl">share</span>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase text-on-surface-variant">Total Links</p>
+                    <p className="text-xl font-black">{Object.keys(shareLinks).length}</p>
+                  </div>
+                </div>
+
+                <div className="border-2 border-on-background bg-surface-container-lowest p-4 flex items-center gap-3 brutal-shadow">
+                  <div className="w-10 h-10 border-2 border-on-background bg-primary-fixed flex items-center justify-center">
+                    <span className="material-symbols-outlined text-xl text-on-primary-fixed">check_circle</span>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase text-on-surface-variant">Live &amp; Active</p>
+                    <p className="text-xl font-black text-primary">
+                      {Object.values(shareLinks).filter(l => l.isActive && (!l.expiresAt || new Date() < new Date(l.expiresAt))).length}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="border-2 border-on-background bg-surface-container-lowest p-4 flex items-center gap-3 brutal-shadow">
+                  <div className="w-10 h-10 border-2 border-on-background bg-error-container flex items-center justify-center">
+                    <span className="material-symbols-outlined text-xl text-on-error-container">timer_off</span>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase text-on-surface-variant">Expired / Revoked</p>
+                    <p className="text-xl font-black">
+                      {Object.values(shareLinks).filter(l => !l.isActive || (l.expiresAt && new Date() >= new Date(l.expiresAt))).length}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Shared Links List */}
+              {Object.keys(shareLinks).length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-80 gap-4 border-4 border-dashed border-on-background bg-surface-container-low p-8 text-center">
+                  <span className="material-symbols-outlined text-6xl text-primary">share</span>
+                  <div>
+                    <h3 className="font-black text-lg uppercase mb-1">No Shared Links Yet</h3>
+                    <p className="text-sm text-on-surface-variant max-w-sm">
+                      Create encrypted expiring links for any photo or file with customizable time limits and view/download permissions.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setSection('all')}
+                    className="flex items-center gap-2 bg-primary text-on-primary border-2 border-on-background px-6 py-3 font-bold text-sm uppercase brutal-shadow"
+                  >
+                    <span className="material-symbols-outlined">folder</span>Go to My Files
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-4">
+                  {Object.values(shareLinks)
+                    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                    .map(link => {
+                      const isPastExpiry = link.expiresAt ? new Date() >= new Date(link.expiresAt) : false;
+                      const isLive = link.isActive && !isPastExpiry;
+
+                      return (
+                        <div
+                          key={link.id}
+                          className={`border-2 border-on-background bg-surface-container-lowest p-5 flex flex-col gap-4 transition-all ${
+                            isLive ? 'hover:border-primary' : 'opacity-70 bg-surface-container-low'
+                          }`}
+                          style={{ boxShadow: '4px 4px 0 #1a1c1c' }}
+                        >
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b-2 border-on-background pb-3">
+                            <div className="flex items-center gap-3 min-w-0">
+                              <div className="w-10 h-10 border-2 border-on-background bg-surface-container flex items-center justify-center flex-shrink-0">
+                                <span className="material-symbols-outlined text-xl text-primary">{getFileIcon(link.mime)}</span>
+                              </div>
+                              <div className="min-w-0">
+                                <h3 className="font-black text-sm uppercase truncate" title={link.fileName}>{link.fileName}</h3>
+                                <p className="text-xs text-on-surface-variant font-label-caps">{fmtSize(link.size)} · Created {fmtDate(link.createdAt)}</p>
+                              </div>
+                            </div>
+
+                            <div className="flex flex-wrap items-center gap-2 self-stretch sm:self-auto">
+                              {/* Status Badge */}
+                              {isLive ? (
+                                <span className="bg-primary-fixed text-on-primary-fixed border border-on-background px-2.5 py-1 text-[10px] font-black uppercase flex items-center gap-1">
+                                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                                  LIVE &amp; ACTIVE
+                                </span>
+                              ) : !link.isActive ? (
+                                <span className="bg-surface-container text-on-surface-variant border border-on-background px-2.5 py-1 text-[10px] font-black uppercase flex items-center gap-1">
+                                  <span className="material-symbols-outlined text-xs">block</span>
+                                  TURNED OFF
+                                </span>
+                              ) : (
+                                <span className="bg-error-container text-on-error-container border border-on-background px-2.5 py-1 text-[10px] font-black uppercase flex items-center gap-1">
+                                  <span className="material-symbols-outlined text-xs">timer_off</span>
+                                  EXPIRED
+                                </span>
+                              )}
+
+                              {/* Permission Pill */}
+                              <span className="border border-on-background bg-surface-container-high px-2 py-0.5 text-[10px] font-bold uppercase">
+                                {link.allowDownload ? '⬇️ Download Allowed' : '👁️ View Only'}
+                              </span>
+
+                              {/* Passcode Pill */}
+                              {link.isPasswordProtected && (
+                                <span className="border border-on-background bg-surface-container-high px-2 py-0.5 text-[10px] font-bold uppercase flex items-center gap-0.5">
+                                  <span className="material-symbols-outlined text-[11px]">lock</span>
+                                  PIN Locked
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* URL Box & Copy */}
+                          <div className="flex items-center gap-2 bg-surface-container-low border-2 border-on-background p-2">
+                            <input
+                              type="text"
+                              readOnly
+                              value={link.shareUrl}
+                              className="bg-transparent text-xs text-on-background font-mono focus:outline-none flex-grow min-w-0 select-all"
+                            />
+                            <button
+                              onClick={() => handleCopyShareLink(link.shareUrl, link.id)}
+                              className="bg-primary text-on-primary border border-on-background px-3 py-1.5 text-xs font-bold uppercase flex items-center gap-1 flex-shrink-0 hover:brightness-110"
+                            >
+                              <span className="material-symbols-outlined text-sm">
+                                {copiedLinkId === link.id ? 'check' : 'content_copy'}
+                              </span>
+                              {copiedLinkId === link.id ? 'Copied!' : 'Copy'}
+                            </button>
+                          </div>
+
+                          {/* Footer Info & Actions */}
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
+                            <div className="flex items-center gap-2 text-xs font-bold text-on-surface-variant">
+                              <span className="material-symbols-outlined text-sm text-primary">schedule</span>
+                              <span>
+                                {!link.expiresAt
+                                  ? 'Never Expires'
+                                  : isPastExpiry
+                                  ? `Expired on ${fmtDate(link.expiresAt)}`
+                                  : `Expires in ${formatTimeRemaining(link.expiresAt)} (${fmtDate(link.expiresAt)})`}
+                              </span>
+                            </div>
+
+                            <div className="flex items-center gap-2 self-stretch sm:self-auto">
+                              {/* Toggle Link Active / Inactive */}
+                              <button
+                                onClick={() => handleToggleShareActive(link)}
+                                className={`flex-1 sm:flex-initial flex items-center justify-center gap-1 border-2 border-on-background px-3 py-1.5 text-xs font-bold uppercase transition-all ${
+                                  link.isActive
+                                    ? 'bg-surface-container hover:bg-error-container hover:text-on-error-container'
+                                    : 'bg-primary text-on-primary'
+                                }`}
+                                title={link.isActive ? 'Turn off link to prevent access' : 'Turn link back on'}
+                              >
+                                <span className="material-symbols-outlined text-sm">
+                                  {link.isActive ? 'toggle_on' : 'toggle_off'}
+                                </span>
+                                {link.isActive ? 'Turn Off' : 'Turn On'}
+                              </button>
+
+                              {/* Open in Browser */}
+                              <button
+                                onClick={() => openUrl(link.shareUrl)}
+                                className="p-1.5 border-2 border-on-background bg-surface-container hover:bg-surface-dim"
+                                title="Open Link in Browser"
+                              >
+                                <span className="material-symbols-outlined text-sm">open_in_new</span>
+                              </button>
+
+                              {/* Delete Link */}
+                              <button
+                                onClick={() => handleDeleteShareLink(link)}
+                                className="p-1.5 border-2 border-on-background bg-error-container text-on-error-container hover:brightness-95"
+                                title="Permanently Delete Share Link"
+                              >
+                                <span className="material-symbols-outlined text-sm">delete</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
           )}
 
           {/* Activity Section */}
