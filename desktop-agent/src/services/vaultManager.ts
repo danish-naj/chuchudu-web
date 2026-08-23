@@ -19,6 +19,8 @@ export interface Album {
   description?: string;
   coverFileId?: string; // ID of the vault file used as cover
   fileIds: string[];
+  isLocked?: boolean;
+  pinHash?: string;
   created: string;
   modified: string;
 }
@@ -167,7 +169,7 @@ export class VaultManager {
     window.dispatchEvent(new CustomEvent('albums-updated'));
   }
 
-  async createAlbum(name: string, description = '', coverFileId?: string, fileIds: string[] = []): Promise<Album> {
+  async createAlbum(name: string, description = '', coverFileId?: string, fileIds: string[] = [], isLocked = false, pinHash?: string): Promise<Album> {
     const albums = await this.getAlbums();
     const id = crypto.randomUUID();
     const now = new Date().toISOString();
@@ -177,6 +179,8 @@ export class VaultManager {
       description: description.trim(),
       coverFileId: coverFileId || (fileIds.length > 0 ? fileIds[0] : undefined),
       fileIds: [...fileIds],
+      isLocked,
+      pinHash,
       created: now,
       modified: now,
     };

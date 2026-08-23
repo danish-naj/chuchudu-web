@@ -19,7 +19,6 @@ export default function PortalSidebar() {
 
   const navItems = [
     { label: 'UPLOAD FILES', path: '/dashboard', icon: 'cloud_upload' },
-    { label: 'MY ALBUMS', path: '/albums', icon: 'photo_album' },
     { label: 'UPLOAD STATUS', path: '/status', icon: 'pending_actions' },
     { label: 'GET APPS', path: '/apps', icon: 'download' },
     { label: 'TERMS & LEGAL', path: '/terms', icon: 'gavel' },
