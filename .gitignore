@@ -18,6 +18,8 @@ dist-ssr
 # Binaries & Temporary files
 *.exe
 !public/downloads/*.exe
+*.dmg
+!public/downloads/*.dmg
 test.txt
 target
 desktop-agent/src-tauri/target

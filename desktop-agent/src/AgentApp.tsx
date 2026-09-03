@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { vault, type VaultFile, type Album, type ShareLink } from './services/vaultManager';
+import QRCode from 'qrcode';
+import JSZip from 'jszip';
+import { vault, type VaultFile, type Album, type ShareLink, type VaultProfile } from './services/vaultManager';
 import { p2pReceiver } from './services/p2pReceiver';
 import { auth, firestore, storage, db as rtdb } from './config/firebase';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
@@ -15,6 +17,27 @@ import { DriveClient } from './services/driveClient';
 
 type Section = 'all' | 'photos' | 'videos' | 'documents' | 'albums' | 'shares' | 'starred' | 'activity' | 'settings';
 type ViewMode = 'grid' | 'list';
+
+export const COLOR_TAGS = [
+  { id: 'red', label: 'Urgent', hex: '#ef4444', bgClass: 'bg-red-500 text-white', borderClass: 'border-red-500' },
+  { id: 'yellow', label: 'Review', hex: '#eab308', bgClass: 'bg-yellow-500 text-black', borderClass: 'border-yellow-500' },
+  { id: 'green', label: 'Personal', hex: '#22c55e', bgClass: 'bg-green-500 text-white', borderClass: 'border-green-500' },
+  { id: 'blue', label: 'Work', hex: '#3b82f6', bgClass: 'bg-blue-500 text-white', borderClass: 'border-blue-500' },
+  { id: 'purple', label: 'Memories', hex: '#a855f7', bgClass: 'bg-purple-500 text-white', borderClass: 'border-purple-500' },
+  { id: 'orange', label: 'Finance', hex: '#f97316', bgClass: 'bg-orange-500 text-white', borderClass: 'border-orange-500' },
+];
+
+export type SortMode = 'date-desc' | 'date-asc' | 'name-asc' | 'name-desc' | 'size-desc' | 'size-asc' | 'type';
+
+const SORT_OPTIONS: { id: SortMode; label: string; icon: string }[] = [
+  { id: 'date-desc', label: 'Date: Newest First', icon: 'arrow_downward' },
+  { id: 'date-asc', label: 'Date: Oldest First', icon: 'arrow_upward' },
+  { id: 'name-asc', label: 'Name: A to Z', icon: 'sort_by_alpha' },
+  { id: 'name-desc', label: 'Name: Z to A', icon: 'sort_by_alpha' },
+  { id: 'size-desc', label: 'Size: Largest First', icon: 'expand_more' },
+  { id: 'size-asc', label: 'Size: Smallest First', icon: 'expand_less' },
+  { id: 'type', label: 'File Type', icon: 'category' },
+];
 
 const SECTION_INFO: Record<Section, { label: string; icon: string }> = {
   all: { label: 'All Files', icon: 'folder' },
@@ -494,6 +517,7 @@ function CreateShareLinkModal({
   
   const [generating, setGenerating] = useState(false);
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
+  const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
   const handleGenerate = async () => {
@@ -616,6 +640,18 @@ function CreateShareLinkModal({
         isActive: true,
       });
 
+      // Generate QR Code
+      try {
+        const qr = await QRCode.toDataURL(link, {
+          width: 240,
+          margin: 1,
+          color: { dark: '#000000', light: '#ffffff' }
+        });
+        setQrDataUrl(qr);
+      } catch (e) {
+        console.warn('QR generation error:', e);
+      }
+
       setGeneratedUrl(link);
     } catch (e) {
       console.error('Error creating share link:', e);
@@ -630,6 +666,14 @@ function CreateShareLinkModal({
     navigator.clipboard.writeText(generatedUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDownloadQr = () => {
+    if (!qrDataUrl) return;
+    const a = document.createElement('a');
+    a.href = qrDataUrl;
+    a.download = `qr-${file.name.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+    a.click();
   };
 
   return (
@@ -782,6 +826,20 @@ function CreateShareLinkModal({
                 </button>
               </div>
 
+              {/* QR Code Section */}
+              {qrDataUrl && (
+                <div className="p-4 bg-white border-2 border-on-background flex flex-col items-center gap-3">
+                  <p className="text-[11px] font-bold text-black uppercase tracking-wider">Scan with Phone Camera</p>
+                  <img src={qrDataUrl} alt="QR Code" className="w-44 h-44 object-contain border border-gray-300 p-1" />
+                  <button
+                    onClick={handleDownloadQr}
+                    className="bg-black text-white border-2 border-black px-3 py-1 text-xs font-bold uppercase flex items-center gap-1 hover:bg-gray-800"
+                  >
+                    <span className="material-symbols-outlined text-sm">download</span>Download QR PNG
+                  </button>
+                </div>
+              )}
+
               <div className="p-3 bg-surface-container border-2 border-on-background text-[11px] text-on-surface-variant flex flex-col gap-1">
                 <div><strong>Expiry:</strong> {expiryHours > 0 ? `${expiryHours} hours` : 'Never'}</div>
                 <div><strong>Permission:</strong> {allowDownload ? 'Download Allowed' : 'View Only (No Download)'}</div>
@@ -797,6 +855,497 @@ function CreateShareLinkModal({
             </div>
           )}
 
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── QR Code Modal ────────────────────────────────────────────────────────────
+function QRCodeModal({
+  title,
+  url,
+  onClose,
+}: {
+  title: string;
+  url: string;
+  onClose: () => void;
+}) {
+  const [qrUrl, setQrUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    QRCode.toDataURL(url, {
+      width: 320,
+      margin: 1,
+      color: { dark: '#000000', light: '#ffffff' }
+    }).then(setQrUrl);
+  }, [url]);
+
+  const handleDownloadQr = () => {
+    if (!qrUrl) return;
+    const a = document.createElement('a');
+    a.href = qrUrl;
+    a.download = `chuchudu-qr-${title.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+    a.click();
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div className="bg-surface-container-lowest border-4 border-on-background w-full max-w-sm flex flex-col"
+        style={{ boxShadow: '10px 10px 0 #1a1c1c' }} onClick={e => e.stopPropagation()}>
+        <div className="bg-primary-container border-b-4 border-on-background p-4 flex items-center justify-between">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="material-symbols-outlined text-2xl text-on-background font-black">qr_code_2</span>
+            <h2 className="font-black text-sm uppercase tracking-tight text-on-background truncate">
+              Scan Share Link
+            </h2>
+          </div>
+          <button onClick={onClose} className="p-1 hover:bg-primary/20 border-2 border-transparent hover:border-on-background">
+            <span className="material-symbols-outlined text-xl">close</span>
+          </button>
+        </div>
+        <div className="p-6 flex flex-col items-center gap-4 text-center">
+          <p className="text-xs font-bold text-on-surface-variant truncate max-w-full">
+            {title}
+          </p>
+          <div className="p-3 bg-white border-4 border-on-background" style={{ boxShadow: '4px 4px 0 #1a1c1c' }}>
+            {qrUrl ? (
+              <img src={qrUrl} alt="QR Code" className="w-52 h-52 object-contain" />
+            ) : (
+              <div className="w-52 h-52 flex items-center justify-center">
+                <span className="material-symbols-outlined text-3xl animate-spin">progress_activity</span>
+              </div>
+            )}
+          </div>
+          <p className="text-[11px] text-on-surface-variant">
+            Scan with any phone camera to view or download directly.
+          </p>
+          <div className="flex items-center gap-2 w-full">
+            <button
+              onClick={handleDownloadQr}
+              className="flex-1 bg-primary text-on-primary border-2 border-on-background py-2 text-xs font-bold uppercase flex items-center justify-center gap-1 brutal-shadow"
+            >
+              <span className="material-symbols-outlined text-sm">download</span>Download QR
+            </button>
+            <button
+              onClick={onClose}
+              className="px-4 py-2 bg-surface-container border-2 border-on-background text-xs font-bold uppercase hover:bg-surface-dim"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Add Vault Modal ──────────────────────────────────────────────────────────
+function AddVaultModal({
+  onClose,
+  onAddVault,
+}: {
+  onClose: () => void;
+  onAddVault: (name: string, path: string) => Promise<void>;
+}) {
+  const [name, setName] = useState('');
+  const [path, setPath] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  const handlePick = async () => {
+    try {
+      const sel = await openDialog({ directory: true, multiple: false, title: 'Select External Drive or Folder' });
+      if (sel && typeof sel === 'string') {
+        setPath(sel);
+        if (!name.trim()) {
+          const parts = sel.replace(/\\/g, '/').split('/');
+          setName(parts[parts.length - 1] || 'External Vault');
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!path.trim()) return;
+    setSaving(true);
+    try {
+      await onAddVault(name.trim() || 'External Vault', path.trim());
+      onClose();
+    } catch (e) {
+      alert(String(e));
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div className="bg-surface-container-lowest border-4 border-on-background w-full max-w-md flex flex-col"
+        style={{ boxShadow: '10px 10px 0 #1a1c1c' }} onClick={e => e.stopPropagation()}>
+        <div className="bg-primary-container border-b-4 border-on-background p-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-2xl text-on-background font-black">storage</span>
+            <h2 className="font-black text-sm uppercase tracking-tight text-on-background">
+              Add Storage Vault / Drive
+            </h2>
+          </div>
+          <button onClick={onClose} className="p-1 hover:bg-primary/20 border-2 border-transparent hover:border-on-background">
+            <span className="material-symbols-outlined text-xl">close</span>
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-4">
+          <div>
+            <label className="block text-xs font-bold uppercase text-on-surface-variant mb-1">Vault Label / Name</label>
+            <input
+              type="text"
+              placeholder="e.g. 2TB External SSD, USB Drive, Work Vault"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              className="w-full bg-surface-container border-2 border-on-background px-3 py-2 text-xs font-bold focus:outline-none focus:border-primary"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-bold uppercase text-on-surface-variant mb-1">Drive / Folder Path</label>
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                readOnly
+                placeholder="Click 'Browse' to choose folder"
+                value={path}
+                className="w-full bg-surface-container border-2 border-on-background px-3 py-2 text-xs font-mono focus:outline-none"
+                required
+              />
+              <button
+                type="button"
+                onClick={handlePick}
+                className="bg-surface-container-high border-2 border-on-background px-4 py-2 text-xs font-bold uppercase hover:bg-surface-dim whitespace-nowrap"
+              >
+                Browse
+              </button>
+            </div>
+          </div>
+          <div className="p-3 bg-surface-container border-2 border-on-background text-[11px] text-on-surface-variant">
+            💡 <strong>Multi-Vault Architecture:</strong> Each vault stores its own isolated encrypted files, photo albums, and offline share indices. You can switch between drives anytime in the sidebar.
+          </div>
+          <div className="flex items-center gap-2 pt-2">
+            <button
+              type="submit"
+              disabled={saving || !path.trim()}
+              className="flex-1 bg-primary text-on-primary border-2 border-on-background py-2.5 text-xs font-bold uppercase brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 disabled:opacity-60"
+            >
+              {saving ? 'Configuring Vault...' : 'Create & Switch Vault'}
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2.5 bg-surface-container border-2 border-on-background text-xs font-bold uppercase hover:bg-surface-dim"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+// ─── Vault Backup & Restore Modal ─────────────────────────────────────────────
+function VaultBackupModal({
+  onClose,
+}: {
+  onClose: () => void;
+}) {
+  const [passphrase, setPassphrase] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
+  const [statusText, setStatusText] = useState('');
+  const [progress, setProgress] = useState(0);
+  const [processing, setProcessing] = useState(false);
+  const [mode, setMode] = useState<'backup' | 'restore'>('backup');
+
+  const handleExport = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passphrase.length < 6) {
+      alert('Passphrase must be at least 6 characters.');
+      return;
+    }
+    if (passphrase !== confirmPass) {
+      alert('Passphrases do not match.');
+      return;
+    }
+
+    try {
+      setProcessing(true);
+      const backupBytes = await vault.exportVaultBackup(passphrase, (pct, status) => {
+        setProgress(pct);
+        setStatusText(status);
+      });
+
+      const today = new Date().toISOString().slice(0, 10);
+      const defaultFileName = `chuchudu-vault-backup-${today}.chuchudu`;
+      
+      const savePath = await saveDialog({
+        defaultPath: defaultFileName,
+        filters: [{ name: 'ChuChudu Encrypted Backup', extensions: ['chuchudu'] }],
+        title: 'Save Encrypted Vault Backup'
+      });
+
+      if (savePath && typeof savePath === 'string') {
+        await writeFile(savePath, backupBytes);
+        alert('Vault backup saved successfully!');
+        onClose();
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Backup failed: ' + String(err));
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  const handleImport = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!passphrase) {
+      alert('Please enter your backup decryption passphrase.');
+      return;
+    }
+
+    try {
+      setProcessing(true);
+      const fileSelection = await openDialog({
+        multiple: false,
+        filters: [{ name: 'ChuChudu Backup', extensions: ['chuchudu', 'zip'] }],
+        title: 'Select ChuChudu Backup File'
+      });
+
+      if (!fileSelection || typeof fileSelection !== 'string') {
+        setProcessing(false);
+        return;
+      }
+
+      setStatusText('Reading backup file...');
+      setProgress(10);
+      const fileBytes = await (await import('@tauri-apps/plugin-fs')).readFile(fileSelection);
+
+      const res = await vault.importVaultBackup(fileBytes, passphrase, (pct, status) => {
+        setProgress(pct);
+        setStatusText(status);
+      });
+
+      alert(`Restore successful! Restored ${res.filesRestored} files and ${res.albumsRestored} albums.`);
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+      alert('Restore failed: ' + String(err));
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div className="bg-surface-container-lowest border-4 border-on-background w-full max-w-md flex flex-col"
+        style={{ boxShadow: '10px 10px 0 #1a1c1c' }} onClick={e => e.stopPropagation()}>
+        <div className="bg-primary-container border-b-4 border-on-background p-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-2xl text-on-background font-black">lock_reset</span>
+            <h2 className="font-black text-sm uppercase tracking-tight text-on-background">
+              {mode === 'backup' ? '1-Click Encrypted Backup' : 'Restore Vault from Backup'}
+            </h2>
+          </div>
+          <button onClick={onClose} className="p-1 hover:bg-primary/20 border-2 border-transparent hover:border-on-background">
+            <span className="material-symbols-outlined text-xl">close</span>
+          </button>
+        </div>
+
+        {/* Tab switch */}
+        <div className="grid grid-cols-2 border-b-2 border-on-background">
+          <button
+            type="button"
+            onClick={() => setMode('backup')}
+            className={`py-2 text-xs font-bold uppercase transition-all ${mode === 'backup' ? 'bg-primary text-on-primary' : 'bg-surface-container'}`}
+          >
+            Create Backup
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode('restore')}
+            className={`py-2 text-xs font-bold uppercase transition-all ${mode === 'restore' ? 'bg-primary text-on-primary' : 'bg-surface-container'}`}
+          >
+            Restore Backup
+          </button>
+        </div>
+
+        <div className="p-6 flex flex-col gap-4">
+          {mode === 'backup' ? (
+            <form onSubmit={handleExport} className="flex flex-col gap-4">
+              <p className="text-xs text-on-surface-variant">
+                Exports all files, albums, and manifests into a single AES-256 encrypted <code>.chuchudu</code> package.
+              </p>
+              <div>
+                <label className="block text-xs font-bold uppercase text-on-surface-variant mb-1">Set Backup Passphrase</label>
+                <input
+                  type="password"
+                  placeholder="Min 6 characters"
+                  value={passphrase}
+                  onChange={e => setPassphrase(e.target.value)}
+                  className="w-full bg-surface-container border-2 border-on-background px-3 py-2 text-xs font-bold focus:outline-none focus:border-primary"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold uppercase text-on-surface-variant mb-1">Confirm Passphrase</label>
+                <input
+                  type="password"
+                  placeholder="Repeat passphrase"
+                  value={confirmPass}
+                  onChange={e => setConfirmPass(e.target.value)}
+                  className="w-full bg-surface-container border-2 border-on-background px-3 py-2 text-xs font-bold focus:outline-none focus:border-primary"
+                  required
+                />
+              </div>
+
+              {processing && (
+                <div className="flex flex-col gap-1.5 p-3 bg-primary-container border-2 border-on-background">
+                  <div className="flex justify-between text-xs font-bold text-on-primary-container">
+                    <span>{statusText || 'Processing...'}</span>
+                    <span>{progress}%</span>
+                  </div>
+                  <div className="w-full h-1.5 bg-primary-fixed/40 border border-on-background">
+                    <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
+                  </div>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={processing}
+                className="w-full bg-primary text-on-primary border-2 border-on-background py-3 font-bold text-xs uppercase brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 disabled:opacity-60"
+              >
+                {processing ? 'Exporting Backup...' : 'Export Encrypted Backup'}
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleImport} className="flex flex-col gap-4">
+              <p className="text-xs text-on-surface-variant">
+                Select an existing <code>.chuchudu</code> backup file and enter the decryption passphrase to restore all items into your active vault.
+              </p>
+              <div>
+                <label className="block text-xs font-bold uppercase text-on-surface-variant mb-1">Decryption Passphrase</label>
+                <input
+                  type="password"
+                  placeholder="Enter backup passphrase"
+                  value={passphrase}
+                  onChange={e => setPassphrase(e.target.value)}
+                  className="w-full bg-surface-container border-2 border-on-background px-3 py-2 text-xs font-bold focus:outline-none focus:border-primary"
+                  required
+                />
+              </div>
+
+              {processing && (
+                <div className="flex flex-col gap-1.5 p-3 bg-primary-container border-2 border-on-background">
+                  <div className="flex justify-between text-xs font-bold text-on-primary-container">
+                    <span>{statusText || 'Restoring...'}</span>
+                    <span>{progress}%</span>
+                  </div>
+                  <div className="w-full h-1.5 bg-primary-fixed/40 border border-on-background">
+                    <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
+                  </div>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={processing}
+                className="w-full bg-primary text-on-primary border-2 border-on-background py-3 font-bold text-xs uppercase brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 disabled:opacity-60"
+              >
+                {processing ? 'Restoring Vault...' : 'Select Backup File & Restore'}
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Tag Assignment Modal ─────────────────────────────────────────────────────
+function TagAssignModal({
+  fileIds,
+  currentTags = [],
+  onClose,
+  onSaveTags,
+}: {
+  fileIds: string[];
+  currentTags?: string[];
+  onClose: () => void;
+  onSaveTags: (fileIds: string[], tags: string[]) => Promise<void>;
+}) {
+  const [selectedTags, setSelectedTags] = useState<string[]>(currentTags);
+
+  const toggleTag = (tagId: string) => {
+    setSelectedTags(prev =>
+      prev.includes(tagId) ? prev.filter(t => t !== tagId) : [...prev, tagId]
+    );
+  };
+
+  const handleSave = async () => {
+    await onSaveTags(fileIds, selectedTags);
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div className="bg-surface-container-lowest border-4 border-on-background w-full max-w-sm flex flex-col"
+        style={{ boxShadow: '10px 10px 0 #1a1c1c' }} onClick={e => e.stopPropagation()}>
+        <div className="bg-primary-container border-b-4 border-on-background p-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-2xl text-on-background font-black">label</span>
+            <h2 className="font-black text-sm uppercase tracking-tight text-on-background">
+              Assign Color Tags ({fileIds.length} {fileIds.length === 1 ? 'file' : 'files'})
+            </h2>
+          </div>
+          <button onClick={onClose} className="p-1 hover:bg-primary/20 border-2 border-transparent hover:border-on-background">
+            <span className="material-symbols-outlined text-xl">close</span>
+          </button>
+        </div>
+        <div className="p-6 flex flex-col gap-3">
+          <div className="grid grid-cols-2 gap-2">
+            {COLOR_TAGS.map(tag => {
+              const active = selectedTags.includes(tag.id);
+              return (
+                <button
+                  key={tag.id}
+                  type="button"
+                  onClick={() => toggleTag(tag.id)}
+                  className={`p-3 border-2 border-on-background flex items-center gap-2 text-xs font-bold uppercase transition-all ${
+                    active ? 'bg-primary-container brutal-shadow' : 'bg-surface-container hover:bg-surface-dim'
+                  }`}
+                >
+                  <span className="w-3.5 h-3.5 rounded-full border border-black" style={{ backgroundColor: tag.hex }} />
+                  <span className="truncate">{tag.label}</span>
+                  {active && <span className="material-symbols-outlined text-xs ml-auto">check</span>}
+                </button>
+              );
+            })}
+          </div>
+          <div className="flex items-center gap-2 pt-3 border-t-2 border-on-background">
+            <button
+              onClick={handleSave}
+              className="flex-1 bg-primary text-on-primary border-2 border-on-background py-2 text-xs font-bold uppercase brutal-shadow"
+            >
+              Apply Tags
+            </button>
+            <button
+              onClick={onClose}
+              className="px-4 py-2 bg-surface-container border-2 border-on-background text-xs font-bold uppercase hover:bg-surface-dim"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1507,6 +2056,21 @@ export function AgentApp() {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
+  // Sorting & Tag Filters
+  const [sortBy, setSortBy] = useState<SortMode>('date-desc');
+  const [showSortMenu, setShowSortMenu] = useState(false);
+  const [activeTagFilter, setActiveTagFilter] = useState<string | null>(null);
+
+  // Batch Select & Operations
+  const [isSelectMode, setIsSelectMode] = useState(false);
+  const [selectedFileIds, setSelectedFileIds] = useState<Set<string>>(new Set());
+  const [isZipping, setIsZipping] = useState(false);
+
+  // Multi-Vault Profiles
+  const [vaultProfiles, setVaultProfiles] = useState<VaultProfile[]>([]);
+  const [activeVaultProfile, setActiveVaultProfile] = useState<VaultProfile | null>(null);
+  const [showVaultMenu, setShowVaultMenu] = useState(false);
+
   // Modals state
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showCreateAlbumModal, setShowCreateAlbumModal] = useState(false);
@@ -1517,6 +2081,10 @@ export function AgentApp() {
   const [showDuplicateModal, setShowDuplicateModal] = useState(false);
   const [showFastDropModal, setShowFastDropModal] = useState(false);
   const [showPinUnlockModal, setShowPinUnlockModal] = useState<Album | null>(null);
+  const [showAddVaultModal, setShowAddVaultModal] = useState(false);
+  const [showBackupModal, setShowBackupModal] = useState(false);
+  const [showQrModal, setShowQrModal] = useState<{ title: string; url: string } | null>(null);
+  const [showTagAssignModal, setShowTagAssignModal] = useState<{ fileIds: string[]; currentTags?: string[] } | null>(null);
 
   const [autostart, setAutostart] = useState(false);
   const [vaultPath, setVaultPath] = useState('');
@@ -1541,6 +2109,8 @@ export function AgentApp() {
           vault.getManifest().then(setFiles);
           vault.getAlbums().then(setAlbums);
           vault.getShareLinks().then(setShareLinks);
+          vault.getVaultProfiles().then(setVaultProfiles);
+          vault.getActiveVaultProfile().then(setActiveVaultProfile);
         });
         p2pReceiver.start();
         cloudSync.start();
@@ -1563,16 +2133,26 @@ export function AgentApp() {
     const refreshShares = () => {
       vault.getShareLinks().then(setShareLinks);
     };
+    const onVaultSwitched = () => {
+      vault.getVaultProfiles().then(setVaultProfiles);
+      vault.getActiveVaultProfile().then(setActiveVaultProfile);
+      vault.getManifest().then(setFiles);
+      vault.getAlbums().then(setAlbums);
+      vault.getShareLinks().then(setShareLinks);
+      setSelectedFileIds(new Set());
+    };
 
     window.addEventListener('vault-updated', refreshFiles);
     window.addEventListener('albums-updated', refreshAlbums);
     window.addEventListener('shares-updated', refreshShares);
+    window.addEventListener('vault-switched', onVaultSwitched);
 
     return () => {
       unsub();
       window.removeEventListener('vault-updated', refreshFiles);
       window.removeEventListener('albums-updated', refreshAlbums);
       window.removeEventListener('shares-updated', refreshShares);
+      window.removeEventListener('vault-switched', onVaultSwitched);
     };
   }, []);
 
@@ -1620,9 +2200,30 @@ export function AgentApp() {
       }
     }
 
+    if (activeTagFilter) {
+      result = result.filter(f => f.tags && f.tags.includes(activeTagFilter));
+    }
+
     if (search.trim()) result = result.filter(f => f.name.toLowerCase().includes(search.toLowerCase()));
-    return result.sort((a, b) => new Date(b.modified).getTime() - new Date(a.modified).getTime());
-  }, [files, section, activeAlbumId, albums, search]);
+
+    switch (sortBy) {
+      case 'date-asc':
+        return result.sort((a, b) => new Date(a.modified).getTime() - new Date(b.modified).getTime());
+      case 'name-asc':
+        return result.sort((a, b) => a.name.localeCompare(b.name));
+      case 'name-desc':
+        return result.sort((a, b) => b.name.localeCompare(a.name));
+      case 'size-desc':
+        return result.sort((a, b) => (b.size || 0) - (a.size || 0));
+      case 'size-asc':
+        return result.sort((a, b) => (a.size || 0) - (b.size || 0));
+      case 'type':
+        return result.sort((a, b) => (a.mime || '').localeCompare(b.mime || ''));
+      case 'date-desc':
+      default:
+        return result.sort((a, b) => new Date(b.modified).getTime() - new Date(a.modified).getTime());
+    }
+  }, [files, section, activeAlbumId, albums, search, activeTagFilter, sortBy]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); setLoginError(''); setLoggingIn(true);
@@ -1818,6 +2419,89 @@ export function AgentApp() {
     } catch (e) {
       console.error('Error opening explorer:', e);
     }
+  };
+
+  // ─── Batch Actions & Multi-Vault Handlers ──────────────────────────────────
+  const handleToggleSelect = (id: string) => {
+    setSelectedFileIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const handleSelectAll = () => {
+    setSelectedFileIds(new Set(filtered.map(f => f.id)));
+  };
+
+  const handleDeselectAll = () => {
+    setSelectedFileIds(new Set());
+    setIsSelectMode(false);
+  };
+
+  const handleBulkZipDownload = async () => {
+    if (selectedFileIds.size === 0) return;
+    setIsZipping(true);
+    try {
+      const zip = new JSZip();
+      for (const id of Array.from(selectedFileIds)) {
+        const f = files[id];
+        if (!f) continue;
+        const data = await vault.readFile(id);
+        if (data) {
+          zip.file(f.name, data);
+        }
+      }
+      const zipBlob = await zip.generateAsync({ type: 'blob' });
+      const url = URL.createObjectURL(zipBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `chuchudu-bundle-${new Date().toISOString().slice(0, 10)}.zip`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      alert('Error creating ZIP archive: ' + String(e));
+    } finally {
+      setIsZipping(false);
+    }
+  };
+
+  const handleBulkStar = async () => {
+    const m = await vault.getManifest();
+    selectedFileIds.forEach(id => {
+      if (m[id]) m[id].starred = true;
+    });
+    await vault.saveManifest(m);
+    setFiles({ ...m });
+  };
+
+  const handleBulkDelete = async () => {
+    if (!confirm(`Delete ${selectedFileIds.size} selected files?`)) return;
+    for (const id of Array.from(selectedFileIds)) {
+      await vault.deleteFile(id);
+    }
+    vault.getManifest().then(setFiles);
+    vault.getAlbums().then(setAlbums);
+    setSelectedFileIds(new Set());
+    setIsSelectMode(false);
+  };
+
+  const handleSaveTags = async (fileIds: string[], tags: string[]) => {
+    for (const id of fileIds) {
+      await vault.setFileTags(id, tags);
+    }
+    vault.getManifest().then(setFiles);
+  };
+
+  const handleSwitchVault = async (vaultId: string) => {
+    await vault.switchVault(vaultId);
+    setShowVaultMenu(false);
+  };
+
+  const handleAddVault = async (name: string, path: string) => {
+    const newProfile = await vault.addVaultProfile(name, path);
+    await vault.switchVault(newProfile.id);
   };
 
   const handleConnectDrive = async () => {
@@ -2048,12 +2732,100 @@ export function AgentApp() {
         />
       )}
 
+      {/* Add Storage Vault Modal */}
+      {showAddVaultModal && (
+        <AddVaultModal
+          onClose={() => setShowAddVaultModal(false)}
+          onAddVault={handleAddVault}
+        />
+      )}
+
+      {/* 1-Click Encrypted Vault Backup Modal */}
+      {showBackupModal && (
+        <VaultBackupModal
+          onClose={() => setShowBackupModal(false)}
+        />
+      )}
+
+      {/* QR Code Viewer Modal */}
+      {showQrModal && (
+        <QRCodeModal
+          title={showQrModal.title}
+          url={showQrModal.url}
+          onClose={() => setShowQrModal(null)}
+        />
+      )}
+
+      {/* Tag Assignment Modal */}
+      {showTagAssignModal && (
+        <TagAssignModal
+          fileIds={showTagAssignModal.fileIds}
+          currentTags={showTagAssignModal.currentTags}
+          onClose={() => setShowTagAssignModal(null)}
+          onSaveTags={handleSaveTags}
+        />
+      )}
+
       {/* Sidebar */}
       <aside className="w-64 min-h-screen bg-surface-container-lowest border-r-2 border-on-background flex flex-col flex-shrink-0"
         style={{ boxShadow: '4px 0 0 #1a1c1c' }}>
-        <div className="px-5 py-4 border-b-2 border-on-background flex items-center gap-3">
-          <ChuchuduLogo size={32} />
-          <span className="font-black text-lg uppercase tracking-tight">Chuchudu</span>
+        
+        {/* Brand & Vault Switcher */}
+        <div className="px-4 py-3.5 border-b-2 border-on-background flex flex-col gap-2.5">
+          <div className="flex items-center gap-2.5">
+            <ChuchuduLogo size={32} />
+            <span className="font-black text-lg uppercase tracking-tight">Chuchudu</span>
+          </div>
+
+          {/* Multi-Vault Switcher Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setShowVaultMenu(v => !v)}
+              className="w-full flex items-center justify-between gap-2 p-2 bg-surface-container border-2 border-on-background hover:bg-surface-dim transition-colors text-left"
+              title="Switch or Add Storage Vaults"
+            >
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="material-symbols-outlined text-primary text-base">storage</span>
+                <div className="min-w-0">
+                  <p className="text-[11px] font-bold uppercase truncate">{activeVaultProfile?.name || 'Primary Vault'}</p>
+                  <p className="text-[9px] text-on-surface-variant font-mono truncate">{vaultPath}</p>
+                </div>
+              </div>
+              <span className="material-symbols-outlined text-sm flex-shrink-0">unfold_more</span>
+            </button>
+
+            {showVaultMenu && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-surface-container-lowest border-2 border-on-background z-40 p-1 flex flex-col gap-1 shadow-lg"
+                style={{ boxShadow: '4px 4px 0 #1a1c1c' }}>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-on-surface-variant px-2 pt-1">Storage Vaults</p>
+                {vaultProfiles.map(p => {
+                  const isActive = (activeVaultProfile?.id || 'default') === p.id;
+                  return (
+                    <button
+                      key={p.id}
+                      onClick={() => handleSwitchVault(p.id)}
+                      className={`flex items-center justify-between p-2 text-left text-xs transition-colors ${
+                        isActive ? 'bg-primary-container font-bold border border-on-background' : 'hover:bg-surface-container'
+                      }`}
+                    >
+                      <div className="min-w-0">
+                        <p className="text-[11px] font-bold truncate">{p.name}</p>
+                        <p className="text-[9px] text-on-surface-variant font-mono truncate">{p.path}</p>
+                      </div>
+                      {isActive && <span className="material-symbols-outlined text-xs text-primary">check</span>}
+                    </button>
+                  );
+                })}
+                <div className="border-t border-on-background my-0.5" />
+                <button
+                  onClick={() => { setShowVaultMenu(false); setShowAddVaultModal(true); }}
+                  className="flex items-center gap-1.5 p-2 text-[11px] font-bold uppercase text-primary hover:bg-surface-container"
+                >
+                  <span className="material-symbols-outlined text-xs">add_to_drive</span>+ Add New Vault
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         <nav className="flex-grow px-3 py-4 flex flex-col gap-1">
@@ -2172,6 +2944,61 @@ export function AgentApp() {
               </div>
             )}
 
+            {/* Sort Options Dropdown */}
+            {!['activity', 'settings', 'shares'].includes(section) && (
+              <div className="relative">
+                <button
+                  onClick={() => setShowSortMenu(s => !s)}
+                  title="Sort files"
+                  className="flex items-center gap-1.5 bg-surface-container border-2 border-on-background px-3 py-2 font-bold text-xs uppercase hover:bg-surface-dim"
+                >
+                  <span className="material-symbols-outlined text-base">sort</span>
+                  <span className="hidden md:inline">{SORT_OPTIONS.find(o => o.id === sortBy)?.label.split(':')[0]}</span>
+                </button>
+                {showSortMenu && (
+                  <div className="absolute right-0 top-full mt-1 w-48 bg-surface-container-lowest border-2 border-on-background z-40 p-1 flex flex-col gap-0.5 shadow-lg"
+                    style={{ boxShadow: '4px 4px 0 #1a1c1c' }}>
+                    {SORT_OPTIONS.map(opt => (
+                      <button
+                        key={opt.id}
+                        onClick={() => { setSortBy(opt.id); setShowSortMenu(false); }}
+                        className={`flex items-center justify-between p-2 text-left text-xs uppercase font-bold transition-colors ${
+                          sortBy === opt.id ? 'bg-primary-container border border-on-background' : 'hover:bg-surface-container'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="material-symbols-outlined text-sm">{opt.icon}</span>
+                          <span>{opt.label}</span>
+                        </div>
+                        {sortBy === opt.id && <span className="material-symbols-outlined text-xs">check</span>}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Batch Select Mode Toggle */}
+            {!['activity', 'settings', 'shares'].includes(section) && (
+              <button
+                onClick={() => {
+                  if (isSelectMode) {
+                    setSelectedFileIds(new Set());
+                    setIsSelectMode(false);
+                  } else {
+                    setIsSelectMode(true);
+                  }
+                }}
+                className={`flex items-center gap-1.5 border-2 border-on-background px-3 py-2 font-bold text-xs uppercase transition-all ${
+                  isSelectMode ? 'bg-primary text-on-primary brutal-shadow' : 'bg-surface-container hover:bg-surface-dim'
+                }`}
+                title="Select multiple files"
+              >
+                <span className="material-symbols-outlined text-base">{isSelectMode ? 'check_box' : 'check_box_outline_blank'}</span>
+                <span className="hidden md:inline">{isSelectMode ? 'Selecting' : 'Select'}</span>
+              </button>
+            )}
+
             {/* Offline Fast Drop Action */}
             <button
               onClick={() => setShowFastDropModal(true)}
@@ -2225,8 +3052,40 @@ export function AgentApp() {
           </div>
         )}
 
-        <main className="flex-grow overflow-y-auto p-6">
+        <main className="flex-grow overflow-y-auto p-6 relative pb-28">
           
+          {/* Tag Filter Bar */}
+          {!['activity', 'settings', 'shares'].includes(section) && (
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-4 mb-2 flex-wrap">
+              <span className="text-[11px] font-bold uppercase text-on-surface-variant mr-1 flex items-center gap-1">
+                <span className="material-symbols-outlined text-sm">filter_alt</span>Tags:
+              </span>
+              <button
+                onClick={() => setActiveTagFilter(null)}
+                className={`px-3 py-1 text-[11px] font-bold uppercase border-2 border-on-background transition-all ${
+                  activeTagFilter === null ? 'bg-on-background text-background' : 'bg-surface-container text-on-surface hover:bg-surface-dim'
+                }`}
+              >
+                All Files
+              </button>
+              {COLOR_TAGS.map(t => {
+                const isActive = activeTagFilter === t.id;
+                return (
+                  <button
+                    key={t.id}
+                    onClick={() => setActiveTagFilter(isActive ? null : t.id)}
+                    className={`flex items-center gap-1.5 px-3 py-1 text-[11px] font-bold uppercase border-2 border-on-background transition-all ${
+                      isActive ? 'bg-primary-container brutal-shadow ring-1 ring-primary' : 'bg-surface-container hover:bg-surface-dim'
+                    }`}
+                  >
+                    <span className="w-2.5 h-2.5 rounded-full border border-black" style={{ backgroundColor: t.hex }} />
+                    <span>{t.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
           {/* ── Albums Overview (All Albums Grid) ── */}
           {section === 'albums' && !activeAlbum && (
             <div>
@@ -2471,46 +3330,80 @@ export function AgentApp() {
                         </span>
                       </div>
                       <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill,minmax(150px,1fr))' }}>
-                        {grp.items.map(file => (
-                          <div key={file.id} className="group border-2 border-on-background bg-surface-container-lowest flex flex-col cursor-pointer hover:border-primary transition-colors relative overflow-hidden"
-                            style={{ boxShadow: '4px 4px 0 #1a1c1c' }} onClick={() => setSelectedFile(file)}>
-                            
-                            <div className="aspect-square bg-surface-container flex items-center justify-center overflow-hidden border-b-2 border-on-background relative">
-                              {thumbnails[file.id]
-                                ? <img src={thumbnails[file.id]} alt={file.name} className="w-full h-full object-cover" />
-                                : <span className="material-symbols-outlined text-5xl text-on-surface-variant">{getFileIcon(file.mime || '')}</span>
-                              }
-
-                              {activeAlbum.coverFileId === file.id && (
-                                <div className="absolute top-1 left-1 bg-primary-fixed text-on-primary-fixed border border-on-background px-1.5 py-0.5 text-[9px] font-black uppercase">
-                                  ★ Cover
+                        {grp.items.map(file => {
+                          const isSelected = selectedFileIds.has(file.id);
+                          return (
+                            <div key={file.id} className={`group border-2 border-on-background bg-surface-container-lowest flex flex-col cursor-pointer transition-all relative overflow-hidden ${isSelected ? 'ring-2 ring-primary border-primary' : 'hover:border-primary'}`}
+                              style={{ boxShadow: '4px 4px 0 #1a1c1c' }} onClick={() => {
+                                if (isSelectMode || selectedFileIds.size > 0) handleToggleSelect(file.id);
+                                else setSelectedFile(file);
+                              }}>
+                              
+                              {/* Selection Checkbox */}
+                              {(isSelectMode || selectedFileIds.size > 0) && (
+                                <div
+                                  onClick={(e) => { e.stopPropagation(); handleToggleSelect(file.id); }}
+                                  className={`absolute top-2 left-2 z-20 w-6 h-6 border-2 border-on-background flex items-center justify-center cursor-pointer transition-colors ${
+                                    isSelected ? 'bg-primary text-on-primary' : 'bg-background/90 text-transparent hover:text-gray-400'
+                                  }`}
+                                >
+                                  {isSelected && <span className="material-symbols-outlined text-sm font-black">check</span>}
                                 </div>
                               )}
-                            </div>
 
-                            <div className="p-2">
-                              <p className="text-xs font-bold truncate" title={file.name}>{file.name}</p>
-                              <p className="text-on-surface-variant text-xs mt-0.5">{fmtSize(file.size || 0)}</p>
-                            </div>
+                              <div className="aspect-square bg-surface-container flex items-center justify-center overflow-hidden border-b-2 border-on-background relative">
+                                {thumbnails[file.id]
+                                  ? <img src={thumbnails[file.id]} alt={file.name} className="w-full h-full object-cover" />
+                                  : <span className="material-symbols-outlined text-5xl text-on-surface-variant">{getFileIcon(file.mime || '')}</span>
+                                }
 
-                            <div className="absolute inset-0 bg-background/85 flex items-center justify-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity p-2">
-                              <button onClick={e => { e.stopPropagation(); setSelectedFile(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-surface-container" title="Preview">
-                                <span className="material-symbols-outlined text-sm">visibility</span>
-                              </button>
-                              <button onClick={e => { e.stopPropagation(); setShowShareModal(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Share Link">
-                                <span className="material-symbols-outlined text-sm">share</span>
-                              </button>
-                              {file.mime?.startsWith('image/') && (
-                                <button onClick={e => { e.stopPropagation(); handleSetCover(activeAlbum.id, file.id); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Set as Cover">
-                                  <span className="material-symbols-outlined text-sm">wallpaper</span>
+                                {activeAlbum.coverFileId === file.id && (
+                                  <div className="absolute top-1 left-1 bg-primary-fixed text-on-primary-fixed border border-on-background px-1.5 py-0.5 text-[9px] font-black uppercase">
+                                    ★ Cover
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="p-2">
+                                <p className="text-xs font-bold truncate" title={file.name}>{file.name}</p>
+                                <div className="flex items-center justify-between mt-0.5">
+                                  <p className="text-on-surface-variant text-[10px]">{fmtSize(file.size || 0)}</p>
+                                  {/* Tag dots */}
+                                  {file.tags && file.tags.length > 0 && (
+                                    <div className="flex items-center gap-0.5">
+                                      {file.tags.map(tid => {
+                                        const tagDef = COLOR_TAGS.find(t => t.id === tid);
+                                        return tagDef ? (
+                                          <span key={tid} className="w-2 h-2 rounded-full border border-black" style={{ backgroundColor: tagDef.hex }} title={tagDef.label} />
+                                        ) : null;
+                                      })}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+
+                              <div className="absolute inset-0 bg-background/85 flex items-center justify-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity p-2">
+                                <button onClick={e => { e.stopPropagation(); setSelectedFile(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-surface-container" title="Preview">
+                                  <span className="material-symbols-outlined text-sm">visibility</span>
                                 </button>
-                              )}
-                              <button onClick={e => { e.stopPropagation(); handleRemoveFileFromAlbum(activeAlbum.id, file.id); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-error-container" title="Remove from Album">
-                                <span className="material-symbols-outlined text-sm">folder_delete</span>
-                              </button>
+                                <button onClick={e => { e.stopPropagation(); setShowTagAssignModal({ fileIds: [file.id], currentTags: file.tags }); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Assign Tags">
+                                  <span className="material-symbols-outlined text-sm">label</span>
+                                </button>
+                                <button onClick={e => { e.stopPropagation(); setShowShareModal(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Share Link">
+                                  <span className="material-symbols-outlined text-sm">share</span>
+                                </button>
+                                {file.mime?.startsWith('image/') && (
+                                  <button onClick={e => { e.stopPropagation(); handleSetCover(activeAlbum.id, file.id); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Set as Cover">
+                                    <span className="material-symbols-outlined text-sm">wallpaper</span>
+                                  </button>
+                                )}
+                                <button onClick={e => { e.stopPropagation(); handleRemoveFileFromAlbum(activeAlbum.id, file.id); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-error-container" title="Remove from Album">
+                                  <span className="material-symbols-outlined text-sm">folder_delete</span>
+                                </button>
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   ))}
@@ -2549,51 +3442,86 @@ export function AgentApp() {
                       </span>
                     </div>
                     <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill,minmax(150px,1fr))' }}>
-                      {grp.items.map(file => (
-                        <div key={file.id} className="group border-2 border-on-background bg-surface-container-lowest flex flex-col cursor-pointer hover:border-primary transition-colors relative overflow-hidden"
-                          style={{ boxShadow: '4px 4px 0 #1a1c1c' }} onClick={() => setSelectedFile(file)}>
-                          <div className="aspect-square bg-surface-container flex items-center justify-center overflow-hidden border-b-2 border-on-background relative">
-                            {thumbnails[file.id]
-                              ? <img src={thumbnails[file.id]} alt={file.name} className="w-full h-full object-cover" />
-                              : <span className="material-symbols-outlined text-5xl text-on-surface-variant">{getFileIcon(file.mime || '')}</span>
-                            }
-                          </div>
-                          <div className="p-2">
-                            <p className="text-xs font-bold truncate" title={file.name}>{file.name}</p>
-                            <p className="text-on-surface-variant text-xs mt-0.5">{fmtSize(file.size || 0)}</p>
-                          </div>
-                          
-                          {/* Hover Actions */}
-                          <div className="absolute inset-0 bg-background/85 flex items-center justify-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button onClick={e => { e.stopPropagation(); setSelectedFile(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-surface-container" title="Preview">
-                              <span className="material-symbols-outlined text-sm">visibility</span>
-                            </button>
-                            <button onClick={e => { e.stopPropagation(); setShowShareModal(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Share Link">
-                              <span className="material-symbols-outlined text-sm">share</span>
-                            </button>
-                            <button onClick={e => { e.stopPropagation(); setShowAssignFileModal(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Add to Album">
-                              <span className="material-symbols-outlined text-sm">photo_album</span>
-                            </button>
-                            <button onClick={e => { e.stopPropagation(); handleDownload(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-surface-container" title="Download">
-                              <span className="material-symbols-outlined text-sm">download</span>
-                            </button>
-                            <button onClick={e => { e.stopPropagation(); handleDelete(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-error-container" title="Delete">
-                              <span className="material-symbols-outlined text-sm">delete</span>
-                            </button>
-                          </div>
+                      {grp.items.map(file => {
+                        const isSelected = selectedFileIds.has(file.id);
+                        return (
+                          <div key={file.id} className={`group border-2 border-on-background bg-surface-container-lowest flex flex-col cursor-pointer transition-all relative overflow-hidden ${isSelected ? 'ring-2 ring-primary border-primary' : 'hover:border-primary'}`}
+                            style={{ boxShadow: '4px 4px 0 #1a1c1c' }} onClick={() => {
+                              if (isSelectMode || selectedFileIds.size > 0) handleToggleSelect(file.id);
+                              else setSelectedFile(file);
+                            }}>
+                            
+                            {/* Selection Checkbox */}
+                            {(isSelectMode || selectedFileIds.size > 0) && (
+                              <div
+                                onClick={(e) => { e.stopPropagation(); handleToggleSelect(file.id); }}
+                                className={`absolute top-2 left-2 z-20 w-6 h-6 border-2 border-on-background flex items-center justify-center cursor-pointer transition-colors ${
+                                  isSelected ? 'bg-primary text-on-primary' : 'bg-background/90 text-transparent hover:text-gray-400'
+                                }`}
+                              >
+                                {isSelected && <span className="material-symbols-outlined text-sm font-black">check</span>}
+                              </div>
+                            )}
 
-                          {file.starred && (
-                            <div className="absolute top-1 right-1 bg-primary-fixed border border-on-background w-5 h-5 flex items-center justify-center">
-                              <span className="material-symbols-outlined text-xs text-on-primary-fixed" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                            <div className="aspect-square bg-surface-container flex items-center justify-center overflow-hidden border-b-2 border-on-background relative">
+                              {thumbnails[file.id]
+                                ? <img src={thumbnails[file.id]} alt={file.name} className="w-full h-full object-cover" />
+                                : <span className="material-symbols-outlined text-5xl text-on-surface-variant">{getFileIcon(file.mime || '')}</span>
+                              }
                             </div>
-                          )}
-                          {file.encrypted && (
-                            <div className="absolute top-1 left-1 bg-surface-dim border border-on-background w-5 h-5 flex items-center justify-center">
-                              <span className="material-symbols-outlined text-xs text-on-surface-variant">lock</span>
+                            <div className="p-2">
+                              <p className="text-xs font-bold truncate" title={file.name}>{file.name}</p>
+                              <div className="flex items-center justify-between mt-0.5">
+                                <p className="text-on-surface-variant text-[10px]">{fmtSize(file.size || 0)}</p>
+                                {/* Tag dots */}
+                                {file.tags && file.tags.length > 0 && (
+                                  <div className="flex items-center gap-0.5">
+                                    {file.tags.map(tid => {
+                                      const tagDef = COLOR_TAGS.find(t => t.id === tid);
+                                      return tagDef ? (
+                                        <span key={tid} className="w-2 h-2 rounded-full border border-black" style={{ backgroundColor: tagDef.hex }} title={tagDef.label} />
+                                      ) : null;
+                                    })}
+                                  </div>
+                                )}
+                              </div>
                             </div>
-                          )}
-                        </div>
-                      ))}
+                            
+                            {/* Hover Actions */}
+                            <div className="absolute inset-0 bg-background/85 flex items-center justify-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <button onClick={e => { e.stopPropagation(); setSelectedFile(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-surface-container" title="Preview">
+                                <span className="material-symbols-outlined text-sm">visibility</span>
+                              </button>
+                              <button onClick={e => { e.stopPropagation(); setShowTagAssignModal({ fileIds: [file.id], currentTags: file.tags }); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Assign Tags">
+                                <span className="material-symbols-outlined text-sm">label</span>
+                              </button>
+                              <button onClick={e => { e.stopPropagation(); setShowShareModal(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Share Link">
+                                <span className="material-symbols-outlined text-sm">share</span>
+                              </button>
+                              <button onClick={e => { e.stopPropagation(); setShowAssignFileModal(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-primary-container" title="Add to Album">
+                                <span className="material-symbols-outlined text-sm">photo_album</span>
+                              </button>
+                              <button onClick={e => { e.stopPropagation(); handleDownload(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-surface-container" title="Download">
+                                <span className="material-symbols-outlined text-sm">download</span>
+                              </button>
+                              <button onClick={e => { e.stopPropagation(); handleDelete(file); }} className="border-2 border-on-background bg-background p-1.5 hover:bg-error-container" title="Delete">
+                                <span className="material-symbols-outlined text-sm">delete</span>
+                              </button>
+                            </div>
+
+                            {file.starred && (
+                              <div className="absolute top-1 right-1 bg-primary-fixed border border-on-background w-5 h-5 flex items-center justify-center">
+                                <span className="material-symbols-outlined text-xs text-on-primary-fixed" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                              </div>
+                            )}
+                            {file.encrypted && (
+                              <div className="absolute top-1 left-1 bg-surface-dim border border-on-background w-5 h-5 flex items-center justify-center">
+                                <span className="material-symbols-outlined text-xs text-on-surface-variant">lock</span>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 ))}
@@ -2603,41 +3531,137 @@ export function AgentApp() {
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
                     <tr className="border-b-2 border-on-background bg-surface-container font-bold uppercase">
+                      <th className="p-3 w-10">
+                        <input
+                          type="checkbox"
+                          checked={selectedFileIds.size === filtered.length && filtered.length > 0}
+                          onChange={e => { if (e.target.checked) handleSelectAll(); else handleDeselectAll(); }}
+                        />
+                      </th>
                       <th className="p-3">Name</th>
+                      <th className="p-3">Tags</th>
                       <th className="p-3">Size</th>
                       <th className="p-3">Modified</th>
                       <th className="p-3 text-right">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y border-on-background">
-                    {filtered.map(file => (
-                      <tr key={file.id} onClick={() => setSelectedFile(file)} className="hover:bg-surface-container-low cursor-pointer">
-                        <td className="p-3 flex items-center gap-2 min-w-0">
-                          <span className="material-symbols-outlined text-primary">{getFileIcon(file.mime)}</span>
-                          <span className="font-bold truncate">{file.name}</span>
-                        </td>
-                        <td className="p-3 text-on-surface-variant whitespace-nowrap">{fmtSize(file.size)}</td>
-                        <td className="p-3 text-on-surface-variant whitespace-nowrap">{fmtDate(file.modified)}</td>
-                        <td className="p-3 text-right whitespace-nowrap" onClick={e => e.stopPropagation()}>
-                          <button onClick={() => setShowShareModal(file)} className="p-1 hover:text-primary mr-1" title="Share Link">
-                            <span className="material-symbols-outlined text-base">share</span>
-                          </button>
-                          <button onClick={() => setShowAssignFileModal(file)} className="p-1 hover:text-primary mr-1" title="Add to Album">
-                            <span className="material-symbols-outlined text-base">photo_album</span>
-                          </button>
-                          <button onClick={() => handleDownload(file)} className="p-1 hover:text-primary mr-1" title="Download">
-                            <span className="material-symbols-outlined text-base">download</span>
-                          </button>
-                          <button onClick={() => handleDelete(file)} className="p-1 hover:text-error" title="Delete">
-                            <span className="material-symbols-outlined text-base">delete</span>
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    {filtered.map(file => {
+                      const isSelected = selectedFileIds.has(file.id);
+                      return (
+                        <tr key={file.id} onClick={() => {
+                          if (isSelectMode || selectedFileIds.size > 0) handleToggleSelect(file.id);
+                          else setSelectedFile(file);
+                        }} className={`hover:bg-surface-container-low cursor-pointer ${isSelected ? 'bg-primary-container/20' : ''}`}>
+                          <td className="p-3" onClick={e => e.stopPropagation()}>
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={() => handleToggleSelect(file.id)}
+                            />
+                          </td>
+                          <td className="p-3 flex items-center gap-2 min-w-0">
+                            <span className="material-symbols-outlined text-primary">{getFileIcon(file.mime)}</span>
+                            <span className="font-bold truncate">{file.name}</span>
+                          </td>
+                          <td className="p-3">
+                            <div className="flex items-center gap-1">
+                              {file.tags && file.tags.map(tid => {
+                                const tagDef = COLOR_TAGS.find(t => t.id === tid);
+                                return tagDef ? (
+                                  <span key={tid} className="w-2.5 h-2.5 rounded-full border border-black" style={{ backgroundColor: tagDef.hex }} title={tagDef.label} />
+                                ) : null;
+                              })}
+                            </div>
+                          </td>
+                          <td className="p-3 text-on-surface-variant whitespace-nowrap">{fmtSize(file.size)}</td>
+                          <td className="p-3 text-on-surface-variant whitespace-nowrap">{fmtDate(file.modified)}</td>
+                          <td className="p-3 text-right whitespace-nowrap" onClick={e => e.stopPropagation()}>
+                            <button onClick={() => setShowTagAssignModal({ fileIds: [file.id], currentTags: file.tags })} className="p-1 hover:text-primary mr-1" title="Assign Tags">
+                              <span className="material-symbols-outlined text-base">label</span>
+                            </button>
+                            <button onClick={() => setShowShareModal(file)} className="p-1 hover:text-primary mr-1" title="Share Link">
+                              <span className="material-symbols-outlined text-base">share</span>
+                            </button>
+                            <button onClick={() => setShowAssignFileModal(file)} className="p-1 hover:text-primary mr-1" title="Add to Album">
+                              <span className="material-symbols-outlined text-base">photo_album</span>
+                            </button>
+                            <button onClick={() => handleDownload(file)} className="p-1 hover:text-primary mr-1" title="Download">
+                              <span className="material-symbols-outlined text-base">download</span>
+                            </button>
+                            <button onClick={() => handleDelete(file)} className="p-1 hover:text-error" title="Delete">
+                              <span className="material-symbols-outlined text-base">delete</span>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
             )
+          )}
+
+          {/* ── Floating Batch Operations Toolbar ── */}
+          {selectedFileIds.size > 0 && (
+            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-surface-container-lowest border-4 border-on-background p-3 z-50 flex items-center gap-3 max-w-2xl w-[92vw] shadow-2xl"
+              style={{ boxShadow: '8px 8px 0 #1a1c1c' }}>
+              <div className="flex items-center gap-2 border-r-2 border-on-background pr-3 flex-shrink-0">
+                <span className="w-6 h-6 rounded-full bg-primary text-on-primary font-black text-xs flex items-center justify-center">
+                  {selectedFileIds.size}
+                </span>
+                <span className="text-xs font-bold uppercase hidden sm:inline">Selected</span>
+              </div>
+
+              <div className="flex items-center gap-2 flex-grow overflow-x-auto">
+                {/* Download as ZIP */}
+                <button
+                  onClick={handleBulkZipDownload}
+                  disabled={isZipping}
+                  className="flex items-center gap-1.5 bg-primary text-on-primary border-2 border-on-background px-3 py-1.5 text-xs font-bold uppercase brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 whitespace-nowrap disabled:opacity-60"
+                  title="Download all selected files as a ZIP archive"
+                >
+                  <span className="material-symbols-outlined text-sm">{isZipping ? 'progress_activity' : 'folder_zip'}</span>
+                  <span>{isZipping ? 'Zipping...' : 'Download ZIP'}</span>
+                </button>
+
+                {/* Tag */}
+                <button
+                  onClick={() => setShowTagAssignModal({ fileIds: Array.from(selectedFileIds) })}
+                  className="flex items-center gap-1.5 bg-surface-container border-2 border-on-background px-3 py-1.5 text-xs font-bold uppercase hover:bg-surface-dim whitespace-nowrap"
+                >
+                  <span className="material-symbols-outlined text-sm">label</span>
+                  <span>Tag</span>
+                </button>
+
+                {/* Star */}
+                <button
+                  onClick={handleBulkStar}
+                  className="flex items-center gap-1.5 bg-surface-container border-2 border-on-background px-3 py-1.5 text-xs font-bold uppercase hover:bg-surface-dim whitespace-nowrap"
+                >
+                  <span className="material-symbols-outlined text-sm">star</span>
+                  <span>Star</span>
+                </button>
+
+                {/* Delete */}
+                <button
+                  onClick={handleBulkDelete}
+                  className="flex items-center gap-1.5 bg-error-container text-on-error-container border-2 border-on-background px-3 py-1.5 text-xs font-bold uppercase hover:brightness-95 whitespace-nowrap"
+                >
+                  <span className="material-symbols-outlined text-sm">delete</span>
+                  <span>Delete</span>
+                </button>
+              </div>
+
+              {/* Deselect / Cancel */}
+              <button
+                onClick={handleDeselectAll}
+                className="p-1.5 border-2 border-transparent hover:border-on-background hover:bg-surface-container flex-shrink-0"
+                title="Deselect All"
+              >
+                <span className="material-symbols-outlined text-base">close</span>
+              </button>
+            </div>
           )}
 
           {/* ── Shared Links Manager Section ── */}
@@ -2791,6 +3815,15 @@ export function AgentApp() {
                             </div>
 
                             <div className="flex items-center gap-2 self-stretch sm:self-auto">
+                              {/* QR Code Modal Button */}
+                              <button
+                                onClick={() => setShowQrModal({ title: link.fileName, url: link.shareUrl })}
+                                className="p-1.5 border-2 border-on-background bg-surface-container hover:bg-primary-container"
+                                title="View / Scan QR Code"
+                              >
+                                <span className="material-symbols-outlined text-sm">qr_code_2</span>
+                              </button>
+
                               {/* Toggle Link Active / Inactive */}
                               <button
                                 onClick={() => handleToggleShareActive(link)}
@@ -2896,6 +3929,33 @@ export function AgentApp() {
                 </button>
               </section>
 
+              {/* 1-Click Encrypted Vault Backup & Restore */}
+              <section className="border-2 border-on-background bg-surface-container-lowest p-6 flex flex-col gap-4" style={{ boxShadow: '4px 4px 0 #1a1c1c' }}>
+                <div className="flex items-center justify-between border-b-2 border-on-background pb-2">
+                  <h2 className="font-black text-base uppercase">Vault Backup &amp; Migration</h2>
+                  <span className="text-xs font-bold uppercase bg-primary-container text-on-primary-container border border-on-background px-2 py-0.5">AES-256</span>
+                </div>
+                <p className="text-sm text-on-surface-variant leading-relaxed">
+                  Export your entire vault, albums, tags, and share indices into a single encrypted <code>.chuchudu</code> archive for cold storage, USB backups, or migration.
+                </p>
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    onClick={() => setShowBackupModal(true)}
+                    className="flex items-center gap-2 bg-primary text-on-primary border-2 border-on-background px-5 py-3 font-bold text-sm uppercase brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5"
+                  >
+                    <span className="material-symbols-outlined text-lg">archive</span>
+                    Create Encrypted Backup
+                  </button>
+                  <button
+                    onClick={() => setShowBackupModal(true)}
+                    className="flex items-center gap-2 bg-surface-container border-2 border-on-background px-5 py-3 font-bold text-sm uppercase hover:bg-surface-dim"
+                  >
+                    <span className="material-symbols-outlined text-lg">unarchive</span>
+                    Restore Vault from Backup
+                  </button>
+                </div>
+              </section>
+
               {/* Storage Folder */}
               <section className="border-2 border-on-background bg-surface-container-lowest p-6 flex flex-col gap-4" style={{ boxShadow: '4px 4px 0 #1a1c1c' }}>
                 <div className="flex items-center justify-between border-b-2 border-on-background pb-2">
@@ -2917,11 +3977,11 @@ export function AgentApp() {
                       Choose Folder
                     </button>
                     <button onClick={handleOpenInExplorer}
-                      title="Open this folder in Windows File Explorer"
+                      title="Open this storage folder in Finder / Explorer"
                       className="bg-on-background text-background border-2 border-on-background px-4 py-3 font-bold text-sm uppercase whitespace-nowrap flex items-center gap-1.5"
                       style={{ boxShadow: '3px 3px 0 #444' }}>
                       <span className="material-symbols-outlined text-lg">folder</span>
-                      Open in Explorer
+                      Open Folder
                     </button>
                   </div>
                 </div>
@@ -2930,8 +3990,8 @@ export function AgentApp() {
               {/* Autostart */}
               <section className="border-2 border-on-background bg-surface-container-lowest p-6 flex items-center justify-between gap-4" style={{ boxShadow: '4px 4px 0 #1a1c1c' }}>
                 <div>
-                  <h2 className="font-black text-base uppercase">Autostart on Windows Boot</h2>
-                  <p className="text-sm text-on-surface-variant mt-1">Start vault automatically when Windows starts.</p>
+                  <h2 className="font-black text-base uppercase">Launch at System Startup</h2>
+                  <p className="text-sm text-on-surface-variant mt-1">Start vault automatically on system login (Windows &amp; macOS).</p>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer" onClick={toggleAutostart}>
                   <input type="checkbox" checked={autostart} readOnly className="sr-only peer" />

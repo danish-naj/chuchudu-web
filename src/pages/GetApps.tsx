@@ -21,12 +21,10 @@ export default function GetApps() {
         </header>
 
         {/* Platform Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-gutter mb-12">
-          {/* Card A: Windows */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter mb-12">
+          
+          {/* Card 1: Windows Desktop */}
           <article className="bg-surface-container-lowest border-2 border-on-background brutal-shadow-lg p-6 md:p-8 flex flex-col relative overflow-hidden group">
-            {/* Decorative background accent */}
-            <div className="absolute -right-12 -top-12 w-32 h-32 bg-primary-container rounded-full opacity-20 group-hover:scale-150 transition-transform duration-500 pointer-events-none"></div>
-
             <div className="flex items-start justify-between mb-6 relative z-10">
               <div className="bg-primary-fixed border-2 border-on-background p-3 inline-flex">
                 <span className="material-symbols-outlined text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>
@@ -34,7 +32,7 @@ export default function GetApps() {
                 </span>
               </div>
               <span className="font-label-caps text-label-caps uppercase bg-on-background text-background px-3 py-1 font-bold">
-                v1.0.0
+                v1.0.0 STABLE
               </span>
             </div>
 
@@ -43,124 +41,188 @@ export default function GetApps() {
                 Primary Vault Client
               </span>
               <h2 className="font-headline-md text-headline-md uppercase mb-2">
-                Windows Desktop Agent
+                Windows PC
               </h2>
               <p className="font-body-md text-body-md text-on-surface-variant italic">
                 Requirement: Windows 10/11 (64-bit)
               </p>
             </div>
 
-            <ul className="flex flex-col gap-3 mb-8 flex-1 font-body-md text-body-md relative z-10">
+            <ul className="flex flex-col gap-3 mb-8 flex-1 font-body-md text-xs sm:text-sm relative z-10">
               <li className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
+                <span className="material-symbols-outlined text-primary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
                   check_box
                 </span>
-                File manager with photo, video, and document tabs
+                File manager with timeline albums &amp; QR link shares
               </li>
               <li className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
+                <span className="material-symbols-outlined text-primary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
                   check_box
                 </span>
-                Background cloud sync ingestion agent
+                External SSD, HDD &amp; USB Multi-Vault profiles
               </li>
               <li className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
+                <span className="material-symbols-outlined text-primary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
                   check_box
                 </span>
-                Local encrypted vault storage (~/Chuchudu_Vault)
+                1-Click AES-256 encrypted vault backup (.chuchudu)
               </li>
               <li className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
+                <span className="material-symbols-outlined text-primary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
                   check_box
                 </span>
-                System tray runner &amp; autostart on boot
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  check_box
-                </span>
-                Custom vault folder selector (choose your drive)
+                System tray runner &amp; autostart on login
               </li>
             </ul>
 
-            <div className="flex flex-col gap-3 relative z-10">
+            <div className="flex flex-col gap-3 relative z-10 mt-auto">
               <a
-                href="/downloads/Chuchudu-Agent-Setup.exe"
+                href="/downloads/Chuchudu-Setup.exe"
                 download="Chuchudu-Setup.exe"
-                className="w-full bg-primary-fixed text-on-primary-fixed border-2 border-on-background brutal-shadow py-4 font-button-text text-button-text uppercase hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:bg-primary-fixed-dim text-center font-bold block"
+                className="w-full bg-primary-fixed text-on-primary-fixed border-2 border-on-background brutal-shadow py-3.5 font-button-text text-button-text uppercase hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:bg-primary-fixed-dim text-center font-bold block"
               >
                 Download for Windows (.exe)
               </a>
               <a
-                href="https://github.com/danish-naj/chuchudu-web/releases"
-                target="_blank"
-                rel="noreferrer"
+                href="/downloads/Chuchudu.exe"
+                download="Chuchudu.exe"
                 className="text-xs text-on-surface-variant hover:text-on-background text-center font-bold uppercase underline"
               >
-                View Releases &amp; Source on GitHub →
+                Download Portable (.exe) →
               </a>
             </div>
           </article>
 
-          {/* Card B: Android */}
+          {/* Card 2: macOS Desktop (MacBook / iMac) */}
+          <article className="bg-surface-container-lowest border-2 border-on-background brutal-shadow-lg p-6 md:p-8 flex flex-col relative overflow-hidden group">
+            <div className="flex items-start justify-between mb-6 relative z-10">
+              <div className="bg-primary-container border-2 border-on-background p-3 inline-flex">
+                <span className="material-symbols-outlined text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+                  laptop_mac
+                </span>
+              </div>
+              <span className="font-label-caps text-label-caps uppercase bg-primary-container text-on-primary-container border border-on-background px-3 py-1 font-bold">
+                UNIVERSAL DMG
+              </span>
+            </div>
+
+            <div className="mb-6 relative z-10">
+              <span className="font-label-caps text-label-caps text-primary uppercase mb-2 block border-b-2 border-on-background pb-1 inline-block font-bold">
+                Apple Silicon &amp; Intel
+              </span>
+              <h2 className="font-headline-md text-headline-md uppercase mb-2">
+                macOS / MacBook
+              </h2>
+              <p className="font-body-md text-body-md text-on-surface-variant italic">
+                Requirement: macOS 10.15+ (Catalina to Sequoia)
+              </p>
+            </div>
+
+            <ul className="flex flex-col gap-3 mb-8 flex-1 font-body-md text-xs sm:text-sm relative z-10">
+              <li className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-primary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
+                  check_box
+                </span>
+                Native Apple Silicon (M1/M2/M3/M4) &amp; Intel Macs
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-primary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
+                  check_box
+                </span>
+                Simple drag-and-drop installer into Applications (.dmg)
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-primary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
+                  check_box
+                </span>
+                macOS Menu Bar tray &amp; Finder folder integration
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-primary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
+                  check_box
+                </span>
+                Full zero-knowledge local encryption engine
+              </li>
+            </ul>
+
+            <div className="flex flex-col gap-3 relative z-10 mt-auto">
+              <a
+                href="/downloads/Chuchudu.dmg"
+                download="Chuchudu.dmg"
+                className="w-full bg-primary text-on-primary border-2 border-on-background brutal-shadow py-3.5 font-button-text text-button-text uppercase hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:bg-primary-dim text-center font-bold block"
+              >
+                Download for Mac (.dmg)
+              </a>
+              <a
+                href="https://github.com/danish-naj/chuchudu-web/actions"
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs text-on-surface-variant hover:text-on-background text-center font-bold uppercase underline"
+              >
+                View Cloud Releases on GitHub →
+              </a>
+            </div>
+          </article>
+
+          {/* Card 3: Mobile (iOS & Android) */}
           <article className="bg-surface-container-lowest border-2 border-on-background brutal-shadow-lg p-6 md:p-8 flex flex-col relative overflow-hidden group">
             <div className="flex items-start justify-between mb-6 relative z-10">
               <div className="bg-surface-container-high border-2 border-on-background p-3 inline-flex">
                 <span className="material-symbols-outlined text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  android
+                  smartphone
                 </span>
               </div>
-              <span className="font-label-caps text-label-caps uppercase bg-[#FFB300] text-on-background border-2 border-on-background px-3 py-1 font-bold">
-                COMING SOON
+              <span className="font-label-caps text-label-caps uppercase bg-on-background text-background px-3 py-1 font-bold">
+                MOBILE &amp; PWA
               </span>
             </div>
 
             <div className="mb-6 relative z-10">
               <span className="font-label-caps text-label-caps text-secondary uppercase mb-2 block border-b-2 border-on-background pb-1 inline-block font-bold">
-                Native Companion App
+                iPhone, iPad &amp; Android
               </span>
               <h2 className="font-headline-md text-headline-md uppercase mb-2">
-                Android APK
+                Mobile Companion
               </h2>
               <p className="font-body-md text-body-md text-on-surface-variant italic">
-                Status: In Active Development
+                iOS 15+ / Android / Mobile Safari &amp; Chrome
               </p>
             </div>
 
-            <ul className="flex flex-col gap-3 mb-6 flex-1 font-body-md text-body-md relative z-10">
+            <ul className="flex flex-col gap-3 mb-6 flex-1 font-body-md text-xs sm:text-sm relative z-10">
               <li className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>
+                <span className="material-symbols-outlined text-secondary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
                   check_box
                 </span>
-                Background automatic camera roll sync
+                Native iOS Camera &amp; QR Code scan support
               </li>
               <li className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>
+                <span className="material-symbols-outlined text-secondary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
+                  check_box
+                </span>
+                Face ID &amp; Touch ID biometric album unlocking
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-secondary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
                   check_box
                 </span>
                 Direct phone-to-laptop encrypted chunk streaming
               </li>
-              <li className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  check_box
-                </span>
-                Push delivery notifications
-              </li>
             </ul>
 
-            <div className="bg-primary-container/30 p-3 border-2 border-dashed border-on-background mb-6 relative z-10">
-              <p className="font-label-caps text-center uppercase text-xs flex items-center justify-center gap-1.5 font-bold text-on-surface">
-                <span className="material-symbols-outlined text-sm">info</span>
-                Use the Web Uploader on mobile Chrome in the meantime!
+            <div className="bg-primary-container/30 p-3 border-2 border-dashed border-on-background mb-4 relative z-10">
+              <p className="font-label-caps text-center uppercase text-[11px] flex items-center justify-center gap-1.5 font-bold text-on-surface">
+                <span className="material-symbols-outlined text-sm">public</span>
+                Installable as PWA on Safari &amp; Chrome!
               </p>
             </div>
 
-            <button
-              disabled
-              className="w-full bg-surface-container-high text-on-surface-variant border-2 border-on-background py-4 font-button-text text-button-text uppercase cursor-not-allowed relative z-10 mt-auto text-center font-bold block opacity-75"
+            <Link
+              to="/dashboard"
+              className="w-full bg-surface-container-high hover:bg-surface-dim text-on-surface border-2 border-on-background py-3.5 font-button-text text-button-text uppercase relative z-10 mt-auto text-center font-bold block transition-all"
             >
-              Android App • Coming Soon
-            </button>
+              Open Mobile Web Portal →
+            </Link>
           </article>
         </div>
 

@@ -11,6 +11,15 @@ export interface VaultFile {
   starred: boolean;
   type: 'file' | 'folder';
   items?: number;
+  tags?: string[];
+}
+
+export interface VaultProfile {
+  id: string;
+  name: string;
+  path: string;
+  isDefault?: boolean;
+  createdAt: string;
 }
 
 export interface Album {
@@ -63,11 +72,12 @@ export class VaultManager {
 
     try {
       const home = await homeDir();
-      const defaultPath = `${home.replace(/\\/g, '/')}/Chuchudu_Vault`;
+      const cleanHome = home ? home.replace(/\\/g, '/').replace(/\/+$/, '') : '';
+      const defaultPath = cleanHome ? `${cleanHome}/Chuchudu_Vault` : 'Chuchudu_Vault';
       localStorage.setItem('chuchudu_vault_path', defaultPath);
       return defaultPath;
     } catch {
-      return 'C:/Users/ACER/Chuchudu_Vault';
+      return 'Chuchudu_Vault';
     }
   }
 
@@ -77,6 +87,69 @@ export class VaultManager {
     this.initialized = false;
     await this.init();
     window.dispatchEvent(new CustomEvent('vault-updated'));
+  }
+
+  // ─── Multi-Vault Profiles ──────────────────────────────────────────────────
+  async getVaultProfiles(): Promise<VaultProfile[]> {
+    try {
+      const saved = localStorage.getItem('chuchudu_vault_profiles');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
+
+    const defaultDir = await this.getVaultDir();
+    const defaultProfile: VaultProfile = {
+      id: 'default',
+      name: 'Primary Vault (SSD)',
+      path: defaultDir,
+      isDefault: true,
+      createdAt: new Date().toISOString(),
+    };
+    localStorage.setItem('chuchudu_vault_profiles', JSON.stringify([defaultProfile]));
+    return [defaultProfile];
+  }
+
+  async addVaultProfile(name: string, path: string): Promise<VaultProfile> {
+    const profiles = await this.getVaultProfiles();
+    const newProfile: VaultProfile = {
+      id: crypto.randomUUID(),
+      name: name.trim() || 'External Vault',
+      path: path.trim(),
+      createdAt: new Date().toISOString(),
+    };
+    profiles.push(newProfile);
+    localStorage.setItem('chuchudu_vault_profiles', JSON.stringify(profiles));
+    return newProfile;
+  }
+
+  async switchVault(vaultId: string): Promise<VaultProfile | null> {
+    const profiles = await this.getVaultProfiles();
+    const target = profiles.find(p => p.id === vaultId);
+    if (!target) return null;
+
+    localStorage.setItem('chuchudu_active_vault_id', target.id);
+    await this.setVaultDir(target.path);
+    window.dispatchEvent(new CustomEvent('vault-switched', { detail: target }));
+    return target;
+  }
+
+  async deleteVaultProfile(vaultId: string): Promise<void> {
+    let profiles = await this.getVaultProfiles();
+    if (profiles.length <= 1) return;
+    profiles = profiles.filter(p => p.id !== vaultId);
+    localStorage.setItem('chuchudu_vault_profiles', JSON.stringify(profiles));
+    const activeId = localStorage.getItem('chuchudu_active_vault_id');
+    if (activeId === vaultId) {
+      await this.switchVault(profiles[0].id);
+    }
+  }
+
+  async getActiveVaultProfile(): Promise<VaultProfile> {
+    const profiles = await this.getVaultProfiles();
+    const activeId = localStorage.getItem('chuchudu_active_vault_id');
+    return profiles.find(p => p.id === activeId) || profiles[0];
   }
 
   async init() {
@@ -441,6 +514,147 @@ export class VaultManager {
     if (albumsChanged) {
       await this.saveAlbums(albums);
     }
+  }
+
+  // ─── Tag Management ──────────────────────────────────────────────────────────
+  async setFileTags(fileId: string, tags: string[]): Promise<void> {
+    const manifest = await this.getManifest();
+    if (manifest[fileId]) {
+      manifest[fileId].tags = tags;
+      await this.saveManifest(manifest);
+    }
+  }
+
+  // ─── 1-Click Encrypted Vault Backup & Restore ───────────────────────────────
+  async exportVaultBackup(passphrase: string, onProgress?: (percent: number, status: string) => void): Promise<Uint8Array> {
+    onProgress?.(10, 'Packaging vault files...');
+    const JSZip = (await import('jszip')).default;
+    const zip = new JSZip();
+
+    const manifest = await this.getManifest();
+    const albums = await this.getAlbums();
+    const shares = await this.getShareLinks();
+
+    zip.file('.manifest.json', JSON.stringify(manifest, null, 2));
+    zip.file('.albums.json', JSON.stringify(albums, null, 2));
+    zip.file('.shares.json', JSON.stringify(shares, null, 2));
+
+    const fileList = Object.values(manifest);
+    for (let i = 0; i < fileList.length; i++) {
+      const file = fileList[i];
+      try {
+        const data = await this.readFile(file.id);
+        if (data) {
+          zip.file(`files/${file.id}`, data);
+        }
+      } catch (e) {
+        console.warn(`Failed to package file ${file.name}:`, e);
+      }
+      onProgress?.(10 + Math.round(((i + 1) / (fileList.length || 1)) * 50), `Bundled ${file.name}`);
+    }
+
+    onProgress?.(65, 'Creating zip archive...');
+    const zipBytes = await zip.generateAsync({ type: 'uint8array' });
+
+    onProgress?.(80, 'Encrypting vault backup with AES-256...');
+    const enc = new TextEncoder();
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const passKey = await crypto.subtle.importKey('raw', enc.encode(passphrase), 'PBKDF2', false, ['deriveKey']);
+    const aesKey = await crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+      passKey,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['encrypt']
+    );
+
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, aesKey, zipBytes.buffer as ArrayBuffer);
+
+    // Pack: [Magic 8 bytes: 'CHUCHUDU'] + [Salt 16 bytes] + [IV 12 bytes] + [Ciphertext]
+    const magic = enc.encode('CHUCHUDU');
+    const combined = new Uint8Array(magic.length + salt.length + iv.length + ciphertext.byteLength);
+    combined.set(magic, 0);
+    combined.set(salt, magic.length);
+    combined.set(iv, magic.length + salt.length);
+    combined.set(new Uint8Array(ciphertext), magic.length + salt.length + iv.length);
+
+    onProgress?.(100, 'Backup created successfully!');
+    return combined;
+  }
+
+  async importVaultBackup(backupBytes: Uint8Array, passphrase: string, onProgress?: (percent: number, status: string) => void): Promise<{ filesRestored: number; albumsRestored: number }> {
+    onProgress?.(10, 'Verifying backup header...');
+    const enc = new TextEncoder();
+    const dec = new TextDecoder();
+    const magic = dec.decode(backupBytes.slice(0, 8));
+    if (magic !== 'CHUCHUDU') {
+      throw new Error('Invalid backup file format: Missing ChuChudu signature.');
+    }
+
+    const salt = backupBytes.slice(8, 24);
+    const iv = backupBytes.slice(24, 36);
+    const ciphertext = backupBytes.slice(36);
+
+    onProgress?.(25, 'Decrypting vault backup...');
+    const passKey = await crypto.subtle.importKey('raw', enc.encode(passphrase), 'PBKDF2', false, ['deriveKey']);
+    const aesKey = await crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+      passKey,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['decrypt']
+    );
+
+    let decryptedZipBytes: ArrayBuffer;
+    try {
+      decryptedZipBytes = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, aesKey, ciphertext.buffer as ArrayBuffer);
+    } catch {
+      throw new Error('Decryption failed! Incorrect passphrase or corrupted backup.');
+    }
+
+    onProgress?.(50, 'Extracting vault archive...');
+    const JSZip = (await import('jszip')).default;
+    const zip = await JSZip.loadAsync(decryptedZipBytes);
+
+    let restoredFilesCount = 0;
+    let restoredAlbumsCount = 0;
+
+    // Restore manifests
+    if (zip.file('.manifest.json')) {
+      const manifestStr = await zip.file('.manifest.json')!.async('string');
+      const manifest = JSON.parse(manifestStr);
+      await this.saveManifest(manifest);
+      restoredFilesCount = Object.keys(manifest).length;
+    }
+
+    if (zip.file('.albums.json')) {
+      const albumsStr = await zip.file('.albums.json')!.async('string');
+      const albums = JSON.parse(albumsStr);
+      await this.saveAlbums(albums);
+      restoredAlbumsCount = Object.keys(albums).length;
+    }
+
+    if (zip.file('.shares.json')) {
+      const sharesStr = await zip.file('.shares.json')!.async('string');
+      const shares = JSON.parse(sharesStr);
+      await this.saveShareLinks(shares);
+    }
+
+    // Restore files
+    const fileEntries = Object.keys(zip.files).filter(p => p.startsWith('files/'));
+    for (let i = 0; i < fileEntries.length; i++) {
+      const entryPath = fileEntries[i];
+      const fileId = entryPath.replace('files/', '');
+      const fileData = await zip.file(entryPath)!.async('uint8array');
+      const manifest = await this.getManifest();
+      const meta = manifest[fileId] || { name: `restored_${fileId}`, mime: 'application/octet-stream', size: fileData.length, modified: new Date().toISOString(), encrypted: false, starred: false, type: 'file' };
+      await this.saveFile(fileId, meta, fileData);
+      onProgress?.(50 + Math.round(((i + 1) / fileEntries.length) * 50), `Restored file ${i + 1}/${fileEntries.length}`);
+    }
+
+    onProgress?.(100, 'Restore complete!');
+    return { filesRestored: restoredFilesCount, albumsRestored: restoredAlbumsCount };
   }
 }
 

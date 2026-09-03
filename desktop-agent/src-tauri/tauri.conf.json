@@ -2,7 +2,7 @@
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Chuchudu",
   "version": "1.0.0",
-  "identifier": "in.chuchudu.app",
+  "identifier": "in.chuchudu.desktop",
   "mainBinaryName": "Chuchudu",
   "build": {
     "frontendDist": "../dist",
@@ -38,6 +38,10 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
+    "macOS": {
+      "minimumSystemVersion": "10.15",
+      "frameworks": []
+    },
     "windows": {
       "nsis": {
         "installerIcon": "icons/icon.ico",

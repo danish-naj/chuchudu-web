@@ -408,85 +408,87 @@ const Landing: React.FC = () => {
                     v1.0.0 STABLE
                   </span>
                 </div>
-                <h3 className="font-brand font-black text-xl sm:text-2xl uppercase mb-2">Windows Agent</h3>
+                <h3 className="font-brand font-black text-xl sm:text-2xl uppercase mb-2">Windows PC</h3>
                 <p className="font-body-md text-xs sm:text-sm text-on-surface-variant mb-6">
-                  Requirement: Windows 10/11 (64-bit). Ingests encrypted chunks and stores files in your vault folder.
+                  Requirement: Windows 10/11 (64-bit). Ingests encrypted chunks and stores files in your local vault.
                 </p>
                 <ul className="space-y-2 font-body-md text-xs sm:text-sm text-on-surface-variant mb-8 flex-1">
                   <li className="flex items-center gap-2">✓ Built on Rust &amp; Tauri v2</li>
-                  <li className="flex items-center gap-2">✓ Automatic chunk decryption</li>
-                  <li className="flex items-center gap-2">✓ Custom storage drive selector</li>
-                  <li className="flex items-center gap-2">✓ In-app media &amp; PDF preview</li>
+                  <li className="flex items-center gap-2">✓ Multi-Vault USB &amp; External SSD support</li>
+                  <li className="flex items-center gap-2">✓ 1-Click Encrypted Backup (.chuchudu)</li>
+                  <li className="flex items-center gap-2">✓ Background system tray runner</li>
                 </ul>
                 <div className="flex flex-col gap-2">
-                  <Link
-                    to="/login"
+                  <a
+                    href="/downloads/Chuchudu-Setup.exe"
+                    download="Chuchudu-Setup.exe"
                     className="w-full bg-primary text-on-primary border-2 border-on-background brutal-shadow py-3.5 sm:py-4 font-brand text-xs sm:text-sm uppercase text-center font-black brutal-hover block"
                   >
-                    Sign In to Download
-                  </Link>
+                    Download for Windows (.exe)
+                  </a>
                   <p className="text-center font-label-caps text-[10px] text-on-surface-variant uppercase">
-                    Available in portal after login
+                    Setup &amp; Portable Available
                   </p>
                 </div>
               </div>
 
-              {/* Android App (Coming Soon) */}
-              <div className="bg-surface-container-lowest brutal-border p-6 sm:p-8 flex flex-col brutal-shadow-lg hover:-translate-y-1 transition-all scroll-hidden">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="bg-surface-container-high p-3 border-2 border-on-background brutal-shadow">
-                    <span className="material-symbols-outlined text-4xl text-on-surface">
-                      android
-                    </span>
-                  </div>
-                  <span className="font-label-caps text-xs bg-[#FFB300] text-on-background border-2 border-on-background px-3 py-1 font-bold">
-                    COMING SOON
-                  </span>
-                </div>
-                <h3 className="font-brand font-black text-xl sm:text-2xl uppercase mb-2">Android App</h3>
-                <p className="font-body-md text-xs sm:text-sm text-on-surface-variant mb-6">
-                  Native Android companion app with automatic background camera roll sync to your laptop.
-                </p>
-                <ul className="space-y-2 font-body-md text-xs sm:text-sm text-on-surface-variant mb-8 flex-1">
-                  <li className="flex items-center gap-2">✓ Background camera auto-sync</li>
-                  <li className="flex items-center gap-2">✓ Direct phone-to-laptop chunking</li>
-                  <li className="flex items-center gap-2">✓ Zero background battery drain</li>
-                  <li className="flex items-center gap-2">✓ Push sync notifications</li>
-                </ul>
-                <div className="flex flex-col gap-2">
-                  <button
-                    disabled
-                    className="w-full bg-surface-container-high text-on-surface-variant border-2 border-on-background py-3.5 sm:py-4 font-brand text-xs sm:text-sm uppercase cursor-not-allowed text-center font-black block opacity-75"
-                  >
-                    Coming Soon
-                  </button>
-                  <p className="text-center font-label-caps text-[10px] text-primary font-bold uppercase">
-                    Use Web Uploader on mobile now
-                  </p>
-                </div>
-              </div>
-
-              {/* Web Portal Uploader */}
+              {/* macOS / MacBook Agent */}
               <div className="bg-surface brutal-border p-6 sm:p-8 flex flex-col brutal-shadow-lg hover:-translate-y-1 transition-all scroll-hidden">
                 <div className="flex items-start justify-between mb-4">
                   <div className="bg-primary-container p-3 border-2 border-on-background brutal-shadow">
                     <span className="material-symbols-outlined text-4xl text-on-primary-container">
-                      public
+                      laptop_mac
                     </span>
                   </div>
                   <span className="font-label-caps text-xs bg-primary-container text-on-primary-container border-2 border-on-background px-3 py-1 font-bold">
-                    PWA READY
+                    UNIVERSAL DMG
                   </span>
                 </div>
-                <h3 className="font-brand font-black text-xl sm:text-2xl uppercase mb-2">Web Uploader</h3>
+                <h3 className="font-brand font-black text-xl sm:text-2xl uppercase mb-2">macOS / MacBook</h3>
                 <p className="font-body-md text-xs sm:text-sm text-on-surface-variant mb-6">
-                  Works instantly on mobile Safari (iOS), Chrome (Android), or any browser. No install needed.
+                  Requirement: macOS 10.15+ (Apple Silicon M1/M2/M3/M4 &amp; Intel Macs).
                 </p>
                 <ul className="space-y-2 font-body-md text-xs sm:text-sm text-on-surface-variant mb-8 flex-1">
-                  <li className="flex items-center gap-2">✓ Mobile camera roll uploader</li>
-                  <li className="flex items-center gap-2">✓ Drag-and-drop batch processing</li>
-                  <li className="flex items-center gap-2">✓ Real-time upload delivery tracker</li>
-                  <li className="flex items-center gap-2">✓ PWA home-screen installable</li>
+                  <li className="flex items-center gap-2">✓ Apple Silicon M-series optimized</li>
+                  <li className="flex items-center gap-2">✓ 1-Click drag-and-drop DMG installer</li>
+                  <li className="flex items-center gap-2">✓ macOS Menu Bar runner &amp; Finder integration</li>
+                  <li className="flex items-center gap-2">✓ Zero-knowledge local encryption</li>
+                </ul>
+                <div className="flex flex-col gap-2">
+                  <a
+                    href="/downloads/Chuchudu.dmg"
+                    download="Chuchudu.dmg"
+                    className="w-full bg-primary-fixed text-on-primary-fixed border-2 border-on-background brutal-shadow py-3.5 sm:py-4 font-brand text-xs sm:text-sm uppercase text-center font-black brutal-hover block"
+                  >
+                    Download for Mac (.dmg)
+                  </a>
+                  <p className="text-center font-label-caps text-[10px] text-on-surface-variant uppercase">
+                    Universal Apple Silicon &amp; Intel
+                  </p>
+                </div>
+              </div>
+
+              {/* Mobile & Web Portal */}
+              <div className="bg-surface brutal-border p-6 sm:p-8 flex flex-col brutal-shadow-lg hover:-translate-y-1 transition-all scroll-hidden">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="bg-surface-container-high p-3 border-2 border-on-background brutal-shadow">
+                    <span className="material-symbols-outlined text-4xl text-on-surface">
+                      smartphone
+                    </span>
+                  </div>
+                  <span className="font-label-caps text-xs bg-on-background text-background px-3 py-1 font-bold">
+                    iOS &amp; ANDROID
+                  </span>
+                </div>
+                <h3 className="font-brand font-black text-xl sm:text-2xl uppercase mb-2">Mobile &amp; Web</h3>
+                <p className="font-body-md text-xs sm:text-sm text-on-surface-variant mb-6">
+                  Works instantly on iPhone (Safari), Android (Chrome), or any tablet. Install as PWA or native app.
+                </p>
+                <ul className="space-y-2 font-body-md text-xs sm:text-sm text-on-surface-variant mb-8 flex-1">
+                  <li className="flex items-center gap-2">✓ Mobile camera roll chunk upload</li>
+                  <li className="flex items-center gap-2">✓ Face ID / Touch ID album unlock</li>
+                  <li className="flex items-center gap-2">✓ Real-time QR code share link scan</li>
+                  <li className="flex items-center gap-2">✓ Zero app store installation barrier</li>
                 </ul>
                 <div className="flex flex-col gap-2">
                   <Link
