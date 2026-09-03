@@ -13,11 +13,13 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "Chuchudu",
         "width": 900,
         "height": 650,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "devtools": true
       }
     ],
     "security": {

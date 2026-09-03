@@ -5,6 +5,7 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 const host = process.env.TAURI_DEV_HOST;
 
 export default defineConfig({
+  base: './',
   plugins: [
     react(),
     nodePolyfills({
