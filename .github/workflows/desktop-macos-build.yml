@@ -1,4 +1,4 @@
-﻿name: macOS Desktop App Build (DMG & APP)
+name: macOS Desktop App Build (DMG & APP)
 
 on:
   workflow_dispatch:
@@ -21,6 +21,8 @@ jobs:
             os: macos-13
             arch: x64
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout Repository
@@ -56,3 +58,16 @@ jobs:
             desktop-agent/src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
             desktop-agent/src-tauri/target/${{ matrix.target }}/release/bundle/macos/*.app
           retention-days: 14
+
+      - name: Publish DMG to GitHub Releases
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          tag_name: "v1.0.0"
+          name: "Chuchudu Desktop v1.0.0"
+          draft: false
+          prerelease: false
+          files: |
+            desktop-agent/src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
