@@ -456,15 +456,24 @@ const Landing: React.FC = () => {
                 </ul>
                 <div className="flex flex-col gap-2">
                   <a
-                    href="/downloads/Chuchudu.dmg"
-                    download="Chuchudu.dmg"
+                    href="/downloads/Chuchudu.pkg"
+                    download="Chuchudu.pkg"
                     className="w-full bg-primary-fixed text-on-primary-fixed border-2 border-on-background brutal-shadow py-3.5 sm:py-4 font-brand text-xs sm:text-sm uppercase text-center font-black brutal-hover block"
                   >
-                    Download for Mac (.dmg)
+                    Download for Mac (.pkg)
                   </a>
-                  <p className="text-center font-label-caps text-[10px] text-on-surface-variant uppercase">
-                    Universal Apple Silicon &amp; Intel
-                  </p>
+                  <div className="flex items-center justify-between px-1">
+                    <a
+                      href="/downloads/Chuchudu.dmg"
+                      download="Chuchudu.dmg"
+                      className="text-[11px] text-primary hover:underline font-bold uppercase"
+                    >
+                      Download .dmg →
+                    </a>
+                    <span className="font-label-caps text-[10px] text-on-surface-variant uppercase">
+                      Universal PKG &amp; DMG
+                    </span>
+                  </div>
                 </div>
               </div>
 

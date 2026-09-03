@@ -20,6 +20,8 @@ dist-ssr
 !public/downloads/*.exe
 *.dmg
 !public/downloads/*.dmg
+*.pkg
+!public/downloads/*.pkg
 test.txt
 target
 desktop-agent/src-tauri/target

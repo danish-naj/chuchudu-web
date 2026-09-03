@@ -129,7 +129,7 @@ export default function GetApps() {
                 <span className="material-symbols-outlined text-primary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
                   check_box
                 </span>
-                Simple drag-and-drop installer into Applications (.dmg)
+                1-Click macOS PKG Installer (Auto-installs to Applications)
               </li>
               <li className="flex items-start gap-2">
                 <span className="material-symbols-outlined text-primary text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
@@ -145,22 +145,31 @@ export default function GetApps() {
               </li>
             </ul>
 
-            <div className="flex flex-col gap-3 relative z-10 mt-auto">
+            <div className="flex flex-col gap-2 relative z-10 mt-auto">
               <a
-                href="/downloads/Chuchudu.dmg"
-                download="Chuchudu.dmg"
+                href="/downloads/Chuchudu.pkg"
+                download="Chuchudu.pkg"
                 className="w-full bg-primary text-on-primary border-2 border-on-background brutal-shadow py-3.5 font-button-text text-button-text uppercase hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:bg-primary-dim text-center font-bold block"
               >
-                Download for Mac (.dmg)
+                Download PKG Installer (.pkg)
               </a>
-              <a
-                href="https://github.com/danish-naj/chuchudu-web/actions"
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs text-on-surface-variant hover:text-on-background text-center font-bold uppercase underline"
-              >
-                View Cloud Releases on GitHub →
-              </a>
+              <div className="flex items-center justify-between px-1">
+                <a
+                  href="/downloads/Chuchudu.dmg"
+                  download="Chuchudu.dmg"
+                  className="text-xs text-primary hover:underline font-bold uppercase"
+                >
+                  Download .dmg →
+                </a>
+                <a
+                  href="https://github.com/danish-naj/chuchudu-web/releases"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-xs text-on-surface-variant hover:text-on-background font-bold uppercase underline"
+                >
+                  GitHub Releases →
+                </a>
+              </div>
             </div>
           </article>
 

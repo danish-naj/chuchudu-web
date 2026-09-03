@@ -31,7 +31,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
           cache-dependency-path: desktop-agent/package-lock.json
 
@@ -50,16 +50,38 @@ jobs:
           cd desktop-agent
           npm run tauri build -- --target ${{ matrix.target }}
 
-      - name: Upload DMG Artifact
+      - name: Build macOS PKG Installer
+        run: |
+          mkdir -p scripts
+          cat << 'EOF' > scripts/postinstall
+          #!/bin/bash
+          # Automatically remove quarantine attributes on installation
+          xattr -cr /Applications/Chuchudu.app 2>/dev/null || true
+          chmod -R 755 /Applications/Chuchudu.app 2>/dev/null || true
+          exit 0
+          EOF
+          chmod +x scripts/postinstall
+
+          APP_PATH="desktop-agent/src-tauri/target/${{ matrix.target }}/release/bundle/macos/Chuchudu.app"
+          PKG_PATH="desktop-agent/src-tauri/target/${{ matrix.target }}/release/bundle/macos/Chuchudu.pkg"
+          pkgbuild --identifier "in.chuchudu.desktop" \
+                   --version "1.0.0" \
+                   --component "$APP_PATH" \
+                   --install-location "/Applications" \
+                   --scripts scripts \
+                   "$PKG_PATH"
+
+      - name: Upload Artifacts (DMG, PKG & APP)
         uses: actions/upload-artifact@v4
         with:
           name: chuchudu-macos-${{ matrix.arch }}
           path: |
             desktop-agent/src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+            desktop-agent/src-tauri/target/${{ matrix.target }}/release/bundle/macos/Chuchudu.pkg
             desktop-agent/src-tauri/target/${{ matrix.target }}/release/bundle/macos/*.app
           retention-days: 14
 
-      - name: Publish DMG to GitHub Releases
+      - name: Publish PKG and DMG to GitHub Releases
         uses: softprops/action-gh-release@v2
         if: github.ref == 'refs/heads/main'
         with:
@@ -69,5 +91,6 @@ jobs:
           prerelease: false
           files: |
             desktop-agent/src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+            desktop-agent/src-tauri/target/${{ matrix.target }}/release/bundle/macos/Chuchudu.pkg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
